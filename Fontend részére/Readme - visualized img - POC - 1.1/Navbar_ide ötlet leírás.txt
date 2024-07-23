@@ -1,0 +1,20 @@
+Navbar-nak valami hasonlót képzeltem el, ami a háttérbe még illene is. Jobban látszódnak a gombok, elkülönül a háttértől. 
+Annyiban módosítanám végül, hogy a kereső mezőt nem lenne muszáj megtartani, akár a Logo is kerülhetne oda, csak a mérete miatt kérdéses, hogy mennyire esne szét.
+
+
+Színek, összetétel alapján, valahogy így nézhet ki:
+Navbar részen belül lenne még egy .Row DIV:
+	- Border: 2px black solid
+	- Padding: 2px, #gold (vagy valami meleg kontraszt szín, mediterrán), solid
+			
+			Navbar a gombokkal együtt:
+			bacol:black
+			Color: Ugyanaz a #gold/meleg/fehér-vaj színű
+			
+				Gombok kitöltésénél: 
+					Bacol: #gold
+					Color: Black (betük)
+
+
+Elviekben valahogy ezekkel a kódokkal "Ki kéne adnia" az elképzelésemet, de nem kódoltam le és ellenőriztem, hogy valid-e így.
+
