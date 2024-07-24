@@ -4,28 +4,21 @@ import { ref } from 'vue';
 const { books } = useGetBooks();
 let description = ref<string>('');
 
-const emit = defineEmits<{
-  (event: 'bookSelected', id: number): void;
-}>();
+// Emitek létrehozása. Emitekkel olyan eseményeket tudunk létrehozni, amiket a szülő componens figyel, 
+// és el tudja kapni azokat, amikor megtörténik az esemény. A szülő componens jelenleg a BookComponent, mert ott használjuk fel a BookCards componenst.
+// Meghatározok egy toggleForm és egy book eseményt. 
+const emit = defineEmits(['toggleForm', 'book']);
 
 function loadDescription(id: number) {
     description.value = books.value[id - 1].description;
-}
-
-//Létrehozni egy függvényt, amit majd máshol meg tudok hívni, és azt átadni, ahol használni kell?
-function idKinyer(id: number) {
-    console.log(books.value[id-1].id)
-    let formIdMegjelenit = books.value[id-1].id;
-    emit('bookSelected', formIdMegjelenit); // Kibocsátja az id-t
-
-    return formIdMegjelenit;
+    // Érdekel gomb nyomására a toggleForm esemény 'elsül' true értékkel, a book esemény pedig az aktuális Book objecttel. Irány a BookComponent!
+    emit('toggleForm', true)
+    emit('book', books.value[id - 1])
 }
 
 </script>
 
 <template>
-
-
     <!--Cardok-->
     <div class="container">
         <div class="row">
@@ -35,14 +28,14 @@ function idKinyer(id: number) {
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
-                        <button id="erdekelGomb" @click="loadDescription(book.id), idKinyer(book.id)" class="btn btn-warning">Érdekel</button>
+                        <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn">Érdekel</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <p>{{ description }}</p>
+        <div class="row my-4">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <p class="m-0">{{ description }}</p>
             </div>
         </div>
 
@@ -54,4 +47,8 @@ function idKinyer(id: number) {
 
 
 <!--Style-->
-<style scoped></style>
+<style scoped>
+.btn {
+    background-color: #F5CD7E;
+}
+</style>

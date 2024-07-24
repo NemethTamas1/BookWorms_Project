@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BookComponent from '@/components/BookComponent.vue';
-import BookForms from '@/components/BookForms.vue';
 </script>
 
 <template>
@@ -8,8 +7,13 @@ import BookForms from '@/components/BookForms.vue';
     <div>
       <BookComponent />
     </div>
-    <div>
-      <BookForms />
-    </div>
   </main>
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+
+main {
+    font-family: "Playfair Display SC", serif;
+}
+</style>
