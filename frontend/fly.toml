@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for frontend-quiet-night-5362 on 2024-07-23T14:02:51+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'frontend-quiet-night-5362'
+primary_region = 'ams'
+
+[build]
+
+[http_service]
+  internal_port = 5173
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

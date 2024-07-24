@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import { useGetBooks } from '@/composables/api/useApi';
+import { useGetBooks } from '@/composables/apiService/useApiService';
 import { ref } from 'vue';
 const { books } = useGetBooks();
-let description = ref<string>('')
+let description = ref<string>('');
+
+const emit = defineEmits<{
+  (event: 'bookSelected', id: number): void;
+}>();
 
 function loadDescription(id: number) {
-    description.value = books.value[id - 1].description
+    description.value = books.value[id - 1].description;
+}
+
+//Létrehozni egy függvényt, amit majd máshol meg tudok hívni, és azt átadni, ahol használni kell?
+function idKinyer(id: number) {
+    console.log(books.value[id-1].id)
+    let formIdMegjelenit = books.value[id-1].id;
+    emit('bookSelected', formIdMegjelenit); // Kibocsátja az id-t
+
+    return formIdMegjelenit;
 }
 
 </script>
@@ -22,7 +35,7 @@ function loadDescription(id: number) {
                     <div class="card-body text-center">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
-                        <button @click="loadDescription(book.id)" class="btn btn-warning">Érdekel</button>
+                        <button id="erdekelGomb" @click="loadDescription(book.id), idKinyer(book.id)" class="btn btn-warning">Érdekel</button>
                     </div>
                 </div>
             </div>
@@ -32,43 +45,11 @@ function loadDescription(id: number) {
                 <p>{{ description }}</p>
             </div>
         </div>
-    </div>
 
+        <div>
 
-    <!--Modal-->
-    <div class="modal fade" id="erdekelModal" tabindex="-1" aria-labelledby="erdekelModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="erdekelModalLabel">Jelentkezés</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <label for="nev">Név</label>
-                        <input placeholder="Név" type="text" id="nev" name="nev">
-                    </div>
-                    <div>
-                        <label for="email">E-mail</label>
-                        <input placeholder="E-mail" type="text" id="e-mail" name="e-mail">
-                    </div>
-                    <div>
-                        <label for="motivlev">Motivációs levél</label>
-                        <textarea placeholder="Motivációs levél" type="text" id="motivlev" name="motivlev"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vissza</button>
-                    <button type="button" class="btn btn-success">Küldés</button>
-                </div>
-            </div>
         </div>
     </div>
-
-
-
-
-
 </template>
 
 
