@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGetBooks } from '@/composables/apiService/useApiService';
+import { useGetBooks } from '@/composables/api/useApi';
 import { ref } from 'vue';
 const { books } = useGetBooks();
 let description = ref<string>('')
