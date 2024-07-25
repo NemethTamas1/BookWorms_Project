@@ -9,23 +9,28 @@ const props = defineProps(['selectedBook'])
       <div class="col-12">
         <form>
           <div>
-            <h4>Selected book:</h4>
+            <h4>Kiválasztott könyv:</h4>
             <!-- prop felhasználása -->
-            <p>{{ selectedBook.title }}</p>            
+            <p>{{ selectedBook.title }}</p>
           </div>
           <div>
-            <label class="form-label" for="nev">Név
-              ID</label><!--Böngészőben console-ban kiírja a számot, ide miért nem teszi be?-->
-            <input class="form-control" placeholder="Név" type="text" id="nev" name="nev" />
+            <label class="form-label"
+              for="family_name">Vezetéknév</label>
+            <input class="form-control" placeholder="Vezetéknév" type="text" id="family_name" name="family_name" />
+          </div>
+          <div>
+            <label class="form-label"
+              for="first_name">Keresztnév</label>
+            <input class="form-control" placeholder="Keresztnév" type="text" id="first_name" name="first_name" />
           </div>
           <div>
             <label class="form-label" for="email">E-mail</label>
-            <input class="form-control" placeholder="E-mail" type="text" id="e-mail" name="e-mail" />
+            <input class="form-control" placeholder="E-mail" type="text" id="email" name="email" />
           </div>
           <div>
-            <label class="form-label" for="motivlev">Motivációs levél</label>
-            <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivlev"
-              name="motivlev"></textarea>
+            <label class="form-label" for="motivational_letter">Motivációs levél</label>
+            <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivational_letter"
+              name="motivational_letter"></textarea>
           </div>
           <div class="modal-footer mt-3">
             <button type="submit" class="btn btn-success">Küldés</button>

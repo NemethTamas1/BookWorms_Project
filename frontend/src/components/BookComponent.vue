@@ -30,7 +30,7 @@ function toggleForm(toogle: boolean){
     <div class="container-fluid topLabel mb-5">
         <div class="topLabelText">
             <h1>BookWorms</h1>
-            <h3>Where motivation meets literature</h3>
+            <h3>Ahol a motiváció és az irodalom találkozik</h3>
         </div>
     </div>
     <div>

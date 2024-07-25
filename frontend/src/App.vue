@@ -13,16 +13,16 @@ import { RouterView } from 'vue-router'
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Main</a>
+            <a class="nav-link" aria-current="page" href="#">Főoldal</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Books</a>
+            <a class="nav-link" href="#">Könyvek</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">Rólunk</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact us</a>
+            <a class="nav-link" href="#">Kapcsolat</a>
           </li>
         </ul>
       </div>
