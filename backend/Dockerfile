@@ -18,14 +18,7 @@ FROM base as build
 
 # Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3 git
-
-# Clone the Git repository
-ARG REPO_URL="https://github.com/NemethTamas1/BookWorms_Project.git"
-RUN git clone ${REPO_URL} .
-
-# Navigate to the backend folder
-WORKDIR /app/backend
+    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
 
 # Install node modules
 COPY --link package-lock.json package.json ./
@@ -42,7 +35,7 @@ RUN npm run build
 FROM base
 
 # Copy built application
-COPY --from=build /app/backend /app
+COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
