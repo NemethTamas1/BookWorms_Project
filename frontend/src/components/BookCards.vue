@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useGetBooks } from '@/composables/apiService/useApiService';
+import { useGetBooks } from '@/composables/api/useApi';
 import { ref } from 'vue';
 const { books } = useGetBooks();
 let description = ref<string>('');
-
 // Emitek létrehozása. Emitekkel olyan eseményeket tudunk létrehozni, amiket a szülő componens figyel, 
 // és el tudja kapni azokat, amikor megtörténik az esemény. A szülő componens jelenleg a BookComponent, mert ott használjuk fel a BookCards componenst.
 // Meghatározok egy toggleForm és egy book eseményt. 
@@ -50,5 +49,14 @@ function loadDescription(id: number) {
 <style scoped>
 .btn {
     background-color: #F5CD7E;
+}
+
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+   -webkit-line-clamp: 8;
+           line-clamp: 8;
+   -webkit-box-orient: vertical;
 }
 </style>
