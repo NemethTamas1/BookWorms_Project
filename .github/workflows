@@ -1,0 +1,32 @@
+name: Fly Deploy
+
+on:
+  push:
+    branches:
+      - main  # Change to your main branch if needed
+
+jobs:
+  deploy:
+    name: Deploy apps
+    runs-on: ubuntu-latest
+    concurrency: deploy-group  # Optional: ensure only one action runs at a time
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy Backend
+        run: |
+          cd backend
+          flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Deploy Frontend
+        run: |
+          cd frontend
+          flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
