@@ -6,10 +6,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'bookView',
       component: BookView,
       meta: {
-        title: 'Home of Books'
+        title: 'Könyvek'
       },
     },
   ]

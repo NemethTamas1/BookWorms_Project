@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { createClient } from "@libsql/client";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class DatabaseService {
