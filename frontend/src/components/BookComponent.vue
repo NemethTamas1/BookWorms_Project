@@ -64,5 +64,6 @@ function toggleForm(toogle: boolean){
     text-shadow: 2px 2px 2px #191416;
     background-color: #1914168c;
     box-shadow: 0 0 50px 50px #1914168c;
+    
 }
 </style>
