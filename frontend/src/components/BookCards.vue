@@ -21,7 +21,7 @@ function loadDescription(id: number) {
     <!--Cardok-->
     <div class="container">
         <div class="row">
-            <div v-for="book in books" class="col-4">
+            <div v-for="book in books" class="col-12 col-md-4 my-3 my-md-0">
                 <div class="card">
                     <!--<img src="..." class="card-img-top" alt="...">-->
                     <div class="card-body text-center">
