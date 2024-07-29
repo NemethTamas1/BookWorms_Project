@@ -48,15 +48,23 @@ function loadDescription(id: number) {
 <!--Style-->
 <style scoped>
 .btn {
-    background-color: #F5CD7E;
+    background-color: #dcb750cf;
 }
 
 .card-text {
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: "Roboto", sans-serif;
+    margin: 3rem 0;
     display: -webkit-box;
    -webkit-line-clamp: 8;
            line-clamp: 8;
    -webkit-box-orient: vertical;
+}
+p{
+    font-family: "Roboto", sans-serif;
+}
+.card {
+    margin-bottom: 3rem;
 }
 </style>
