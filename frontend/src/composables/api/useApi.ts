@@ -35,32 +35,32 @@ export function useGetBooks() {
     return { books, error }
 }
 
-// export function useGetApplications() {
-//     const applications = ref<Application[]>([])
-//     const error = ref(null)
+export function useGetApplications() {
+    const applications = ref<Application[]>([])
+    const error = ref(null)
 
-//     const resetApplicationsRef = () => {
-//         applications.value = []
-//         error.value = null
-//     }
+    const resetApplicationsRef = () => {
+        applications.value = []
+        error.value = null
+    }
 
-//     fetch(baseURL + 'applications', {
-//         method: "GET",
-//         headers: {
-//             "Access-Control-Allow-Origin": "*",
-//             "Accept": "application/json"
-//         }
-//     }).then(res => res.json())
-//         .then((res) => {
-//             applications.value = res
-//         }).catch(err => {
-//             error.value = err
-//             console.log(err)
-//         })
+    fetch(baseURL + 'applications', {
+        method: "GET",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Accept": "application/json"
+        }
+    }).then(res => res.json())
+        .then((res) => {
+            applications.value = res
+        }).catch(err => {
+            error.value = err
+            console.log(err)
+        })
 
-//     watchEffect(() => {
-//         resetApplicationsRef();
-//     })
+    watchEffect(() => {
+        resetApplicationsRef();
+    })
 
-//     return { applications, error }
-// }
+    return { applications, error }
+}
