@@ -1,4 +1,4 @@
-export interface Application{
+export interface Application {
     id: number;
     book_id: number;
     user_id: number;
