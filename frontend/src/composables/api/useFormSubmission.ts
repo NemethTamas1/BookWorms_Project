@@ -1,27 +1,23 @@
-// src/composables/useFormSubmission.ts
-import { readonly, ref } from 'vue';
+import type { User } from "@/models/User";
 
 export function useFormSubmission() {
 
-  const family_name = readonly(ref(''));
-  const first_name = readonly(ref(''));
-  const email = readonly(ref(''));
-  const motivational_letter = readonly(ref(''));
-
-  const submitFormData = async (formData: { [key: string]: string}) => {
+  const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
+  const localURL = 'http://localhost:3000/'
+  
+  async function submitFormData(newUser:User) {
     try {
-      const response = await fetch('https://backend-shy-dew-2743.fly.dev/books', {
+      const response = await fetch(baseURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(newUser)
       });
 
       if (!response.ok) {
         return {success: false, message: 'Network error'}
       }
-
       return {success: true};
     } catch (error) {
       console.error('API hiba:', error);
@@ -33,18 +29,8 @@ export function useFormSubmission() {
   //megkap a submitFormData. Ott pedig lemegy a fetch, ami
   //felküldi DB-be az adatokat. !!!ELIVLEG!!!
   //(Valamint szerintem rossz a link, a DB link kellene oda.. xd)
-  const handleSubmit = async (event: Event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const formData = {
-      family_name: family_name?.value,
-      first_name: first_name?.value,
-      email: email?.value,
-      motivational_letter: motivational_letter?.value,
-    };
-
-    const result = await submitFormData(formData);
+  async function handleSubmit(newUser: User) {
+    const result = await submitFormData(newUser);
     if (result.success) {
       console.log('Form adatok sikeresen elküldve!');
     } else {
@@ -53,10 +39,6 @@ export function useFormSubmission() {
   };
 
   return {
-    family_name,
-    first_name,
-    email,
-    motivational_letter,
     handleSubmit
   };
 }
