@@ -2,8 +2,8 @@ import type { User } from "@/models/User";
 
 export function useFormSubmission() {
 
-  const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
-  const localURL = 'http://localhost:3000/'
+  const baseURL = 'https://backend-shy-dew-2743.fly.dev/user'
+  const localURL = 'http://localhost:3000/user'
   
   async function submitFormData(newUser:User) {
     try {

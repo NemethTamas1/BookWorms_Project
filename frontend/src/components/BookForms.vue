@@ -5,7 +5,7 @@ import { computed, ref, type Ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
 
-const id = ref<string>('')
+const id = ref<number>(0)
 const first_name = ref<string>('')
 const family_name = ref<string>('')
 const email = ref<string>('')
@@ -30,7 +30,7 @@ const validateInputField = () => {
   return validationError
 }
 
-const checkFormValidation = (id: string, first_name: string, family_name: string, email: string, password: string) => {
+const checkFormValidation = (id: number, first_name: string, family_name: string, email: string, password: string) => {
   let newUser =
   {
     id: id,
