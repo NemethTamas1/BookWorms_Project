@@ -67,7 +67,7 @@ export function useGetApplications() {
 }
 
 export async function useSendApplication(newUser: User): Promise<void> {
-    await fetch(localURL + 'user', {
+    await fetch(baseURL + 'user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
