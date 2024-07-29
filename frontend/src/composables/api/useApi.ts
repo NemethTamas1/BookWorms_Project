@@ -2,7 +2,7 @@ import type { Book } from "@/models/Book";
 import type { Application } from "@/models/Application";
 import { ref, watchEffect } from "vue";
 
-const baseURL = 'http://backend-shy-dew-2743.fly.dev/'
+const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
 
 export function useGetBooks() {
     const books = ref<Book[]>([])
