@@ -1,9 +1,9 @@
  <script setup lang="ts">
 import { ref } from 'vue'
-import BookCards from './BookCards.vue'
-import BookForms from './BookForms.vue'
-import type { Book } from '@/models/Book'
-import BookWelcome from './BookWelcome.vue';
+import BookCards from './subComponents/BookCards.vue'
+import BookForms from './subComponents/BookForms.vue'
+import type { Book } from '../../models/Book'
+import BookWelcome from './subComponents/BookWelcome.vue';
 
 // Refek létrehozása, hogy dinamikus legyen az adatáramlás.
 const formDisplayed = ref<boolean>(false)
@@ -54,7 +54,7 @@ function toggleForm(toogle: boolean){
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../assets/img/Background-1.png");
+    background: url("../../assets/img/Background-1.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

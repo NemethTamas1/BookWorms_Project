@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useFormSubmission } from '@/composables/api/useFormSubmission';
-import type { User } from '@/models/User';
-import { computed, ref, type Ref } from 'vue';
+import { useSendApplication } from '@/composables/api/useApi';
+import { computed, reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
 
@@ -11,20 +10,20 @@ const family_name = ref<string>('')
 const email = ref<string>('')
 const password = ref<string>('')
 
-const errors = {
-  family_nameErrorMsg: ''
-};
-
-const isFamilyNameValid = computed(() => first_name.value.trim() !== '')
-
+const errMessages = reactive({
+  family_name_err_msg: ''
+})
 
 const validateInputField = () => {
   let validationError = false
-  errors['family_nameErrorMsg'] = ''
 
-  if(!isFamilyNameValid.value){
-    errors.family_nameErrorMsg = "A vezetéknév nem lehet üres!"
+  if (family_name.value === '') {
+    errMessages.family_name_err_msg = 'A vezetéknév nem lehet üres!'
     validationError = true
+  }
+  else{
+    errMessages.family_name_err_msg = ''
+    validationError = false
   }
 
   return validationError
@@ -40,15 +39,18 @@ const checkFormValidation = (id: number, first_name: string, family_name: string
     password: password
   }
 
-  if(validateInputField()){
-    console.log("Hiba a formon!", isFamilyNameValid.value)
+  if (validateInputField()) {
+    console.log("Hiba a formon!")
   }
-  else{
-    handleSubmit(newUser)
+  else {
+    try {
+      useSendApplication(newUser)
+      alert("Jelentkezését fogadtuk!")
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
-
-const { handleSubmit } = useFormSubmission()
 </script>
 
 <template>
@@ -63,19 +65,18 @@ const { handleSubmit } = useFormSubmission()
           </div>
           <div>
             <label class="form-label" for="family_name">Vezetéknév</label>
-            <span class="error" v-if="!isFamilyNameValid">{{ errors.family_nameErrorMsg }}</span>
-            <input v-model="family_name" class="form-control" placeholder="Vezetéknév" type="text"
-              id="family_name" name="family_name" />
+            <input :class="{ error: errMessages.family_name_err_msg !== ''}" @focus="validateInputField()" @keyup="validateInputField()" v-model="family_name" class="form-control" placeholder="Vezetéknév" type="text" id="family_name"
+              name="family_name" />
+            <p class="errorMsg" v-if="errMessages.family_name_err_msg !== ''">{{ errMessages.family_name_err_msg }}</p>
           </div>
           <div>
             <label class="form-label" for="first_name">Keresztnév</label>
-            <input v-model="first_name" class="form-control" placeholder="Keresztnév" type="text"
-              id="first_name" name="first_name" />
+            <input v-model="first_name" class="form-control" placeholder="Keresztnév" type="text" id="first_name"
+              name="first_name" />
           </div>
           <div>
             <label class="form-label" for="email">E-mail</label>
-            <input v-model="email" class="form-control" placeholder="E-mail" type="text" id="email"
-              name="email" />
+            <input v-model="email" class="form-control" placeholder="E-mail" type="text" id="email" name="email" />
           </div>
           <div>
             <label class="form-label" for="motivational_letter">Motivációs levél</label>
@@ -92,6 +93,15 @@ const { handleSubmit } = useFormSubmission()
 </template>
 
 <style scoped>
+
+.error{
+  border: 1px solid red;
+}
+
+.errorMsg{
+  color: red;
+}
+
 form {
   background-color: #dcb750cf;
   border: 3px solid #191416;

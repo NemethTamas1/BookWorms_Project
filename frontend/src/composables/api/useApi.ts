@@ -1,9 +1,10 @@
 import type { Book } from "@/models/Book";
 import type { Application } from "@/models/Application";
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect} from "vue";
+import type { User } from "@/models/User";
 
 const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
-//const baseURL = 'http://localhost:3000/'
+const localURL = 'http://localhost:3000/'
 
 export function useGetBooks() {
     const books = ref<Book[]>([])
@@ -63,4 +64,26 @@ export function useGetApplications() {
     })
 
     return { applications, error }
+}
+
+export async function useSendApplication(newUser: User): Promise<void> {
+    await fetch(localURL + 'user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+    }).then(res => {
+        if (res.status === 201) {
+            console.log('Form adatok sikeresen elküldve!');
+            return { success: true }
+        }
+        else {
+            console.log('Form adatok elküldése sikertelen!')
+            return { success: false }
+        }
+    }).catch(err => {
+        console.log('Error:', err)
+        return { success: false }
+    })
 }

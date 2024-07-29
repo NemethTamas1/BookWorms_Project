@@ -17,9 +17,9 @@ function loadDescription(id: number) {
 
 const cardPicsSrc =
     [
-        new URL("../assets/img/szotar.jpg", import.meta.url).href,
-        new URL("../assets/img/fotokonyv.jpg", import.meta.url).href,
-        new URL("../assets/img/filozofia.jpg", import.meta.url).href
+        new URL("../../../assets/img/szotar.jpg", import.meta.url).href,
+        new URL("../../../assets/img/fotokonyv.jpg", import.meta.url).href,
+        new URL("../../../assets/img/filozofia.jpg", import.meta.url).href
     ]
 
 </script>
