@@ -1,8 +1,9 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { ref } from 'vue'
 import BookCards from './BookCards.vue'
 import BookForms from './BookForms.vue'
 import type { Book } from '@/models/Book'
+import BookWelcome from './BookWelcome.vue';
 
 // Refek létrehozása, hogy dinamikus legyen az adatáramlás.
 const formDisplayed = ref<boolean>(false)
@@ -30,8 +31,11 @@ function toggleForm(toogle: boolean){
     <div class="container-fluid topLabel mb-5">
         <div class="topLabelText">
             <h1>BookWorms</h1>
-            <h3>Ahol a motiváció és az irodalom találkozik</h3>
+            <h3>Ahol a motiváció és az irodalom kéz a kézben jár</h3>
         </div>
+    </div>
+    <div>
+        <BookWelcome />
     </div>
     <div>
         <!-- A @toggleForm és a @book emitek figyelése, és elkapása a belőlük származó adattal. A toggleForm és a setSelectedBook itt meghatározott functionok.--> 
@@ -59,10 +63,19 @@ function toggleForm(toogle: boolean){
 
 .topLabelText {
     font-family: "Playfair Display SC", serif;
+    font-style: italic;
     color: white;
     text-align: center;
     text-shadow: 2px 2px 2px #191416;
     background-color: #1914168c;
     box-shadow: 0 0 50px 50px #1914168c;
+    
+}
+h1{
+    font-family: "Playfair Display SC", serif;
+    font-size: 3rem;
+}
+h3{
+    font-style: normal;
 }
 </style>

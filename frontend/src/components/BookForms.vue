@@ -43,12 +43,17 @@ const props = defineProps(['selectedBook'])
 
 <style scoped>
 form {
-  background-color: #F5CD7E;
+  background-color: #dcb750cf;
   border: 3px solid #191416;
   padding: 2em;
   position: relative;
+  box-shadow: 5px 5px 30px grey;
+  margin: 3rem 0 10rem 0;
 }
 
+p {
+  font-family: "Roboto", sans-serif;
+}
 form:before {
   background: none;
   border: 3px solid #191416;
@@ -61,4 +66,20 @@ form:before {
   bottom: .1rem;
   pointer-events: none;
 }
+
+input, textarea {
+  font-family: "Roboto", sans-serif;
+}
+
+input::placeholder {
+  color:rgb(192, 184, 165);
+}
+textarea::placeholder {
+  color:rgb(192, 184, 165)
+}
+
+button{
+  background-color: black;
+}
+
 </style>

@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y git
 WORKDIR /app
 
 # Clone the latest code from GitHub
-RUN git clone https://github.com/szankdav/bookWorms.git .
+ARG REPO_URL="https://github.com/NemethTamas1/BookWorms_Project.git"
+RUN git clone ${REPO_URL} .
 
 # Set the working directory to the frontend folder inside the cloned repo
 WORKDIR /app/frontend
