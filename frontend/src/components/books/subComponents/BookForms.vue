@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSendApplication } from '@/composables/api/useApi';
+import { useNewUser } from '@/composables/api/useApi';
 import { computed, reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
@@ -44,7 +44,7 @@ const checkFormValidation = (id: number, first_name: string, family_name: string
   }
   else {
     try {
-      useSendApplication(newUser)
+      useNewUser(newUser)
       alert("Jelentkezését fogadtuk!")
     } catch (error) {
       console.log(error)

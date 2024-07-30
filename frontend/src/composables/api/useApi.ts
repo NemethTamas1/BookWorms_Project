@@ -66,8 +66,8 @@ export function useGetApplications() {
     return { applications, error }
 }
 
-export async function useSendApplication(newUser: User): Promise<void> {
-    await fetch(baseURL + 'user', {
+export async function useNewUser(newUser: User): Promise<void> {
+    await fetch(localURL + 'user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,12 +76,13 @@ export async function useSendApplication(newUser: User): Promise<void> {
     }).then(res => {
         if (res.status === 201) {
             console.log('Form adatok sikeresen elküldve!');
-            return { success: true }
+            return res.json()
         }
         else {
             console.log('Form adatok elküldése sikertelen!')
-            return { success: false }
         }
+    }).then(res => {
+        console.log(res[0]['lastInsertRowid']) // USER ID
     }).catch(err => {
         console.log('Error:', err)
         return { success: false }
