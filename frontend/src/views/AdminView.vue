@@ -5,7 +5,7 @@ import Table from '@/components/admin/Table.vue';
 import { useGetApplications } from '@/composables/api/useApi';
 
 // Define the tabs
-const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasításított'];
+const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
 
 const selectedTab = ref(tabs[0]);
 
