@@ -30,6 +30,8 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
   test:
+    name: Run tests
+    needs: deploy  # This ensures the 'test' job runs after 'deploy' job
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +44,7 @@ jobs:
         working-directory: frontend
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-        working-directory: frontend # Change to your frontend directory
+        working-directory: frontend 
       - name: Run Playwright tests
         run: npx playwright test
         working-directory: frontend
