@@ -5,6 +5,7 @@ import type { User } from "@/models/User";
 
 const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
 const localURL = 'http://localhost:3000/'
+//const baseURL = localURL
 
 export function useGetBooks() {
     const books = ref<Book[]>([])
@@ -66,8 +67,9 @@ export function useGetApplications() {
     return { applications, error }
 }
 
+
 export async function useNewUser(newUser: User): Promise<void> {
-    await fetch(localURL + 'user', {
+    await fetch(baseURL + 'user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,15 +78,38 @@ export async function useNewUser(newUser: User): Promise<void> {
     }).then(res => {
         if (res.status === 201) {
             console.log('Form adatok sikeresen elküldve!');
-            return res.json()
+            return res.json();
         }
         else {
-            console.log('Form adatok elküldése sikertelen!')
+            console.log('Form adatok elküldése sikertelen!');
         }
     }).then(res => {
-        console.log(res[0]['lastInsertRowid']) // USER ID
+        //console.log(res[0]['lastInsertRowid']) // USER ID
     }).catch(err => {
         console.log('Error:', err)
         return { success: false }
     })
+}
+
+export async function useNewApplication(newApplication: Application): Promise<void> {
+    await fetch(baseURL + 'applications', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newApplication)
+    }).then(res => {
+        if (res.status === 201) {
+            console.log('Sikereresen elküldve!');
+            return res.json();
+        }
+        else {
+            console.log('Küldés sikertelen!');
+        }
+    }).then(() => {
+    }).catch(err => {
+        console.log('Error:', err)
+        return { success: false }
+    })
+    
 }

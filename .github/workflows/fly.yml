@@ -9,7 +9,6 @@ jobs:
   deploy:
     name: Deploy apps
     runs-on: ubuntu-latest
-    concurrency: deploy-group  # Optional: ensure only one action runs at a time
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,3 +28,27 @@ jobs:
           flyctl deploy --no-cache
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+        working-directory: frontend # Change to your frontend directory
+      - name: Run Playwright tests
+        run: npx playwright test
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 30

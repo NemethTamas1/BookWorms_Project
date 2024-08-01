@@ -3,6 +3,7 @@ import { ref} from 'vue';
 import Tabs from '@/components/admin/Tabs.vue';
 import Table from '@/components/admin/Table.vue';
 import { useGetApplications } from '@/composables/api/useApi';
+import type { Application } from '@/models/Application';
 
 // Define the tabs
 const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
@@ -18,14 +19,14 @@ const { applications } = useGetApplications();
 // Define filter functions
 function filterApplications(tab: string): Application[] {
   switch (tab) {
-    case 'Tab 1':
+    case 'Összes':
       return applications.value; // No filtering
-    case 'Tab 2':
+    case 'Elfogadásra vár':
       return applications.value.filter(app => app.application_status === 1); // Filter by status
-    case 'Tab 3':
-      return applications.value.filter(app => app.application_status === 2); // Filter by price
-    case 'Tab 4':
-      return applications.value.filter(app => app.application_status === 3); // Filter by user ID
+    case 'Elfogadott':
+      return applications.value.filter(app => app.application_status === 2); // Filter by status
+    case 'Elutasított':
+      return applications.value.filter(app => app.application_status === 3); // Filter by status
     default:
       return [];
   }
@@ -42,7 +43,7 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Összes'"
           title="Összes jelentkezés"
-          :applications="filterApplications('Tab 1')"
+          :applications="filterApplications('Összes')"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="true"
@@ -53,7 +54,7 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Elfogadásra vár'" 
           title="Elfogadásra váró jelentkezések"
-          :applications="filterApplications('Tab 2')"
+          :applications="filterApplications('Elfogadásra vár')"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
@@ -65,17 +66,18 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Elfogadott'"
           title="Elfogadott jelentkezések"
-          :applications="filterApplications('Tab 3')"
+          :applications="filterApplications('Elfogadott')"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
           :showPrice="true"
           :showMotivationalLetter="true"
         />
+        <!--Rejected applications -->
         <Table
-          v-if="selectedTab === 'Elutasításított'"
+          v-if="selectedTab === 'Elutasított'"
           title="Elutasításított jelentkezések"
-          :applications="filterApplications('Tab 4')"
+          :applications="filterApplications('Elutasított')"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
