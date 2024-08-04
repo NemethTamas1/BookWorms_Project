@@ -3,6 +3,7 @@ import type { Application } from "@/models/Application";
 import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
 
+
 const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
 const localURL = 'http://localhost:3000/'
 
@@ -66,25 +67,33 @@ export function useGetApplications() {
     return { applications, error }
 }
 
-export async function useNewUser(newUser: User): Promise<void> {
-    await fetch(localURL + 'user', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
-    }).then(res => {
+//export const ujId = ref<number>();
+
+//export const idProp = defineProps(['ujId']);
+
+export async function useNewUser(newUser: User): Promise<number | undefined> {
+    try {
+        const res = await fetch(localURL + 'user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        });
+
         if (res.status === 201) {
             console.log('Form adatok sikeresen elküldve!');
-            return res.json()
+            const data = await res.json();
+            const lastInsertRowid = data[0]['lastInsertRowid'];
+            //ujId.value = lastInsertRowid;
+            console.log("useApi-s console.log", lastInsertRowid); // USER ID
+            return lastInsertRowid;
+        } else {
+            console.log('Form adatok elküldése sikertelen!');
         }
-        else {
-            console.log('Form adatok elküldése sikertelen!')
-        }
-    }).then(res => {
-        console.log(res[0]['lastInsertRowid']) // USER ID
-    }).catch(err => {
-        console.log('Error:', err)
-        return { success: false }
-    })
+    } catch (err) {
+        console.log('Error:', err);
+        return undefined;
+    }
 }
+
