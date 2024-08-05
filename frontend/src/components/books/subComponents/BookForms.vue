@@ -5,45 +5,44 @@ import { computed, reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
 
-const id = ref<number>(0)
-const first_name = ref<string>('')
-const family_name = ref<string>('')
-const email = ref<string>('')
-const password = ref<string>('')
+const id = ref<number>(0);
+const first_name = ref<string>('');
+const family_name = ref<string>('');
+const email = ref<string>('');
+const password = ref<string>('');
+const motivational_letter = ref<string>('');
 
+// Error messages
 const errMessages = reactive({
   family_name_err_msg: ''
-})
+});
 
 const validateInputField = () => {
-  let validationError = false
+  let validationError = false;
 
   if (family_name.value === '') {
-    errMessages.family_name_err_msg = 'A vezetéknév nem lehet üres!'
-    validationError = true
-  }
-  else{
-    errMessages.family_name_err_msg = ''
-    validationError = false
+    errMessages.family_name_err_msg = 'A vezetéknév nem lehet üres!';
+    validationError = true;
+  } else {
+    errMessages.family_name_err_msg = '';
+    validationError = false;
   }
 
-  return validationError
-}
+  return validationError;
+};
 
-const checkFormValidation = (id: number, first_name: string, family_name: string, email: string, password: string) => {
-  let newUser =
-  {
+const checkFormValidation = async (id: number, first_name: string, family_name: string, email: string, password: string, motivational_letter: string) => {
+  let newUser = {
     id: id,
     first_name: first_name,
     family_name: family_name,
     email: email,
     password: password
-  }
+  };
 
   if (validateInputField()) {
-    console.log("Hiba a formon!")
-  }
-  else {
+    console.log("Hiba a formon!");
+  } else {
     try {
       const response = useNewUser(newUser)
       let application = {
@@ -59,25 +58,25 @@ const checkFormValidation = (id: number, first_name: string, family_name: string
       console.log(application)
       alert("Jelentkezését fogadtuk!")
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-}
+};
 </script>
 
 <template>
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form @submit.prevent="checkFormValidation(id, first_name, family_name, email, password)">
+        <form @submit.prevent="checkFormValidation(id, first_name, family_name, email, password, motivational_letter)">
           <div>
             <h4>Kiválasztott könyv:</h4>
-            <!-- prop felhasználása -->
+            <!-- Display selected book -->
             <p>{{ selectedBook.title }}</p>
           </div>
           <div>
             <label class="form-label" for="family_name">Vezetéknév</label>
-            <input :class="{ error: errMessages.family_name_err_msg !== ''}" @focus="validateInputField()" @keyup="validateInputField()" v-model="family_name" class="form-control" placeholder="Vezetéknév" type="text" id="family_name"
+            <input :class="{ error: errMessages.family_name_err_msg !== '' }" @focus="validateInputField()" @keyup="validateInputField()" v-model="family_name" class="form-control" placeholder="Vezetéknév" type="text" id="family_name"
               name="family_name" />
             <p class="errorMsg" v-if="errMessages.family_name_err_msg !== ''">{{ errMessages.family_name_err_msg }}</p>
           </div>
@@ -92,7 +91,7 @@ const checkFormValidation = (id: number, first_name: string, family_name: string
           </div>
           <div>
             <label class="form-label" for="motivational_letter">Motivációs levél</label>
-            <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivational_letter"
+            <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivational_letter" v-model="motivational_letter"
               name="motivational_letter"></textarea>
           </div>
           <div class="modal-footer mt-3">
@@ -105,12 +104,11 @@ const checkFormValidation = (id: number, first_name: string, family_name: string
 </template>
 
 <style scoped>
-
-.error{
+.error {
   border: 1px solid red;
 }
 
-.errorMsg{
+.errorMsg {
   color: red;
 }
 

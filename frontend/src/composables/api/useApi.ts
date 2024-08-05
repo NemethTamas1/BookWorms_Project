@@ -3,6 +3,7 @@ import type { Application } from "@/models/Application";
 import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
 
+
 const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
 //const localURL = 'http://localhost:3000/'
 //const baseURL = localURL
@@ -67,29 +68,52 @@ export function useGetApplications() {
     return { applications, error }
 }
 
+//Új, refaktorált fetch
+export async function  useNewUser(newUser: User): Promise<void> {
+    try {
+        const response = await fetch(`${baseURL}user`, { //${baseURL}user not ${baseURL}/user
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify(newUser)
+        });
 
-export async function useNewUser(newUser: User): Promise<void> {
-    await fetch(baseURL + 'user', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newUser)
-    }).then(res => {
-        if (res.status === 201) {
-            console.log('Form adatok sikeresen elküldve!');
-            return res.json();
+        if(!response.ok) {
+            console.error('Form adatok elküldése sikertelen!');
+            return;
         }
-        else {
-            console.log('Form adatok elküldése sikertelen!');
-        }
-    }).then(res => {
-        //console.log(res[0]['lastInsertRowid']) // USER ID
-    }).catch(err => {
-        console.log('Error:', err)
-        return { success: false }
-    })
+
+        const result = await response.json();
+        console.log('Form adatok sikeresen elküldve!');
+    } catch (error) {
+        console.log('Error: ', error)
+    }
 }
+
+//Régi fetch
+// export async function useNewUser(newUser: User): Promise<void> {
+//     await fetch(baseURL + 'user', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(newUser)
+//     }).then(res => {
+//         if (res.status === 201) {
+//             console.log('Form adatok sikeresen elküldve!');
+//             return res.json();
+//         }
+//         else {
+//             console.log('Form adatok elküldése sikertelen!');
+//         }
+//     }).then(res => {
+//         //console.log(res[0]['lastInsertRowid']) // USER ID
+//     }).catch(err => {
+//         console.log('Error:', err)
+//         return { success: false }
+//     })
+// }
 
 export async function useNewApplication(newApplication: Application): Promise<void> {
     await fetch(baseURL + 'applications', {
