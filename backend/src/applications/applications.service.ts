@@ -17,7 +17,7 @@ export class ApplicationsService {
         book_id: applicationFromDatabase["rows"][i]["book_id"] as number,
         user_id: applicationFromDatabase["rows"][i]["user_id"] as number,
         application_status: applicationFromDatabase["rows"][i]["application_status"] as number,
-        price: applicationFromDatabase["rows"][i]["price"] as number,
+        price: applicationFromDatabase["rows"][i]["price"] as number | null,
         motivational_letter: applicationFromDatabase["rows"][i]["motivational_letter"] as string
       }
       applications.push(application)
@@ -39,6 +39,25 @@ export class ApplicationsService {
         "write"
     )
     return createdApplication
-}
+  }
+
+    async updateApplication(application: Application): Promise<Array<ResultSet>> {
+        const updatedApplication = await this.dbConnect.turso.batch([{
+            sql: "UPDATE Application SET id = :id, book_id = :book_id, user_id = :user_id, application_status = :application_status, price = :price, motivational_letter = :motivational_letter WHERE id = :id",
+            args: {
+                id: application.id as number,
+                book_id: application.book_id as number,
+                user_id: application.user_id as number,
+                application_status: application.application_status as number,
+                price: application.price as number | null,
+                motivational_letter: application.motivational_letter as string,
+            }
+        }],
+            "write"
+        );
+        return updatedApplication
+
+    }
+
 }
 

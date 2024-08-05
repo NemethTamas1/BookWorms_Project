@@ -4,7 +4,7 @@ import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
 
 const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
-const localURL = 'http://localhost:3000/'
+//const localURL = 'http://localhost:3000/'
 //const baseURL = localURL
 
 export function useGetBooks() {
@@ -113,3 +113,29 @@ export async function useNewApplication(newApplication: Application): Promise<vo
     })
     
 }
+
+
+
+//what happens when we call this function with a wrong id?
+export async function useUpdateApplication(updatedApplication: Application): Promise<void> {
+    try {
+        const response = await fetch(`${baseURL}applications/${updatedApplication.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedApplication), // Convert the application object to a JSON string
+        });
+
+        if (response.status === 200) { // 200 status indicates successful update
+            console.log('Application updated successfully!');
+            const data = await response.json(); // Parse the JSON response if needed
+            console.log('Updated application data:', data);
+        } else {
+            console.log('Update failed with status:', response.status);
+        }
+    } catch (err) {
+        console.log('Error:', err);
+    }
+}
+

@@ -49,6 +49,9 @@ function filterApplications(tab: string): Application[] {
           :showApplicationStatus="true"
           :showPrice="true"
           :showMotivationalLetter="true"
+          :showCheckImage="false"
+          :showXImage="false"
+          :showBackImage="false"
         />
         <!--Applications awaiting approval -->
         <Table
@@ -60,7 +63,9 @@ function filterApplications(tab: string): Application[] {
           :showApplicationStatus="false"
           :showPrice="false"
           :showMotivationalLetter="true"
-          :showImages="true"
+          :showCheckImage="true"
+          :showXImage="true"
+          :showBackImage="false"
         />
         <!--Approved applications -->
         <Table
@@ -72,6 +77,9 @@ function filterApplications(tab: string): Application[] {
           :showApplicationStatus="false"
           :showPrice="true"
           :showMotivationalLetter="true"
+          :showCheckImage="false"
+          :showXImage="true"
+          :showBackImage="true"
         />
         <!--Rejected applications -->
         <Table
@@ -83,6 +91,9 @@ function filterApplications(tab: string): Application[] {
           :showApplicationStatus="false"
           :showPrice="false"
           :showMotivationalLetter="true"
+          :showCheckImage="true"
+          :showXImage="false"
+          :showBackImage="true"
         />
       </template>
     </Tabs>

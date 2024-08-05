@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
@@ -20,6 +20,23 @@ export class ApplicationsController {
     @Get()
     async getAllApplications(): Promise<Application[]>{
         return await this.applicationService.getApplications();
+    }
+
+    @Put('/:id')
+    async updateApplication(
+        @Param('id') id: number, 
+        @Body() application: Application
+    ): Promise<Application> {
+        try {
+            const updatedApplication = await this.applicationService.updateApplication(application);
+            if (!updatedApplication) {
+                throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
+            }
+            return;
+        } catch (error) {
+            console.error("Error updating application:", error);
+            throw new HttpException("Error updating application", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

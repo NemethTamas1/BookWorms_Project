@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { useGetApplications, useUpdateApplication } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import { ref } from 'vue';
 const pic_x = new URL("@/assets/img/admin/x.png", import.meta.url).href;
 const pic_check = new URL("@/assets/img/admin/check.png", import.meta.url).href;
+const pic_back = new URL("@/assets/img/admin/back.png", import.meta.url).href;
 
 const props = defineProps<{
   title: string;
@@ -12,8 +14,26 @@ const props = defineProps<{
   showApplicationStatus: boolean;
   showPrice: boolean;
   showMotivationalLetter: boolean;
-  showImages?: boolean; // Add new prop for images
+  showCheckImage?: boolean;
+  showXImage?: boolean;
+  showBackImage?: boolean;
 }>();
+
+
+// Method to change an application status (1 means pending, 2 means accepted, 3 means rejected)
+function changeStatus(application: Application, status: number) {
+  let updatedApplication = {
+    id: application.id,
+    book_id: application.book_id,
+    user_id: application.user_id,
+    application_status: status, //means rejected
+    price: application.price,
+    motivational_letter: application.motivational_letter,
+  }
+  useUpdateApplication(updatedApplication);
+}
+
+
 
 </script>
 
@@ -29,8 +49,9 @@ const props = defineProps<{
           <th v-if="showApplicationStatus">Jelentkezés állapota</th>
           <th v-if="showPrice">Licit állása</th>
           <th v-if="showMotivationalLetter">Motivációs levél</th>
-          <th v-if="showImages">Elfogad</th> <!-- Add header for images -->
-          <th v-if="showImages">Elutasít</th> <!-- Add header for images -->
+          <th v-if="showCheckImage">Elfogad</th>
+          <th v-if="showXImage">Elutasít</th>
+          <th v-if="showBackImage">Vissza</th>
         </tr>
       </thead>
       <tbody>
@@ -41,11 +62,14 @@ const props = defineProps<{
           <td v-if="showApplicationStatus">{{ application.application_status }}</td>
           <td v-if="showPrice">{{ application.price }}</td>
           <td v-if="showMotivationalLetter">{{ application.motivational_letter }}</td>
-          <td v-if="showImages"> <!-- Add images in the table -->
-            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" />
+          <td v-if="showCheckImage"> <!-- Add images in the table -->
+            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)" />
           </td>
-          <td v-if="showImages">
-            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" />
+          <td v-if="showXImage">
+            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)"/>
+          </td> 
+          <td v-if="showBackImage">
+            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 1)"/>
           </td> 
         </tr>
       </tbody>
