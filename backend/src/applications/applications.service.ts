@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Application } from './applications.interface';
 import { DatabaseService } from 'src/database/db.service';
+import { ResultSet } from '@libsql/client/.';
 
 @Injectable()
 export class ApplicationsService {
@@ -15,7 +16,7 @@ export class ApplicationsService {
         id: applicationFromDatabase["rows"][i]["id"] as number,
         book_id: applicationFromDatabase["rows"][i]["book_id"] as number,
         user_id: applicationFromDatabase["rows"][i]["user_id"] as number,
-        application_status: applicationFromDatabase["rows"][i]["application_status"] as string,
+        application_status: applicationFromDatabase["rows"][i]["application_status"] as number,
         price: applicationFromDatabase["rows"][i]["price"] as number,
         motivational_letter: applicationFromDatabase["rows"][i]["motivational_letter"] as string
       }
@@ -23,4 +24,21 @@ export class ApplicationsService {
     }
     return applications
   }
+
+  async createApplication(application: Application): Promise<Array<ResultSet>> {
+    const createdApplication = await this.dbConnect.turso.batch([{
+        sql: "INSERT INTO Application (book_id, user_id, application_status, price, motivational_letter) VALUES (:book_id, :user_id, :application_status, :price, :motivational_letter)",
+        args: {
+            book_id: application.book_id,
+            user_id: application.user_id,
+            application_status: application.application_status,
+            price: application.price,
+            motivational_letter: application.motivational_letter
+        }
+    }],
+        "write"
+    )
+    return createdApplication
 }
+}
+

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useNewUser } from '@/composables/api/useApi';
-import { reactive, ref } from 'vue';
-
-const props = defineProps(['selectedBook']);
+import { useNewApplication, useNewUser } from '@/composables/api/useApi';
+import type { Application } from '@/models/Application';
+import { computed, reactive, ref } from 'vue';
+// Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
+const props = defineProps(['selectedBook'])
 
 const id = ref<number>(0);
 const first_name = ref<string>('');
@@ -43,18 +44,19 @@ const checkFormValidation = async (id: number, first_name: string, family_name: 
     console.log("Hiba a formon!");
   } else {
     try {
-      const userId = await useNewUser(newUser); // Wait for user creation
-
-      let newApplication = {
-        userId: userId, // User ID from the response
-        bookId: props.selectedBook.id, // Selected book ID
-        motivationalLetter: motivational_letter // Motivational letter
-      };
-
-      alert("Jelentkezését fogadtuk!"); // Alert for success
-      console.log("User ID BookForms: ", newApplication.userId);
-      console.log("Választott könyv: ", newApplication.bookId);
-      console.log("Megírt motivációs levél: ", newApplication.motivationalLetter);
+      const response = useNewUser(newUser)
+      let application = {
+        id: 0,
+        book_id: props.selectedBook.id as number,
+        user_id: 1,//response.id,
+        application_status: 1 as number,
+        price: null as unknown as number,
+        motivational_letter: '' //motivational_letter
+      }
+      console.log(application)
+      useNewApplication(application)
+      console.log(application)
+      alert("Jelentkezését fogadtuk!")
     } catch (error) {
       console.log(error);
     }
