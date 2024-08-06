@@ -26,27 +26,33 @@ const cardPicsSrc =
 
 <template>
     <!--Cardok-->
-    <div class="container">
-        <div class="row">
+    <div class="container ">
+        <div class="row holder">
             <div v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
+                
                 <div class="card">
+                    <div class="bar left"></div>
+                    <div class="bar top"></div>
+                    <div class="bar right"></div>
+                    <div class="bar bottom"></div>
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
                         <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Érdekel</button>
                     </div>
+                
                 </div>
             </div>
         </div>
         <div class="row my-4">
             <div class="col-12 d-flex justify-content-center align-items-center">
                 <p class="m-0">{{ description }}</p>
-            </div>
+            </div>  
         </div>
-
+        
         <div>
-
+            
         </div>
     </div>
 </template>
@@ -76,7 +82,7 @@ p {
 .card {
     min-height: 100%;
     background-color: #dcb750cf;
-    border: 3px solid #191416;
+    border: 2px solid #ebb00dcf;
     padding: 2em;
     position: relative;
     box-shadow: 5px 5px 30px grey;
@@ -84,7 +90,7 @@ p {
 
 .card:before {
     background: none;
-    border: 3px solid #191416;
+    /* border: 2px solid #191416; */
     content: "";
     display: block;
     position: absolute;
@@ -94,4 +100,172 @@ p {
     bottom: .1rem;
     pointer-events: none;
 }
+
+ /* glowing effect */
+
+ /* body {
+  
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+} */
+
+
+.bar {
+    background: rgba(255, 215, 0, 0.5);
+    box-shadow: 0px 0px 4px rgba(255, 215, 0, 0.8),
+                0px 0px 8px rgba(255, 215, 0, 0.6),
+                0px 0px 16px rgba(255, 215, 0, 0.4);
+    border-radius: 4px;
+    position: absolute;
+}
+
+
+.left, .right {
+    width: 4px;
+}
+
+.top, .bottom {
+    height: 4px;
+}
+
+.card:hover .left {
+    -webkit-animation: left 4s linear infinite;
+    animation: left 4s linear infinite;
+}
+
+@-webkit-keyframes left {
+    0% { height: 0; top: 100%; left: 0; }
+    20% { height: 100%; top: 0; left: 0; }
+    40% { height: 0; top: 0; left: 0; }
+}
+
+@keyframes left {
+    0% { height: 0; top: 100%; left: 0; }
+    20% { height: 100%; top: 0; left: 0; }
+    40% { height: 100%; top: 0; left: 0; }
+}
+
+.card:hover .top {
+    -webkit-animation: top 4s linear infinite;
+    animation: top 4s linear infinite;
+}
+
+@-webkit-keyframes top {
+    0% { width: 0; top: 0; left: 0; }
+    20% { width: 0; top: 0; left: 0; }
+    40% { width: 100%; top: 0; left: 0; }
+    60% { width: 0; top: 0; left: 100px; }
+}
+
+@keyframes top {
+    0% { width: 0; top: 0; left: 0; }
+    20% { width: 0; top: 0; left: 0; }
+    40% { width: 100%; top: 0; left: 0; }
+    60% { width: 0; top: 0; left: 100px; }
+}
+
+.card:hover .right {
+    -webkit-animation: right 4s linear infinite;
+    animation: right 4s linear infinite;
+}
+
+@-webkit-keyframes right {
+    0% { height: 0; top: 0; left: 100%; }
+    40% { height: 0; top: 0; left: 100%; }
+    60% { height: 100%; top: 0; left: 100%; }
+    80% { height: 0; top: 100%; left: 100%; }
+}
+
+@keyframes right {
+    0% { height: 0; top: 0; left: 100%; }
+    40% { height: 0; top: 0; left: 100%; }
+    60% { height: 100%; top: 0; left: 100%; }
+    80% { height: 0; top: 100%; left: 100%; }
+}
+
+.card:hover .bottom {
+    -webkit-animation: bottom 4s linear infinite;
+    animation: bottom 4s linear infinite;
+}
+
+@-webkit-keyframes bottom {
+    0% { width: 0; top: 100%; left: 196px; }
+    60% { width: 0; top: 100%; left: 196px; }
+    80% { width: 100%; top: 100%; left: 0; }
+    100% { width: 0; top: 100%; left: 0; }
+}
+
+@keyframes bottom {
+    0% { width: 0; top: 100%; left: 100%; }
+    60% { width: 0; top: 100%; left: 100%; }
+    80% { width: 100%; top: 100%; left: 0; }
+    100% { width: 0; top: 100%; left: 0; }
+}
+
+
+
+
+
+
+
+/* another glow */
+/* 
+body{
+  background: #222;
+  margin: 0;
+}
+
+  
+.bar{
+  background: #d0f0dd;
+  box-shadow: 0px 0px 0 #40ff22,
+    0px 0px 4px #30ff1f,
+    0px 0px 8px #20ff1b,
+    0px 0px 16px #10ff18;
+  border-radius: 4px;
+  position: absolute;
+}
+.left{
+  width: 4px;
+  -webkit-animation: left 2s linear infinite;
+}
+@-webkit-keyframes left{
+  0%  {height: 0; top: 390px; left: 0;}
+  20% {height: 500px; top: 0; left: 0;}
+  40% {height: 0; top: 0; left: 0;}
+}
+.top{
+  height: 4px;
+  -webkit-animation: top 2s linear infinite;
+}
+@-webkit-keyframes top{
+  0%  {width: 0; top: 0; left: 0;}
+  20% {width: 0; top: 0; left: 0;}
+  40% {width: 100px; top: 0; left: 0;}
+  60% {width: 0; top:0; left: 100px;}
+}
+.right{
+  width: 4px;
+  -webkit-animation: right 2s linear infinite;
+}
+@-webkit-keyframes right{
+  0%  {height: 0; top: 0; left: 390px;}
+  40% {height: 0; top: 0; left: 390px;}
+  60% {height: 100px; top: 0; left: 390px;}
+  80% {height: 0; top: 100px;left: 390px;}
+}
+.bottom{
+  height: 4px;
+  -webkit-animation: bottom 2s linear infinite;
+}
+@-webkit-keyframes bottom{
+  0%  {width: 0; top: 390px; left: 390px;}
+  60% {width: 0; top: 390px; left: 390px;}
+  80% {width: 100px; top:390px; left: 0px;}
+  100% {width: 0px; top:390px; left: 0px;}
+}
+ */
 </style>
