@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BookComponent from '@/components/books/BookComponent.vue';
-BookComponent
 </script>
 
 <template>

@@ -6,13 +6,13 @@ let description = ref<string>('');
 // Emitek létrehozása. Emitekkel olyan eseményeket tudunk létrehozni, amiket a szülő componens figyel, 
 // és el tudja kapni azokat, amikor megtörténik az esemény. A szülő componens jelenleg a BookComponent, mert ott használjuk fel a BookCards componenst.
 // Meghatározok egy toggleForm és egy book eseményt. 
-const emit = defineEmits(['toggleForm', 'book']);
+const emit = defineEmits(['book', 'launchModal']);
 
 function loadDescription(id: number) {
     description.value = books.value[id - 1].description;
     // Érdekel gomb nyomására a toggleForm esemény 'elsül' true értékkel, a book esemény pedig az aktuális Book objecttel. Irány a BookComponent!
-    emit('toggleForm', true)
     emit('book', books.value[id - 1])
+    emit('launchModal', true)
 }
 
 const cardPicsSrc =
@@ -29,7 +29,7 @@ const cardPicsSrc =
     <div class="container ">
         <div class="row holder">
             <div v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
-                
+
                 <div class="card">
                     <div class="bar left"></div>
                     <div class="bar top"></div>
@@ -39,20 +39,18 @@ const cardPicsSrc =
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
-                        <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Érdekel</button>
+                        <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Tovább</button>
                     </div>
-                
+
                 </div>
             </div>
         </div>
-        <div class="row my-4">
-            <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="row my-4" :class="description ? 'detailedDescription' : ''">
+            <div class="col-12 d-flex flex-column">
                 <p class="m-0">{{ description }}</p>
-            </div>  
-        </div>
-        
-        <div>
-            
+                <button v-if="description" class="btn mt-3 mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#bookFormModal">Regisztrálok a licitre</button>
+            </div>
         </div>
     </div>
 </template>
@@ -62,6 +60,28 @@ const cardPicsSrc =
 <style scoped>
 .btn {
     background-color: #dcb750cf;
+}
+
+.detailedDescription {
+    background-color: #dcb750cf;
+    border: 3px solid #191416;
+    padding: 2em;
+    position: relative;
+    box-shadow: 5px 5px 30px grey;
+    margin: 3rem 0 10rem 0;
+}
+
+.detailedDescription:before {
+    background: none;
+    border: 3px solid #191416;
+    content: "";
+    display: block;
+    position: absolute;
+    top: .1rem;
+    left: .1rem;
+    right: .1rem;
+    bottom: .1rem;
+    pointer-events: none;
 }
 
 .card-text {
@@ -101,9 +121,9 @@ p {
     pointer-events: none;
 }
 
- /* glowing effect */
+/* glowing effect */
 
- /* body {
+/* body {
   
     margin: 0;
     display: flex;
@@ -116,18 +136,20 @@ p {
 .bar {
     background: rgba(255, 215, 0, 0.5);
     box-shadow: 0px 0px 4px rgba(255, 215, 0, 0.8),
-                0px 0px 8px rgba(255, 215, 0, 0.6),
-                0px 0px 16px rgba(255, 215, 0, 0.4);
+        0px 0px 8px rgba(255, 215, 0, 0.6),
+        0px 0px 16px rgba(255, 215, 0, 0.4);
     border-radius: 4px;
     position: absolute;
 }
 
 
-.left, .right {
+.left,
+.right {
     width: 4px;
 }
 
-.top, .bottom {
+.top,
+.bottom {
     height: 4px;
 }
 
@@ -137,15 +159,43 @@ p {
 }
 
 @-webkit-keyframes left {
-    0% { height: 0; top: 100%; left: 0; }
-    20% { height: 100%; top: 0; left: 0; }
-    40% { height: 0; top: 0; left: 0; }
+    0% {
+        height: 0;
+        top: 100%;
+        left: 0;
+    }
+
+    20% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 0;
+    }
 }
 
 @keyframes left {
-    0% { height: 0; top: 100%; left: 0; }
-    20% { height: 100%; top: 0; left: 0; }
-    40% { height: 100%; top: 0; left: 0; }
+    0% {
+        height: 0;
+        top: 100%;
+        left: 0;
+    }
+
+    20% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
 }
 
 .card:hover .top {
@@ -154,17 +204,55 @@ p {
 }
 
 @-webkit-keyframes top {
-    0% { width: 0; top: 0; left: 0; }
-    20% { width: 0; top: 0; left: 0; }
-    40% { width: 100%; top: 0; left: 0; }
-    60% { width: 0; top: 0; left: 100px; }
+    0% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    20% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    60% {
+        width: 0;
+        top: 0;
+        left: 100px;
+    }
 }
 
 @keyframes top {
-    0% { width: 0; top: 0; left: 0; }
-    20% { width: 0; top: 0; left: 0; }
-    40% { width: 100%; top: 0; left: 0; }
-    60% { width: 0; top: 0; left: 100px; }
+    0% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    20% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    60% {
+        width: 0;
+        top: 0;
+        left: 100px;
+    }
 }
 
 .card:hover .right {
@@ -173,17 +261,55 @@ p {
 }
 
 @-webkit-keyframes right {
-    0% { height: 0; top: 0; left: 100%; }
-    40% { height: 0; top: 0; left: 100%; }
-    60% { height: 100%; top: 0; left: 100%; }
-    80% { height: 0; top: 100%; left: 100%; }
+    0% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    60% {
+        height: 100%;
+        top: 0;
+        left: 100%;
+    }
+
+    80% {
+        height: 0;
+        top: 100%;
+        left: 100%;
+    }
 }
 
 @keyframes right {
-    0% { height: 0; top: 0; left: 100%; }
-    40% { height: 0; top: 0; left: 100%; }
-    60% { height: 100%; top: 0; left: 100%; }
-    80% { height: 0; top: 100%; left: 100%; }
+    0% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    60% {
+        height: 100%;
+        top: 0;
+        left: 100%;
+    }
+
+    80% {
+        height: 0;
+        top: 100%;
+        left: 100%;
+    }
 }
 
 .card:hover .bottom {
@@ -192,17 +318,55 @@ p {
 }
 
 @-webkit-keyframes bottom {
-    0% { width: 0; top: 100%; left: 196px; }
-    60% { width: 0; top: 100%; left: 196px; }
-    80% { width: 100%; top: 100%; left: 0; }
-    100% { width: 0; top: 100%; left: 0; }
+    0% {
+        width: 0;
+        top: 100%;
+        left: 196px;
+    }
+
+    60% {
+        width: 0;
+        top: 100%;
+        left: 196px;
+    }
+
+    80% {
+        width: 100%;
+        top: 100%;
+        left: 0;
+    }
+
+    100% {
+        width: 0;
+        top: 100%;
+        left: 0;
+    }
 }
 
 @keyframes bottom {
-    0% { width: 0; top: 100%; left: 100%; }
-    60% { width: 0; top: 100%; left: 100%; }
-    80% { width: 100%; top: 100%; left: 0; }
-    100% { width: 0; top: 100%; left: 0; }
+    0% {
+        width: 0;
+        top: 100%;
+        left: 100%;
+    }
+
+    60% {
+        width: 0;
+        top: 100%;
+        left: 100%;
+    }
+
+    80% {
+        width: 100%;
+        top: 100%;
+        left: 0;
+    }
+
+    100% {
+        width: 0;
+        top: 100%;
+        left: 0;
+    }
 }
 
 

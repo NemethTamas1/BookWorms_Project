@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useNewApplication, useNewUser } from '@/composables/api/useApi';
-import type { Application } from '@/models/Application';
-import { computed, reactive, ref } from 'vue';
+import router from '@/router';
+import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
 
@@ -31,32 +31,39 @@ const validateInputField = () => {
   return validationError;
 };
 
-const checkFormValidation = async (id: number, first_name: string, family_name: string, email: string, password: string, motivational_letter: string) => {
+const createNewUser = () => {
   let newUser = {
-    id: id,
-    first_name: first_name,
-    family_name: family_name,
-    email: email,
-    password: password
+    id: id.value,
+    first_name: first_name.value,
+    family_name: family_name.value,
+    email: email.value,
+    password: password.value
   };
 
+  return newUser;
+}
+
+const createNewApplication = (newUserId: number) => {
+  let application = {
+    id: 0,
+    book_id: props.selectedBook.id,
+    user_id: newUserId,
+    application_status: 1,
+    price: 0,
+    motivational_letter: motivational_letter.value
+  }
+
+  return application;
+}
+
+const checkFormValidation = async () => {
   if (validateInputField()) {
     console.log("Hiba a formon!");
   } else {
     try {
-      const response = useNewUser(newUser)
-      let application = {
-        id: 0,
-        book_id: props.selectedBook.id as number,
-        user_id: 1,//response.id,
-        application_status: 1 as number,
-        price: null as unknown as number,
-        motivational_letter: '' //motivational_letter
-      }
-      console.log(application)
-      useNewApplication(application)
-      console.log(application)
-      alert("Jelentkezését fogadtuk!")
+      const newUserFromDatabase: any = await useNewUser(createNewUser())
+      useNewApplication(createNewApplication(newUserFromDatabase[0]['lastInsertRowid']))
+      router.push('/applicantReceived')
     } catch (error) {
       console.log(error);
     }
@@ -65,37 +72,41 @@ const checkFormValidation = async (id: number, first_name: string, family_name: 
 </script>
 
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <form @submit.prevent="checkFormValidation(id, first_name, family_name, email, password, motivational_letter)">
-          <div>
-            <h4>Kiválasztott könyv:</h4>
-            <!-- Display selected book -->
-            <p>{{ selectedBook.title }}</p>
+  <div class="modal fade" id="bookFormModal" tabindex="-1" aria-labelledby="bookFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5>{{ selectedBook.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form @submit.prevent="checkFormValidation()">
+          <div class="modal-body">
+            <div>
+              <label class="form-label" for="family_name">Vezetéknév</label>
+              <input :class="{ error: errMessages.family_name_err_msg !== '' }" @focus="validateInputField()"
+                @keyup="validateInputField()" v-model="family_name" class="form-control" placeholder="Vezetéknév"
+                type="text" id="family_name" name="family_name" />
+              <p class="errorMsg" v-if="errMessages.family_name_err_msg !== ''">{{ errMessages.family_name_err_msg }}
+              </p>
+            </div>
+            <div>
+              <label class="form-label" for="first_name">Keresztnév</label>
+              <input v-model="first_name" class="form-control" placeholder="Keresztnév" type="text" id="first_name"
+                name="first_name" />
+            </div>
+            <div>
+              <label class="form-label" for="email">E-mail</label>
+              <input v-model="email" class="form-control" placeholder="E-mail" type="text" id="email" name="email" />
+            </div>
+            <div>
+              <label class="form-label" for="motivational_letter">Motivációs levél</label>
+              <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivational_letter"
+                v-model="motivational_letter" name="motivational_letter"></textarea>
+            </div>
           </div>
-          <div>
-            <label class="form-label" for="family_name">Vezetéknév</label>
-            <input :class="{ error: errMessages.family_name_err_msg !== '' }" @focus="validateInputField()" @keyup="validateInputField()" v-model="family_name" class="form-control" placeholder="Vezetéknév" type="text" id="family_name"
-              name="family_name" />
-            <p class="errorMsg" v-if="errMessages.family_name_err_msg !== ''">{{ errMessages.family_name_err_msg }}</p>
-          </div>
-          <div>
-            <label class="form-label" for="first_name">Keresztnév</label>
-            <input v-model="first_name" class="form-control" placeholder="Keresztnév" type="text" id="first_name"
-              name="first_name" />
-          </div>
-          <div>
-            <label class="form-label" for="email">E-mail</label>
-            <input v-model="email" class="form-control" placeholder="E-mail" type="text" id="email" name="email" />
-          </div>
-          <div>
-            <label class="form-label" for="motivational_letter">Motivációs levél</label>
-            <textarea class="form-control" placeholder="Motivációs levél" type="text" id="motivational_letter" v-model="motivational_letter"
-              name="motivational_letter"></textarea>
-          </div>
-          <div class="modal-footer mt-3">
-            <button type="submit" class="btn btn-success">Küldés</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+            <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Küldés</button>
           </div>
         </form>
       </div>
@@ -112,7 +123,7 @@ const checkFormValidation = async (id: number, first_name: string, family_name: 
   color: red;
 }
 
-form {
+.modal-content {
   background-color: #dcb750cf;
   border: 3px solid #191416;
   padding: 2em;
@@ -125,7 +136,7 @@ p {
   font-family: "Roboto", sans-serif;
 }
 
-form:before {
+.modal-content:before {
   background: none;
   border: 3px solid #191416;
   content: "";
@@ -151,7 +162,8 @@ textarea::placeholder {
   color: rgb(192, 184, 165)
 }
 
-button {
+.btn-success,
+.btn-secondary {
   background-color: black;
 }
 </style>

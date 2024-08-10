@@ -86,6 +86,7 @@ export async function  useNewUser(newUser: User): Promise<void> {
 
         const result = await response.json();
         console.log('Form adatok sikeresen elküldve!');
+        return result
     } catch (error) {
         console.log('Error: ', error)
     }
