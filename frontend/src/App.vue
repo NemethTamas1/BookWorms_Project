@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
+
+const router = useRouter();
+
+const navigateToLoginSite = () => {
+  router.push('/login');
+}
 </script>
 
 <template>
@@ -23,6 +29,11 @@ import { RouterView } from 'vue-router'
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Kapcsolat</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <router-link to="/login" class="btn btn-outline-warning">Bejelentkezés</router-link>
           </li>
         </ul>
       </div>
