@@ -19,9 +19,8 @@ const props = defineProps<{
   showBackImage?: boolean;
 }>();
 
-
 // Method to change an application status (1 means pending, 2 means accepted, 3 means rejected)
-function changeStatus(application: Application, status: number) {
+async function changeStatus(application: Application, status: number) {
   let updatedApplication = {
     id: application.id,
     book_id: application.book_id,
@@ -30,7 +29,10 @@ function changeStatus(application: Application, status: number) {
     price: application.price,
     motivational_letter: application.motivational_letter,
   }
-  useUpdateApplication(updatedApplication);
+  const updatedApplicationResponseStatus = await useUpdateApplication(updatedApplication);
+  if(updatedApplicationResponseStatus == 200){
+    props.applications.find(app => app == application)!.application_status = status
+  }
 }
 
 

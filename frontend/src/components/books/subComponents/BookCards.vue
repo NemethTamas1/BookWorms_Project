@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useGetBooks } from '@/composables/api/useApi';
+import type { Book } from '@/models/Book';
 import { ref } from 'vue';
-const { books } = useGetBooks();
+
+const booksResponse = await useGetBooks();
+const books = ref<Book[]>(booksResponse)
 let description = ref<string>('');
 // Emitek létrehozása. Emitekkel olyan eseményeket tudunk létrehozni, amiket a szülő componens figyel, 
 // és el tudja kapni azokat, amikor megtörténik az esemény. A szülő componens jelenleg a BookComponent, mert ott használjuk fel a BookCards componenst.
@@ -28,7 +31,7 @@ const cardPicsSrc =
     <!--Cardok-->
     <div class="container ">
         <div class="row holder">
-            <div v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
+            <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
 
                 <div class="card">
                     <div class="bar left"></div>
@@ -43,6 +46,9 @@ const cardPicsSrc =
                     </div>
 
                 </div>
+            </div>
+            <div class="col-12 mt-5 text-center card" v-else>
+                <h1>Valami hiba történt a könyvek betöltése közben, kérjük nézzen vissza később!</h1>
             </div>
         </div>
         <div class="row my-4" :class="description ? 'detailedDescription' : ''">

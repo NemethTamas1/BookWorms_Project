@@ -61,9 +61,13 @@ const checkFormValidation = async () => {
     console.log("Hiba a formon!");
   } else {
     try {
-      const newUserFromDatabase: any = await useNewUser(createNewUser())
-      useNewApplication(createNewApplication(newUserFromDatabase[0]['lastInsertRowid']))
-      router.push('/applicantReceived')
+      const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+      if(newUserIdFromDatabase != 0){
+        const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
+        if(useNewApplicationResponseStatus == 201){
+          await router.push('/applicantReceived')
+        }
+      }
     } catch (error) {
       console.log(error);
     }

@@ -14,7 +14,9 @@ function updateSelectedTab(tab: string) {
   selectedTab.value = tab;
 }
 
-const { applications } = useGetApplications();
+const applicationsResponse = await useGetApplications();
+const applications = ref<Application[]>(applicationsResponse)
+
 
 // Define filter functions
 function filterApplications(tab: string): Application[] {
