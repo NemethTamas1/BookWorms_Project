@@ -18,7 +18,6 @@ const totalPages = ref(0);
 
 function updateSelectedTab(tab: string) {
   selectedTab.value = tab;
-  currentPage.value = 0; // Reset the current page
 }
 
 const { applications } = useGetApplications();
@@ -88,6 +87,12 @@ function changePage(newPage: number) {
     </div>
     <Tabs :tabs="tabs" :currentPage=0 @update:selectedTab="updateSelectedTab">
        <template #default="{ selectedTab }"> <!--No filtering, show all applications -->
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 0">Előző</button>
+          <span>Oldal: {{ currentPage + 1 }}/{{ totalPages }}</span>
+          <button @click="changePage(currentPage + 1)" :disabled="currentPage >= totalPages - 1">Következő</button>
+        </div>
         <Table
           v-if="selectedTab === 'Összes'"
           title="Összes jelentkezés"
@@ -145,12 +150,6 @@ function changePage(newPage: number) {
         />
       </template>
     </Tabs>
-    <!-- Pagination Controls -->
-    <div class="pagination">
-      <button @click="changePage(currentPage - 1)" :disabled="currentPage === 0">Previous</button>
-      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-      <button @click="changePage(currentPage + 1)" :disabled="currentPage >= totalPages - 1">Next</button>
-    </div>
   </div>
 </template>
 <style scoped>
