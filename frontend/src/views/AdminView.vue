@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { ref} from 'vue';
+import { ref } from 'vue';
 import Tabs from '@/components/admin/Tabs.vue';
 import Table from '@/components/admin/Table.vue';
-import { useGetApplications } from '@/composables/api/useApi';
+import { useGetApplications, useGetBooks } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
+import type { Book } from '@/models/Book';
 
 // Define the tabs
 const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
 
 const selectedTab = ref(tabs[0]);
+const selectedBookId = ref<number | null>(null); // Use null for "All" option
+
+// Pagination states
+const itemsPerPage = 10; // Number of items per page
+const currentPage = ref(0);
+const totalPages = ref(0);
 
 function updateSelectedTab(tab: string) {
   selectedTab.value = tab;
@@ -17,21 +24,56 @@ function updateSelectedTab(tab: string) {
 const applicationsResponse = await useGetApplications();
 const applications = ref<Application[]>(applicationsResponse)
 
+const booksResponse = await useGetBooks();
+const books = ref<Book[]>(booksResponse)
 
 // Define filter functions
 function filterApplications(tab: string): Application[] {
+  let filteredApplications = applications.value;
+  // Filter by tab
   switch (tab) {
     case 'Összes':
-      return applications.value; // No filtering
+      break; // No filtering
     case 'Elfogadásra vár':
-      return applications.value.filter(app => app.application_status === 1); // Filter by status
+      filteredApplications = filteredApplications.filter(app => app.application_status === 1);
+      break;
     case 'Elfogadott':
-      return applications.value.filter(app => app.application_status === 2); // Filter by status
+      filteredApplications = filteredApplications.filter(app => app.application_status === 2);
+      break;
     case 'Elutasított':
-      return applications.value.filter(app => app.application_status === 3); // Filter by status
+      filteredApplications = filteredApplications.filter(app => app.application_status === 3);
+      break;
     default:
       return [];
   }
+
+  // Filter by selectedBookId
+  if (selectedBookId.value !== null) {
+    filteredApplications = filteredApplications.filter(app => app.book_id === selectedBookId.value);
+  }
+
+  return filteredApplications;
+}
+
+// Compute the paginated applications for the current page
+function paginatedApplications(tab: string): Application[] {
+  const filteredApps = filterApplications(tab);
+  const start = currentPage.value * itemsPerPage;
+  const end = start + itemsPerPage;
+  updateTotalPages(tab);
+  console.log(start)
+  console.log(end)
+  return filteredApps.slice(start, end);
+}
+
+function updateTotalPages(tab: string) {
+  totalPages.value = Math.ceil(filterApplications(tab).length / itemsPerPage);
+}
+
+// Change page
+function changePage(newPage: number) {
+  currentPage.value = newPage;
+  console.log(currentPage.value)
 }
 
 </script>
@@ -39,13 +81,30 @@ function filterApplications(tab: string): Application[] {
 
 <template>
   <div>
-    <h1>Elfogadásra váró jelentkezések</h1>
-    <Tabs :tabs="tabs" @update:selectedTab="updateSelectedTab">
-       <template #default="{ selectedTab }"> <!--No filtering, show all applications -->
+    <h1>Jelentkezések:</h1>
+    <!-- Dropdown for filtering by book ID -->
+    <div class="filter-container">
+      <label for="bookIdSelect">Szűrés a könyv ID alapján: </label>
+      <select id="bookIdSelect" v-model="selectedBookId">
+        <option :value="null">Nincs</option> <!-- Correctly handle null for 'All' -->
+        <option v-for="book in books" :key="book.id" :value="book.id">
+          {{ book.id }}
+        </option>
+      </select>
+    </div>
+    <Tabs :tabs="tabs" :currentPage=0 @update:selectedTab="updateSelectedTab">
+       <template #default="{ selectedTab }">
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 0">Előző</button>
+          <span>Oldal: {{ currentPage + 1 }}/{{ totalPages }}</span>
+          <button @click="changePage(currentPage + 1)" :disabled="currentPage >= totalPages - 1">Következő</button>
+        </div>
+         <!--No filtering, show all applications -->
         <Table
           v-if="selectedTab === 'Összes'"
           title="Összes jelentkezés"
-          :applications="filterApplications('Összes')"
+          :applications="paginatedApplications(selectedTab)"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="true"
@@ -59,7 +118,7 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Elfogadásra vár'" 
           title="Elfogadásra váró jelentkezések"
-          :applications="filterApplications('Elfogadásra vár')"
+          :applications="paginatedApplications(selectedTab)"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
@@ -73,7 +132,7 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Elfogadott'"
           title="Elfogadott jelentkezések"
-          :applications="filterApplications('Elfogadott')"
+          :applications="paginatedApplications(selectedTab)"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
@@ -87,7 +146,7 @@ function filterApplications(tab: string): Application[] {
         <Table
           v-if="selectedTab === 'Elutasított'"
           title="Elutasításított jelentkezések"
-          :applications="filterApplications('Elutasított')"
+          :applications="paginatedApplications(selectedTab)"
           :showBookId="true"
           :showUserId="true"
           :showApplicationStatus="false"
@@ -101,3 +160,20 @@ function filterApplications(tab: string): Application[] {
     </Tabs>
   </div>
 </template>
+<style scoped>
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button {
+  margin: 0 10px;
+  padding: 5px 10px;
+}
+
+.pagination span {
+  margin: 0 10px;
+}
+</style>
