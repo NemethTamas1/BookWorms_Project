@@ -33,7 +33,7 @@ const navigateToLoginSite = () => {
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <router-link to="/login" class="btn btn-outline-warning">Bejelentkezés</router-link>
+            <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
           </li>
         </ul>
       </div>
