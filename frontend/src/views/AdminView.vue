@@ -9,7 +9,7 @@ import type { Book } from '@/models/Book';
 // Define the tabs
 const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
 
-const selectedTab = ref(tabs[0]);
+//const selectedTab = ref(tabs[0]);
 const selectedBookId = ref<number | null>(null); // Use null for "All" option
 
 // Pagination states
@@ -17,9 +17,9 @@ const itemsPerPage = 10; // Number of items per page
 const currentPage = ref(0);
 const totalPages = ref(0);
 
-function updateSelectedTab(tab: string) {
-  selectedTab.value = tab;
-}
+// function updateSelectedTab(tab: string) {
+//   selectedTab.value = tab;
+// }
 
 const applicationsResponse = await useGetApplications();
 const applications = ref<Application[]>(applicationsResponse)
@@ -61,8 +61,6 @@ function paginatedApplications(tab: string): Application[] {
   const start = currentPage.value * itemsPerPage;
   const end = start + itemsPerPage;
   updateTotalPages(tab);
-  console.log(start)
-  console.log(end)
   return filteredApps.slice(start, end);
 }
 
@@ -73,7 +71,6 @@ function updateTotalPages(tab: string) {
 // Change page
 function changePage(newPage: number) {
   currentPage.value = newPage;
-  console.log(currentPage.value)
 }
 
 </script>
@@ -92,7 +89,8 @@ function changePage(newPage: number) {
         </option>
       </select>
     </div>
-    <Tabs :tabs="tabs" :currentPage=0 @update:selectedTab="updateSelectedTab">
+    <!-- @update:selectedTab="updateSelectedTab" -->
+    <Tabs :tabs="tabs">
        <template #default="{ selectedTab }">
         <!-- Pagination Controls -->
         <div class="pagination">
