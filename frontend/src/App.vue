@@ -19,16 +19,16 @@ const navigateToLoginSite = () => {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Főoldal</a>
+            <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Könyvek</a>
+            <RouterLink to="/" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Rólunk</a>
+            <RouterLink to="/" class="nav-link">Rólunk</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Kapcsolat</a>
+            <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -51,10 +51,6 @@ const navigateToLoginSite = () => {
   border-bottom: 2px solid #F5CD7E;
   padding: 0;
 }
-
-/* .navbar-brand>img {
-  width: 25%;
-} */
 
 .navbar-nav>li>a {
   color: #F5CD7E;
