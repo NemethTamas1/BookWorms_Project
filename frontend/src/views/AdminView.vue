@@ -86,13 +86,14 @@ function changePage(newPage: number) {
       </select>
     </div>
     <Tabs :tabs="tabs" :currentPage=0 @update:selectedTab="updateSelectedTab">
-       <template #default="{ selectedTab }"> <!--No filtering, show all applications -->
+       <template #default="{ selectedTab }">
         <!-- Pagination Controls -->
         <div class="pagination">
           <button @click="changePage(currentPage - 1)" :disabled="currentPage === 0">Előző</button>
           <span>Oldal: {{ currentPage + 1 }}/{{ totalPages }}</span>
           <button @click="changePage(currentPage + 1)" :disabled="currentPage >= totalPages - 1">Következő</button>
         </div>
+         <!--No filtering, show all applications -->
         <Table
           v-if="selectedTab === 'Összes'"
           title="Összes jelentkezés"
