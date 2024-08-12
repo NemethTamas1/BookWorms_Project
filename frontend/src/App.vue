@@ -39,7 +39,9 @@ const navigateToLoginSite = () => {
       </div>
     </div>
   </nav>
-  <RouterView />
+  <Suspense>
+    <RouterView />
+  </Suspense>
 </template>
 
 <style>

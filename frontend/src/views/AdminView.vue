@@ -4,6 +4,7 @@ import Tabs from '@/components/admin/Tabs.vue';
 import Table from '@/components/admin/Table.vue';
 import { useGetApplications, useGetBooks } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
+import type { Book } from '@/models/Book';
 
 // Define the tabs
 const tabs = ['Összes', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
@@ -20,8 +21,11 @@ function updateSelectedTab(tab: string) {
   selectedTab.value = tab;
 }
 
-const { applications } = useGetApplications();
-const {books} = useGetBooks();
+const applicationsResponse = await useGetApplications();
+const applications = ref<Application[]>(applicationsResponse)
+
+const booksResponse = await useGetBooks();
+const books = ref<Book[]>(booksResponse)
 
 // Define filter functions
 function filterApplications(tab: string): Application[] {
@@ -57,6 +61,8 @@ function paginatedApplications(tab: string): Application[] {
   const start = currentPage.value * itemsPerPage;
   const end = start + itemsPerPage;
   updateTotalPages(tab);
+  console.log(start)
+  console.log(end)
   return filteredApps.slice(start, end);
 }
 
@@ -67,6 +73,7 @@ function updateTotalPages(tab: string) {
 // Change page
 function changePage(newPage: number) {
   currentPage.value = newPage;
+  console.log(currentPage.value)
 }
 
 </script>
