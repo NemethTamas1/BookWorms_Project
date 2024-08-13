@@ -15,6 +15,7 @@ export async function useGetBooks(): Promise<Book[]> {
                 "Access-Control-Allow-Origin": "*",
             }
         })
+        console.log(response)
         return response.data
     } catch (err) {
         console.log(err)
