@@ -25,6 +25,32 @@ export class ApplicationsService {
     return applications
   }
 
+  async getApplicationWithUserIDAndEmailID(userID: number, bookID: number) {
+    let application: Application = {
+      id: 0,
+      book_id: 0,
+      user_id: 0,
+      application_status: 1,
+      price: 0,
+      motivational_letter: 'string'
+    }
+
+    const applicationFromDatabase = await this.dbConnect.turso.execute({
+      sql: "SELECT * FROM Application WHERE user_id = $userID AND book_id = $bookID",
+      args: {userID, bookID}
+  })
+
+    if(applicationFromDatabase.rows.length > 0){
+      application.id = applicationFromDatabase["rows"][0]["id"] as number
+      application.book_id = applicationFromDatabase["rows"][0]["book_id"] as number
+      application.user_id = applicationFromDatabase["rows"][0]["user_id"] as number
+      application.application_status = applicationFromDatabase["rows"][0]["application_status"] as number
+      application.motivational_letter = applicationFromDatabase["rows"][0]["motivational_letter"] as string
+    }
+
+    return application
+  }
+
   async createApplication(application: Application): Promise<Array<ResultSet>> {
     const createdApplication = await this.dbConnect.turso.batch([{
         sql: "INSERT INTO Application (book_id, user_id, application_status, price, motivational_letter) VALUES (:book_id, :user_id, :application_status, :price, :motivational_letter)",

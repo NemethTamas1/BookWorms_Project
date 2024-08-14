@@ -1,16 +1,26 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
+import { Response } from 'express';
 
 @Controller('applications')
 export class ApplicationsController {
-    constructor(private readonly applicationService: ApplicationsService){}
+    constructor(
+        private readonly applicationService: ApplicationsService,
+    ){}
+
     @Post()
-    async createApplication(@Body() application: Application): Promise<ResultSet[]>{
+    async createApplication(@Body() application: Application): Promise<ResultSet[] | Response>{
         try {
-            const createdApplication = await this.applicationService.createApplication(application);
-            return createdApplication;
+            const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndEmailID(application.user_id, application.book_id)
+            if(applicationFromDatabase.id != 0){
+                throw new BadRequestException("Erre a könyvre már jelentkeztek ezzel az email címmel!")
+            }
+            else{
+                const createdApplication = await this.applicationService.createApplication(application);
+                return createdApplication;
+            }
           } catch (error) {
             console.log(error);
             throw new HttpException("Hiba a jelentkezés létrehozása közben", HttpStatus.INTERNAL_SERVER_ERROR)

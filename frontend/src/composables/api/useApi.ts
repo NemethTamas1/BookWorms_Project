@@ -15,7 +15,6 @@ export async function useGetBooks(): Promise<Book[]> {
                 "Access-Control-Allow-Origin": "*",
             }
         })
-        console.log(response)
         return response.data
     } catch (err) {
         console.log(err)
@@ -41,7 +40,12 @@ export async function useGetApplications(): Promise<Application[]> {
 export async function useNewUser(newUser: User): Promise<number> {
     try {
         const response = await axios.post(localURL + 'user', newUser)
-        return response.data[0]['lastInsertRowid']
+        if(response.data.length > 0){
+            return response.data[0]['lastInsertRowid']
+        }
+        else{
+            return response.data
+        }
     } catch (error) {
         console.log(error)
         return 0
@@ -52,9 +56,8 @@ export async function useNewApplication(newApplication: Application): Promise<nu
     try {
         const response = await axios.post(localURL + 'applications', newApplication)
         return response.status
-    } catch (error) {
-        console.log(error)
-        return 0
+    } catch (error: any) {
+        return error.response.status
     }
 }
 
