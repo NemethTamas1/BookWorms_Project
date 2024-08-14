@@ -13,7 +13,7 @@ export class ApplicationsController {
     @Post()
     async createApplication(@Body() application: Application): Promise<ResultSet[] | Response>{
         try {
-            const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndEmailID(application.user_id, application.book_id)
+            const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndBookID(application.user_id, application.book_id)
             if(applicationFromDatabase.id != 0){
                 throw new BadRequestException("Erre a könyvre már jelentkeztek ezzel az email címmel!")
             }

@@ -11,7 +11,7 @@ export class UsersController {
   @Post()
   async createUser(@Body() user: User): Promise<ResultSet[] | number> {
     try {
-      const userFromDatabase = await this.userService.getUser(user.email);
+      const userFromDatabase = await this.userService.getUserByEmail(user.email);
       if (userFromDatabase.id != 0) {
         return userFromDatabase.id
       }

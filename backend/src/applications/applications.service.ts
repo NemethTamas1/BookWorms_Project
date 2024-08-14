@@ -25,7 +25,7 @@ export class ApplicationsService {
     return applications
   }
 
-  async getApplicationWithUserIDAndEmailID(userID: number, bookID: number) {
+  async getApplicationWithUserIDAndBookID(userID: number, bookID: number) {
     let application: Application = {
       id: 0,
       book_id: 0,

@@ -62,15 +62,12 @@ const checkFormValidation = async () => {
   } else {
     try {
       const newUserIdFromDatabase: number = await useNewUser(createNewUser())
-      if(newUserIdFromDatabase != 0){
-        const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
-        console.log(useNewApplicationResponseStatus)
-        if(useNewApplicationResponseStatus == 201){
-          await router.push('/applicantReceived')
-        }
-        else{
-          console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
-        }
+      const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
+      if (useNewApplicationResponseStatus == 201) {
+        await router.push('/applicantReceived')
+      }
+      else if(useNewApplicationResponseStatus == 500) {
+        console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
     } catch (error) {
       console.log(error);
