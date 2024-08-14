@@ -62,6 +62,7 @@ const checkFormValidation = async () => {
   } else {
     try {
       const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+      console.log(newUserIdFromDatabase)
       if(newUserIdFromDatabase != 0){
         const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
         console.log(useNewApplicationResponseStatus)

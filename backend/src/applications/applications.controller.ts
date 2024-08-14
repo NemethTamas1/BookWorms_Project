@@ -3,22 +3,28 @@ import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
 import { Response } from 'express';
+import { NodeMailerService } from 'src/nodemailer/nodemailer.service';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('applications')
 export class ApplicationsController {
     constructor(
         private readonly applicationService: ApplicationsService,
+        private readonly nodeMailerService: NodeMailerService,
+        private readonly userService: UsersService
     ){}
 
     @Post()
     async createApplication(@Body() application: Application): Promise<ResultSet[] | Response>{
         try {
-            const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndEmailID(application.user_id, application.book_id)
+            const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndBookID(application.user_id, application.book_id)
             if(applicationFromDatabase.id != 0){
                 throw new BadRequestException("Erre a könyvre már jelentkeztek ezzel az email címmel!")
             }
             else{
+                const user = await this.userService.getUserById(application.user_id);
                 const createdApplication = await this.applicationService.createApplication(application);
+                await this.nodeMailerService.sendMail(user.email, "Tesz link", "Visszaigazoló email motivációs levél megerősítéséhez.");
                 return createdApplication;
             }
           } catch (error) {
