@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useNewApplication, useNewUser } from '@/composables/api/useApi';
 import router from '@/router';
+import { HttpStatusCode } from 'node_modules/axios/index.cjs';
 import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
@@ -17,9 +18,9 @@ const errMessages = reactive({
 
 const resetRefs = () => {
   first_name.value = '',
-  family_name.value = '',
-  email.value = '',
-  motivational_letter.value = ''
+    family_name.value = '',
+    email.value = '',
+    motivational_letter.value = ''
 }
 
 const validateInputField = () => {
@@ -65,19 +66,19 @@ const sendForm = async () => {
   if (validateInputField()) {
     console.log("Hiba a formon!");
   } else {
-    try {
-      const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+    const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+    if (newUserIdFromDatabase != 0) {
       const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
-      if (useNewApplicationResponseStatus == 201) {
-        await router.push('/applicantReceived')
-      }
-      else if(useNewApplicationResponseStatus == 500) {
-        // Biztos, hogy ez kell ide?
+      if (useNewApplicationResponseStatus == 400) {
         resetRefs();
         console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
-    } catch (error) {
-      console.log(error);
+      else if (useNewApplicationResponseStatus == 201) {
+        await router.push('/applicantReceived')
+      }
+    }
+    else {
+      console.log("Hiba a felhasználó létrehozása közben!")
     }
   }
 };

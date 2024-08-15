@@ -7,7 +7,7 @@ import { ResultSet } from '@libsql/client/.';
 export class UsersService {
     dbConnect = new DatabaseService()
 
-    async createUser(user: User): Promise<Array<ResultSet>> {
+    async createUser(user: User): Promise<number> {
         const createdUser = await this.dbConnect.turso.batch([{
             sql: "INSERT INTO User (first_name, family_name, email, password) VALUES (:first_name, :family_name, :email, :password)",
             args: {
@@ -19,7 +19,7 @@ export class UsersService {
         }],
             "write"
         )
-        return createdUser
+        return Number(createdUser[0]["lastInsertRowid"])
     }
 
     async getUserByEmail(email:string):Promise<User>{

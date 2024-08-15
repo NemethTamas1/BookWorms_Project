@@ -1,7 +1,7 @@
 import type { Application } from "@/models/Application";
 import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
-import axios, { type AxiosResponse } from "axios";
+import axios, { HttpStatusCode, type AxiosResponse } from "axios";
 import type { Book } from "@/models/Book";
 
 const localURL = 'http://localhost:3000/'
@@ -40,13 +40,8 @@ export async function useGetApplications(): Promise<Application[]> {
 export async function useNewUser(newUser: User): Promise<number> {
     try {
         const response = await axios.post(localURL + 'user', newUser)
-        if(response.data.length > 0){
-            return response.data[0]['lastInsertRowid']
-        }
-        else{
-            return response.data
-        }
-    } catch (error) {
+        return response.data
+    } catch (error: any) {
         console.log(error)
         return 0
     }
