@@ -5,17 +5,22 @@ import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
 
-const id = ref<number>(0);
 const first_name = ref<string>('');
 const family_name = ref<string>('');
 const email = ref<string>('');
-const password = ref<string>('');
 const motivational_letter = ref<string>('');
 
 // Error messages
 const errMessages = reactive({
   family_name_err_msg: ''
 });
+
+const resetRefs = () => {
+  first_name.value = '',
+  family_name.value = '',
+  email.value = '',
+  motivational_letter.value = ''
+}
 
 const validateInputField = () => {
   let validationError = false;
@@ -33,11 +38,11 @@ const validateInputField = () => {
 
 const createNewUser = () => {
   let newUser = {
-    id: id.value,
+    id: 0,
     first_name: first_name.value,
     family_name: family_name.value,
     email: email.value,
-    password: password.value
+    password: ''
   };
 
   return newUser;
@@ -56,7 +61,7 @@ const createNewApplication = (newUserId: number) => {
   return application;
 }
 
-const checkFormValidation = async () => {
+const sendForm = async () => {
   if (validateInputField()) {
     console.log("Hiba a formon!");
   } else {
@@ -67,6 +72,8 @@ const checkFormValidation = async () => {
         await router.push('/applicantReceived')
       }
       else if(useNewApplicationResponseStatus == 500) {
+        // Biztos, hogy ez kell ide?
+        resetRefs();
         console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
     } catch (error) {
@@ -84,7 +91,7 @@ const checkFormValidation = async () => {
           <h5>{{ selectedBook.title }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form @submit.prevent="checkFormValidation()">
+        <form @submit.prevent="sendForm()">
           <div class="modal-body">
             <div>
               <label class="form-label" for="family_name">Vezetéknév</label>
