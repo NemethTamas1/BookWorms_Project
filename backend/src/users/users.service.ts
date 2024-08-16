@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.interface';
 import { DatabaseService } from 'src/database/db.service';
+import { JwtService } from '@nestjs/jwt';
 import { ResultSet } from '@libsql/client/.';
+import { Logger } from '@nestjs/common';
+
 
 @Injectable()
 export class UsersService {
     dbConnect = new DatabaseService()
+    private readonly logger = new Logger(UsersService.name);
+
+    constructor(private readonly jwtService: JwtService) {}
 
     async createUser(user: User): Promise<number> {
         const createdUser = await this.dbConnect.turso.batch([{
@@ -42,5 +48,31 @@ export class UsersService {
             user.password = userFromDatabase["rows"][0]["password"] as string
         }
         return user
+    }
+
+
+    async validateUser(email: string, password: string): Promise<User | null> {
+        const user = await this.getUserByEmail(email);
+        if ( user && user.password === password ) {
+            return user;
+        }
+        return null;
+    }
+
+    async generateToken(user: User): Promise<string> {
+        const payload = { email: user.email };
+        return this.jwtService.sign(payload);//Itt jön létre a token. A jwtService.sign egy objektumot vár, ami alapján generál kódot.
+    }
+
+    async login(email: string, password: string): Promise<string | null> {
+        const user = await this.validateUser(email, password);
+        if (user) {
+            const payload = { email: user.email, sub: user.id };
+            const token = this.jwtService.sign(payload);
+            console.log(`User ${email} successfully logged in.`);
+            return token;
+        }
+        console.log(`Failed login attempt for user with email: ${email}`);
+        return null;
     }
 }

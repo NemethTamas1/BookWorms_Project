@@ -37,13 +37,14 @@ const validateInputField = () => {
   return validationError;
 };
 
+//HOZZÁADTAM EGY TESZT JELSZÓT!
 const createNewUser = () => {
   let newUser = {
     id: 0,
     first_name: first_name.value,
     family_name: family_name.value,
     email: email.value,
-    password: ''
+    password: 'tesztjelszo'
   };
 
   return newUser;
@@ -67,6 +68,7 @@ const sendForm = async () => {
     console.log("Hiba a formon!");
   } else {
     const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+    console.log(createNewUser)
     if (newUserIdFromDatabase != 0) {
       const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
       if (useNewApplicationResponseStatus == 400) {
