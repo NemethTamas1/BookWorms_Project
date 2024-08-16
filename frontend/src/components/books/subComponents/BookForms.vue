@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useNewApplication, useNewUser } from '@/composables/api/useApi';
+import { userIsLoggedIn } from '@/composables/auth/auth';
 import router from '@/router';
 import { HttpStatusCode } from 'node_modules/axios/index.cjs';
 import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
-
 const first_name = ref<string>('');
 const family_name = ref<string>('');
 const email = ref<string>('');

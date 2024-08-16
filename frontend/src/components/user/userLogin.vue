@@ -1,6 +1,6 @@
 <script setup lang="ts">
+    import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth';
     import { ref } from 'vue';
-    import axios from 'axios';
 
     // Figyelni kívánt változók
     const email = ref<string>('');
@@ -14,19 +14,9 @@
             return; 
         }
 
-        try {
-            const response = await axios.post('http://localhost:3000/user/login', {
-                email: email.value,
-                password: password.value
-            });
-
-            const token = response.data.token;
-            localStorage.setItem('token', token); // Store the token in local storage
-
-            // You can also redirect the user to a protected route or perform other actions after login
-            console.log('Logged in successfully!');
-        } catch (error) {
-            errorMessage.value = 'Hibás e-mail vagy jelszó.';
+        const responseError:string|null = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
+        if(responseError){
+            errorMessage.value = responseError
         }
 
         // Form reset
