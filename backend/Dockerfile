@@ -7,11 +7,10 @@ FROM node:${NODE_VERSION}-slim as base
 LABEL fly_launch_runtime="NestJS"
 
 # NestJS app lives here
-WORKDIR /app
+WORKDIR /app/backend
 
 # Set production environment
 ENV NODE_ENV="production"
-
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -36,6 +35,7 @@ FROM base
 
 # Copy built application
 COPY --from=build /app /app
+COPY dist/client /app/dist/client
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000

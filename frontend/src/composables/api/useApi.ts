@@ -4,9 +4,7 @@ import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
 
 
-const baseURL = 'https://backend-shy-dew-2743.fly.dev/'
-//const localURL = 'http://localhost:3000/'
-//const baseURL = localURL
+const baseURL = import.meta.env.VITE_URL;
 
 export function useGetBooks() {
     const books = ref<Book[]>([])
