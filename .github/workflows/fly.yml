@@ -7,7 +7,7 @@ on:
 
 jobs:
   setup:
-    name: Setup Backend and Build Frontend
+    name: Setup Backend, Build Frontend and Run Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,20 +31,8 @@ jobs:
         working-directory: backend
 
       - name: Start Backend Server
-        run: npm run start:prod &
+        run: npm run start &
         working-directory: backend
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    needs: setup  # This ensures the 'test' job runs after 'setup' job
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install frontend dependencies
-        run: npm ci
-        working-directory: frontend 
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -64,7 +52,7 @@ jobs:
   deploy:
     name: Deploy Backend
     runs-on: ubuntu-latest
-    needs: [setup, test]  # Ensures 'deploy' job runs after 'setup' and 'test' jobs
+    needs: [setup]  # Ensures 'deploy' job runs after 'setup' and 'test' jobs
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
