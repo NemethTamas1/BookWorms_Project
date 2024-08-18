@@ -27,15 +27,11 @@ jobs:
         working-directory: frontend
 
       - name: Install Backend Dependencies
-        run: |
-          cd backend
-          npm ci
+        run: npm ci
         working-directory: backend
 
       - name: Start Backend Server
-        run: |
-          cd backend
-          npm run start:prod &
+        run: npm run start:prod &
         working-directory: backend
 
   test:
