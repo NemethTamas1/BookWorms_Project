@@ -31,10 +31,6 @@ async function changeStatus(application: Application, status: number) {
     motivational_letter: application.motivational_letter,
   }
   const updatedApplicationResponseStatus = await useUpdateApplication(updatedApplication);
-  const user: User | number = await useGetUserById(updatedApplication.user_id)
-  if(user != 0){
-    await useSendEmailToVerification(user as User)
-  }
   if(updatedApplicationResponseStatus == 200){
     props.applications.find(app => app == application)!.application_status = status
   }

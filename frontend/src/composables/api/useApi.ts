@@ -79,9 +79,9 @@ export async function useUpdateApplication(updatedApplication: Application): Pro
     }
 }
 
-export async function useSendEmailToVerification(user: User): Promise<number>{
+export async function useSendEmailToVerification(userId: number): Promise<number>{
     try {
-        const response = await axios.post(localURL + 'mail', user)
+        const response = await axios.post(localURL + 'mail', {id: userId})
         if(response.status == 201){
             console.log('Email sent!')
             return response.status

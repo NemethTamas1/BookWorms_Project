@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNewApplication, useNewUser } from '@/composables/api/useApi';
+import { useNewApplication, useNewUser, useSendEmailToVerification } from '@/composables/api/useApi';
 import { userIsLoggedIn } from '@/composables/auth/auth';
 import router from '@/router';
 import { HttpStatusCode } from 'node_modules/axios/index.cjs';
@@ -77,6 +77,7 @@ const sendForm = async () => {
         console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
       else if (useNewApplicationResponseStatus == 201) {
+        await useSendEmailToVerification(newUserIdFromDatabase)
         await router.push('/applicantReceived')
       }
     }

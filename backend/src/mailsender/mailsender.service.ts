@@ -14,7 +14,7 @@ export class MailsenderService {
             .setTo(recipient)
             .setReplyTo(sentFrom)
             .setSubject("Visszaigazoló email jelentkezéshez")
-            .setText(`http://localhost:5173/changeGuestStatus/?id=${user.id}`)
+            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: http://localhost:5173/changeGuestStatus/?id=${user.id}`)
 
         await this.mailerSend.email.send(emailParams)
     }
