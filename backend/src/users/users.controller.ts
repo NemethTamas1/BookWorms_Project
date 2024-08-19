@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Param, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from './user.interface';
@@ -11,6 +11,22 @@ export class UsersController {
     private readonly userService: UsersService,
     private readonly jwtService: JwtService
   ) {}
+
+  @Get()
+  async getUser(@Query('id') id: number): Promise<User>{
+    try {
+      const userFromDatabase = await this.userService.getUserById(id)
+      if(userFromDatabase.id != 0){
+        return userFromDatabase
+      }
+      else{
+        throw new HttpException('Nem található user a megadott id-val!', HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   @Post()
   async createUser(@Body() user: User): Promise<number> {

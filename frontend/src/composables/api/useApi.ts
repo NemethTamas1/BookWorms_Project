@@ -79,3 +79,35 @@ export async function useUpdateApplication(updatedApplication: Application): Pro
     }
 }
 
+export async function useSendEmailToVerification(user: User): Promise<number>{
+    try {
+        const response = await axios.post(localURL + 'mail', user)
+        if(response.status == 201){
+            console.log('Email sent!')
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useGetUserById(userId: number): Promise<User | number> {
+    try {
+        const response = await axios.get(localURL + `user/?id=${userId}`)
+        if(response.status == 200){
+            return response.data
+        }
+        else{
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}

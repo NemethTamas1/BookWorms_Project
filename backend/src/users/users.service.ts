@@ -52,6 +52,30 @@ export class UsersService {
         return user
     }
 
+    async getUserById(userId:number):Promise<User>{
+        let user: User = {
+            id: 0,
+            first_name: '',
+            family_name: '',
+            email: '',
+            password: '',
+            status: 1
+        }
+        const userFromDatabase = await this.dbConnect.turso.execute({
+            sql: "SELECT * FROM User WHERE id = $userId",
+            args: {userId : userId}
+        })
+        if(userFromDatabase.rows.length > 0){
+            user.id = userFromDatabase["rows"][0]["id"] as number
+            user.first_name = userFromDatabase["rows"][0]["first_name"] as string
+            user.family_name = userFromDatabase["rows"][0]["family_name"] as string
+            user.email = userFromDatabase["rows"][0]["email"] as string
+            user.password = userFromDatabase["rows"][0]["password"] as string
+            user.status = userFromDatabase["rows"][0]["status"] as number
+        }
+        return user
+    }
+
 
     async validateUser(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
