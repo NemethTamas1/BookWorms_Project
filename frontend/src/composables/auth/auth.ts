@@ -11,9 +11,10 @@ export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: strin
             password: password
         });
 
-        const token = response.data.token;
+        const token = response.data.access_token;
+        console.log(token)
         userIsLoggedIn.value = true
-        localStorage.setItem('token', token); // Store the token in local storage
+        sessionStorage.setItem('token', token); // Store the token in local storage
         // You can also redirect the user to a protected route or perform other actions after login
         console.log('Logged in successfully!');
         return null

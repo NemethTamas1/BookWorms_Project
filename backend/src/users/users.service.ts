@@ -34,7 +34,8 @@ export class UsersService {
             first_name: '',
             family_name: '',
             email: '',
-            password: ''
+            password: '',
+            status: 1
         }
         const userFromDatabase = await this.dbConnect.turso.execute({
             sql: "SELECT * FROM User WHERE email = $email",
@@ -46,6 +47,7 @@ export class UsersService {
             user.family_name = userFromDatabase["rows"][0]["family_name"] as string
             user.email = userFromDatabase["rows"][0]["email"] as string
             user.password = userFromDatabase["rows"][0]["password"] as string
+            user.status = userFromDatabase["rows"][0]["status"] as number
         }
         return user
     }

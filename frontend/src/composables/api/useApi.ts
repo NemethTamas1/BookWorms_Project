@@ -37,6 +37,7 @@ export async function useGetApplications(): Promise<Application[]> {
     }
 }
 
+
 export async function useNewUser(newUser: User): Promise<number> {
     try {
         const response = await axios.post(localURL + 'user', newUser)
