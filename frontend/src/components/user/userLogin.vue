@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth';
+    import { loginUserOrAdminAndStoreTokenIntoLocalStorage, user } from '@/composables/auth/auth';
     import { ref } from 'vue';
 
     // Figyelni kívánt változók
@@ -25,8 +25,8 @@
     };
 
     // Ellenőrzés
-    console.log('E-mail: ', email.value);
-    console.log('Jelszó: ', password.value);
+    // console.log('E-mail: ', email.value);
+    // console.log('Jelszó: ', password.value);
 </script>
 
 

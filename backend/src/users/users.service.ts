@@ -86,7 +86,7 @@ export class UsersService {
         const user = await this.validateUserOrAdmin(email, password);
         if (user) {
             const token = await this.authService.generateTokenForUserOrAdmin(user)
-            return {token: token, status: user.status}
+            return {token: token, user: user}
         }
         console.log(`Failed login attempt with email: ${email}`);
         return null;

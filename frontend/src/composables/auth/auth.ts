@@ -1,8 +1,8 @@
+import type { User } from "@/models/User";
 import axios from "axios";
 import { ref } from "vue";
 
-export const userIsLoggedIn = ref<boolean>(false)
-export const adminIsLoggedIn = ref<boolean>(false)
+export const user = ref<User>()
 
 export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: string, password: string): Promise<null | string>{
     try {
@@ -12,17 +12,16 @@ export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: strin
         });
 
         const token = response.data.access_token
-        const status = response.data.status
-        console.log(token)
-        console.log(status)
-        if(status == 3){
-            userIsLoggedIn.value = true
+        const responseUser = response.data.user
+
+        if(responseUser.status == 3){
+            user.value = responseUser as User
             localStorage.setItem('userToken', token); // Store the token in local storage
             console.log('Logged in successfully!');
             return null
         }
-        else if(status == 4){
-            adminIsLoggedIn.value = true
+        else if(responseUser.status == 4){
+            user.value = responseUser as User
             localStorage.setItem('adminToken', token);
             console.log('Logged in successfully!');
             return null

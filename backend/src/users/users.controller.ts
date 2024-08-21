@@ -46,11 +46,11 @@ export class UsersController {
     const { email, password } = loginDto;
     console.log(`Login attempt for email: ${email}`);
     try {
-      const tokenAndStatus = await this.userService.getTokenForUserOrAdmin(email, password);
-      if (tokenAndStatus) {
+      const tokenAndUser = await this.userService.getTokenForUserOrAdmin(email, password);
+      if (tokenAndUser) {
         return {
-          access_token: tokenAndStatus['token'],
-          status: tokenAndStatus['status']
+          access_token: tokenAndUser['token'],
+          user: tokenAndUser['user']
         };
       } else {
         console.log(`Failed login attempt for email: ${email}`);
