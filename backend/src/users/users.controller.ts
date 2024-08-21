@@ -1,6 +1,7 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.interface';
+import { ResultSet } from '@libsql/client/.';
 
 @Controller('user')
 export class UsersController {
@@ -59,6 +60,17 @@ export class UsersController {
     } catch (error) {
       console.log('Error during login', error.stack);
       throw new HttpException('Login failed', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
+
+  @Put()
+  async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]>{
+    try {
+      const changedUserStatus = await this.userService.changeUserStatusById(id, 2);
+      return changedUserStatus
+    } catch (error) {
+      console.log('Error during status change!', error.stack);
+      throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
     }
   }
 }

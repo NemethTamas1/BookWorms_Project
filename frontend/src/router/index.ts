@@ -3,6 +3,7 @@ import BookView from '../views/BookView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserLoginView from '../views/UserLoginView.vue';
 import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue';
+import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,14 @@ const router = createRouter({
       component: ApplicantReceivedView,
       meta: {
         title: 'Köszönjük a jelentkezését!'
+      },
+    },
+    {
+      path: '/changeGuestStatus',
+      name: 'changeGuestStatus',
+      component: ChangeGuestStatusView,
+      meta: {
+        title: 'Köszönjük a visszaigazolást!'
       },
     },
   ]

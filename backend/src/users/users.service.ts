@@ -91,4 +91,17 @@ export class UsersService {
         console.log(`Failed login attempt with email: ${email}`);
         return null;
     }
+
+    async changeUserStatusById(id: number, status: number){
+        const updatedUserStatus = await this.dbConnect.turso.batch([{
+            sql: "UPDATE User SET status = :status WHERE id = :id",
+            args: {
+                id: id as number,
+                status: status as number
+            }
+        }],
+            "write"
+        );
+        return updatedUserStatus
+    }
 }

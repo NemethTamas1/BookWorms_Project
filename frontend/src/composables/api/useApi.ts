@@ -111,3 +111,14 @@ export async function useGetUserById(userId: number): Promise<User | number> {
         return 0
     }
 }
+
+export async function useUpdateUserStatusById(id: number): Promise<any>{
+    try {
+        const response = await axios.put(localURL + `user/?id=${id}`)
+        console.log(response)
+        return response
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
