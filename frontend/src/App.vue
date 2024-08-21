@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
+import { user } from './composables/auth/auth';
 
 const router = useRouter();
 
 const navigateToLoginSite = () => {
   router.push('/login');
 }
+
+const logout = () => {
+  if(user.value?.status == 3){
+    localStorage.removeItem('userToken')
+    user.value = undefined
+  }
+  else{
+    localStorage.removeItem('adminToken')
+    user.value = undefined
+  }
+}
+
 </script>
 
 <template>
@@ -31,9 +44,14 @@ const navigateToLoginSite = () => {
             <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
           </li>
         </ul>
-        <ul class="navbar-nav ms-auto">
+        <ul v-if="user == undefined" class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
+          </li>
+        </ul>
+        <ul v-if="user != undefined" class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <RouterLink to="/login" class="btn btn-outline-warning" v-on:click="logout()">Kijelentkezés</RouterLink>
           </li>
         </ul>
       </div>
