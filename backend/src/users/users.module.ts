@@ -3,18 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { DatabaseService } from 'src/database/db.service';
-import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from 'src/authentication/auth.service';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
-    }),
-  ],
+  imports: [ConfigModule.forRoot()],
   controllers: [UsersController],
-  providers: [UsersService, DatabaseService],
+  providers: [UsersService, DatabaseService, AuthService],
   exports: [UsersService],
 })
 export class UsersModule {}

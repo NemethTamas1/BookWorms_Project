@@ -1,17 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.interface';
 import { DatabaseService } from 'src/database/db.service';
-import { JwtService } from '@nestjs/jwt';
-import { ResultSet } from '@libsql/client/.';
-import { Logger } from '@nestjs/common';
+import { AuthService } from 'src/authentication/auth.service';
 
 
 @Injectable()
 export class UsersService {
     dbConnect = new DatabaseService()
-    private readonly logger = new Logger(UsersService.name);
 
-    constructor(private readonly jwtService: JwtService) {}
+    constructor(private readonly authService: AuthService){}
 
     async createUser(user: User): Promise<number> {
         const createdUser = await this.dbConnect.turso.batch([{
@@ -77,28 +74,21 @@ export class UsersService {
     }
 
 
-    async validateUser(email: string, password: string): Promise<User | null> {
+    async validateUserOrAdmin(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
-        if ( user && user.password === password ) {
+        if ( user && user.password === password && (user.status == 3 || user.status == 4) ) {
             return user;
         }
         return null;
     }
 
-    async generateToken(user: User): Promise<string> {
-        const payload = { email: user.email };
-        return this.jwtService.sign(payload);//Itt jön létre a token. A jwtService.sign egy objektumot vár, ami alapján generál kódot.
-    }
-
-    async login(email: string, password: string): Promise<string | null> {
-        const user = await this.validateUser(email, password);
+    async getTokenForUserOrAdmin(email: string, password: string): Promise<object | null> {
+        const user = await this.validateUserOrAdmin(email, password);
         if (user) {
-            const payload = { email: user.email, sub: user.id };
-            const token = this.jwtService.sign(payload);
-            console.log(`User ${email} successfully logged in.`);
-            return token;
+            const token = await this.authService.generateTokenForUserOrAdmin(user)
+            return {token: token, status: user.status}
         }
-        console.log(`Failed login attempt for user with email: ${email}`);
+        console.log(`Failed login attempt with email: ${email}`);
         return null;
     }
 }

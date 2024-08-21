@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { BooksModule } from './books/books.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { UsersModule } from './users/users.module';
-import { JwtModule } from '@nestjs/jwt';
 import { MailsenderModule } from './mailsender/mailsender.module';
+import { AuthModule } from './authentication/auth.module';
 
 @Module({
   imports: [
@@ -13,10 +13,7 @@ import { MailsenderModule } from './mailsender/mailsender.module';
     ApplicationsModule,
     UsersModule,
     MailsenderModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h'},
-    })
+    AuthModule
   ],
 })
 export class AppModule {}

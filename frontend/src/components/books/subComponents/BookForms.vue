@@ -37,14 +37,13 @@ const validateInputField = () => {
   return validationError;
 };
 
-//HOZZÁADTAM EGY TESZT JELSZÓT!
 const createNewUser = () => {
   let newUser = {
     id: 0,
     first_name: first_name.value,
     family_name: family_name.value,
     email: email.value,
-    password: 'tesztjelszo',
+    password: '',
     status: 1
   };
 

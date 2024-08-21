@@ -11,15 +11,29 @@ export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: strin
             password: password
         });
 
-        const token = response.data.access_token;
+        const token = response.data.access_token
+        const status = response.data.status
         console.log(token)
-        userIsLoggedIn.value = true
-        sessionStorage.setItem('token', token); // Store the token in local storage
-        // You can also redirect the user to a protected route or perform other actions after login
-        console.log('Logged in successfully!');
-        return null
+        console.log(status)
+        if(status == 3){
+            userIsLoggedIn.value = true
+            localStorage.setItem('userToken', token); // Store the token in local storage
+            console.log('Logged in successfully!');
+            return null
+        }
+        else if(status == 4){
+            adminIsLoggedIn.value = true
+            localStorage.setItem('adminToken', token);
+            console.log('Logged in successfully!');
+            return null
+        }
+        else{
+            console.log('Invalid user status!');
+            return null
+        }
     } catch (error) {
+        console.log(error)
         let errorMessage = '';
-        return errorMessage = 'Hibás e-mail vagy jelszó.';
+        return errorMessage = 'Hibás e-mail cím vagy jelszó.';
     }
 }

@@ -1,16 +1,12 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Param, Query } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { JwtService } from '@nestjs/jwt';
 import { User } from './user.interface';
 
 @Controller('user')
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
-  constructor(
-    private readonly userService: UsersService,
-    private readonly jwtService: JwtService
-  ) {}
+  constructor(private readonly userService: UsersService) {}
 
   @Get()
   async getUser(@Query('id') id: number): Promise<User>{
@@ -50,13 +46,11 @@ export class UsersController {
     const { email, password } = loginDto;
     console.log(`Login attempt for email: ${email}`);
     try {
-      const token = await this.userService.login(email, password);
-      if (token) {
-        //console.log(`User ${email} successfully logged in.`);
+      const tokenAndStatus = await this.userService.getTokenForUserOrAdmin(email, password);
+      if (tokenAndStatus) {
         return {
-          access_token: token,
-          expires_in: 3600,
-          token_type: 'Bearer',
+          access_token: tokenAndStatus['token'],
+          status: tokenAndStatus['status']
         };
       } else {
         console.log(`Failed login attempt for email: ${email}`);
