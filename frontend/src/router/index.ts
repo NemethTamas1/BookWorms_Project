@@ -3,13 +3,22 @@ import BookView from '../views/BookView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserLoginView from '../views/UserLoginView.vue';
 import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue';
+import MainPageComponent from '@/components/mainPage/MainPageComponent.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'bookView',
+      name: 'mainPage',
+      component: MainPageComponent,
+      meta: {
+        title: 'Üdvözöljük!'
+      },
+    },
+    {
+      path: '/books',
+      name: 'books',
       component: BookView,
       meta: {
         title: 'Könyvek'

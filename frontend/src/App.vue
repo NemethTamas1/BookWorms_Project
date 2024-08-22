@@ -9,7 +9,7 @@ const navigateToLoginSite = () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="./assets/img/kesz_resized.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -22,7 +22,7 @@ const navigateToLoginSite = () => {
             <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Könyvek</RouterLink>
+            <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/" class="nav-link">Rólunk</RouterLink>

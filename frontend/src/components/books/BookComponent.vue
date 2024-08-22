@@ -20,15 +20,6 @@ function setSelectedBook(book: Book){
 </script>
 
 <template>
-    <div class="container-fluid topLabel mb-5">
-        <div class="topLabelText">
-            <h1>BookWorms</h1>
-            <h3>Ahol a motiváció és az irodalom kéz a kézben jár</h3>
-        </div>
-    </div>
-    <div>
-        <BookWelcome />
-    </div>
     <div>
         <!-- A @toggleForm és a @book emitek figyelése, és elkapása a belőlük származó adattal. A toggleForm és a setSelectedBook itt meghatározott functionok.--> 
         <BookCards @book="setSelectedBook"/>
@@ -49,7 +40,7 @@ function setSelectedBook(book: Book){
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 30rem;
+    height: 100vh;
 }
 
 .topLabelText {
