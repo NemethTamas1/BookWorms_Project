@@ -14,7 +14,7 @@ export class MailsenderService {
             .setTo(recipient)
             .setReplyTo(sentFrom)
             .setSubject("Visszaigazoló email jelentkezéshez")
-            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: http://localhost:5173/changeGuestStatus/?id=${application_id}`)
+            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: https://bookworms.fly.dev/changeGuestStatus/?id=${application_id}`)
 
         await this.mailerSend.email.send(emailParams)
     }
@@ -27,7 +27,7 @@ export class MailsenderService {
             .setTo(recipient)
             .setReplyTo(sentFrom)
             .setSubject("Regisztrációs email")
-            .setText(`Kattints a linkre a regisztrációhoz: http://localhost:5173/registration/?id=${user.id}`)
+            .setText(`Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}`)
 
         await this.mailerSend.email.send(emailParams)
     }

@@ -3,12 +3,12 @@ import type { User } from "@/models/User";
 import axios, { type AxiosResponse } from "axios";
 import type { Book } from "@/models/Book";
 
-const localURL = 'http://localhost:3000/'
-const baseURL = import.meta.env.VITE_BASE_URL
+const baseURL = import.meta.env.VITE_URL
+//const baseURL = "http://localhost:3000/"
 
 export async function useGetBooks(): Promise<Book[]> {
     try {
-        const response = await axios.get(localURL + 'books', {
+        const response = await axios.get(baseURL + 'books', {
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
@@ -23,7 +23,7 @@ export async function useGetBooks(): Promise<Book[]> {
 
 export async function useGetApplications(): Promise<Application[]> {
     try {
-        const response = await axios.get(localURL + 'applications', {
+        const response = await axios.get(baseURL + 'applications', {
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
@@ -39,7 +39,7 @@ export async function useGetApplications(): Promise<Application[]> {
 
 export async function useNewUser(newUser: User): Promise<number> {
     try {
-        const response = await axios.post(localURL + 'user', newUser)
+        const response = await axios.post(baseURL + 'user', newUser)
         console.log(response)
         return response.data
     } catch (error: any) {
@@ -50,7 +50,7 @@ export async function useNewUser(newUser: User): Promise<number> {
 
 export async function useNewApplication(newApplication: Application): Promise<AxiosResponse<any, any>> {
     try {
-        const response = await axios.post(localURL + 'applications', newApplication)
+        const response = await axios.post(baseURL + 'applications', newApplication)
         console.log(response)
         return response
     } catch (error: any) {
@@ -81,7 +81,7 @@ export async function useUpdateApplication(updatedApplication: Application): Pro
 
 export async function useSendEmailToVerification(userId: number): Promise<number>{
     try {
-        const response = await axios.post(localURL + 'mail', {id: userId})
+        const response = await axios.post(baseURL + 'mail', {id: userId})
         if(response.status == 201){
             console.log('Email sent!')
             return response.status
@@ -98,7 +98,7 @@ export async function useSendEmailToVerification(userId: number): Promise<number
 
 export async function useSendEmailToRegistration(userId: number): Promise<number>{
     try {
-        const response = await axios.put(localURL + 'mail/register', {id: userId})
+        const response = await axios.put(baseURL + 'mail/register', {id: userId})
         if(response.status == 201){
             console.log('Email sent!')
             return response.status
@@ -115,7 +115,7 @@ export async function useSendEmailToRegistration(userId: number): Promise<number
 
 export async function useGetUserById(userId: number): Promise<User | number> {
     try {
-        const response = await axios.get(localURL + `user/?id=${userId}`)
+        const response = await axios.get(baseURL + `user/?id=${userId}`)
         if(response.status == 200){
             return response.data
         }
@@ -131,7 +131,7 @@ export async function useGetUserById(userId: number): Promise<User | number> {
 
 export async function useUpdateApplicationStatusById(id: number): Promise<any>{
     try {
-        const response = await axios.put(localURL + `applications/?id=${id}`)
+        const response = await axios.put(baseURL + `applications/?id=${id}`)
         console.log(response)
         return response
     } catch (error) {
@@ -142,7 +142,7 @@ export async function useUpdateApplicationStatusById(id: number): Promise<any>{
 
 export async function useAddUserPasswordAndUpdateStatus(userId: number, password: string) {
     try {
-        const response = await axios.put(localURL + `user/registration/?id=${userId}`, {password : password})
+        const response = await axios.put(baseURL + `user/registration/?id=${userId}`, {password : password})
         if(response.status == 200){
             return response.data
         }
@@ -156,7 +156,7 @@ export async function useAddUserPasswordAndUpdateStatus(userId: number, password
     }
 }export async function useGetApplicationsByUserId(userId: number): Promise<Application[]> {
     try {
-        const response = await axios.get(localURL + `applications/search-by-userid`, {
+        const response = await axios.get(baseURL + `applications/search-by-userid`, {
             params: { userId: userId }
         })
         return response.data
@@ -168,7 +168,7 @@ export async function useAddUserPasswordAndUpdateStatus(userId: number, password
 
 export async function useGetBiggestBid(bookId: number): Promise<number | null> {
     try {
-        const response = await axios.get(localURL + `applications/search-by-bookid`,{
+        const response = await axios.get(baseURL + `applications/search-by-bookid`,{
             params: { bookId: bookId }
         })
         if(response.status == 200){
@@ -193,7 +193,7 @@ export async function useSendBid(application: Application, newBid: number, bigge
         const updatedApplication = application
         updatedApplication.price = newBid
         try {
-            const response = await axios.put(localURL + `applications/${updatedApplication.id}`, updatedApplication)
+            const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication)
             return response.status
         } catch (error: any) {
             return error.response.status

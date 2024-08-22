@@ -14,13 +14,14 @@ export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: strin
         const token = response.data.access_token
         const responseUser = response.data.user
 
-        if(responseUser.status == 3){
+        if(responseUser.status == 2){
             user.value = responseUser as User
             localStorage.setItem('userToken', token); // Store the token in local storage
             console.log('Logged in successfully!');
+            console.log(user.value)
             return null
         }
-        else if(responseUser.status == 4){
+        else if(responseUser.status == 3){
             user.value = responseUser as User
             localStorage.setItem('adminToken', token);
             console.log('Logged in successfully!');

@@ -77,7 +77,7 @@ export class UsersService {
 
     async validateUserOrAdmin(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
-        if ( user && user.password === password && (user.status == 3 || user.status == 4) ) {
+        if ( user && user.password === password && (user.status == 2 || user.status == 3) ) {
             return user;
         }
         return null;
@@ -85,6 +85,7 @@ export class UsersService {
 
     async getTokenForUserOrAdmin(email: string, password: string): Promise<object | null> {
         const user = await this.validateUserOrAdmin(email, password);
+        console.log(user)
         if (user) {
             const token = await this.authService.generateTokenForUserOrAdmin(user)
             return {token: token, user: user}
