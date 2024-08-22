@@ -2,9 +2,10 @@ name: Fly Deploy
 
 on:
   push:
-    branches:
-      - main  # Change to your main branch if needed
-
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+    
 jobs:
   setup:
     name: Setup Backend, Build Frontend and Run Tests
@@ -33,6 +34,10 @@ jobs:
       - name: Start Backend Server
         run: npm run start &
         working-directory: backend
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+        working-directory: frontend
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
