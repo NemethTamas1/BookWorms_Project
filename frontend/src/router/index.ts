@@ -6,6 +6,7 @@ import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue';
 import MainPageComponent from '@/components/mainPage/MainPageComponent.vue';
 import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue';
 import RegistrationView from '@/views/RegistrationView.vue';
+import DashboardView from '@/views/DashboardView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,6 +65,14 @@ const router = createRouter({
       component: RegistrationView,
       meta: {
         title: 'Regisztráció'
+      },
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboardView',
+      component: DashboardView,
+      meta: {
+        title: 'Jelentkezéseim'
       },
     },
   ]

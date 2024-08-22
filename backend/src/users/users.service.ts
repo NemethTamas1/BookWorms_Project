@@ -36,7 +36,8 @@ export class UsersService {
         }
         const userFromDatabase = await this.dbConnect.turso.execute({
             sql: "SELECT * FROM User WHERE email = $email",
-            args: {email}
+            // itt csak email volt az argsban, nem email: email, de az nem működött
+            args: {email: email}
         })
         if(userFromDatabase.rows.length > 0){
             user.id = userFromDatabase["rows"][0]["id"] as number

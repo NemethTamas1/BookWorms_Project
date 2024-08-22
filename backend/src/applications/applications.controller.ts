@@ -37,7 +37,6 @@ export class ApplicationsController {
 
     @Put('/:id')
     async updateApplication(
-        @Param('id') id: number, 
         @Body() application: Application
     ): Promise<Application> {
         try {
@@ -61,6 +60,34 @@ export class ApplicationsController {
         console.log('Error during status change!', error.stack);
         throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
       }
+    }
+
+    @Get('search-by-userid')
+    async getApplicationsByUserId(@Query('userId') userId: number): Promise<Application[]> {
+        try {
+            const applications = await this.applicationService.getApplicationsByUserId(userId);
+            if (!applications) {
+                throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
+            }
+            return applications;
+        } catch (error) {
+            console.error("Error getting application by id:", error);
+            throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Get('search-by-bookid')
+    async getBiggestBid(@Query('bookId') bookId: number): Promise<number | number> {
+        try {
+            const biggestBid = await this.applicationService.getBiggestBid(bookId);
+            if (!biggestBid) {
+                throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
+            }
+            return biggestBid as number;
+        } catch (error) {
+            console.error("Error getting biggest bid:", error);
+            throw new HttpException("Error getting biggest bid", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
