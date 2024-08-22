@@ -69,13 +69,13 @@ const sendForm = async () => {
     const newUserIdFromDatabase: number = await useNewUser(createNewUser())
     console.log(createNewUser)
     if (newUserIdFromDatabase != 0) {
-      const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
-      if (useNewApplicationResponseStatus == 400) {
+      const useNewApplicationResponse = await useNewApplication(createNewApplication(newUserIdFromDatabase))
+      if (useNewApplicationResponse.status == 400) {
         resetRefs();
         console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
-      else if (useNewApplicationResponseStatus == 201) {
-        await useSendEmailToVerification(newUserIdFromDatabase)
+      else if (useNewApplicationResponse.status == 201) {
+        await useSendEmailToVerification(useNewApplicationResponse.data[0]['lastInsertRowid'])
         await router.push('/applicantReceived')
       }
     }

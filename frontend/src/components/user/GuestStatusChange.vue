@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useUpdateUserStatusById } from '@/composables/api/useApi';
+import { useUpdateApplicationStatusById } from '@/composables/api/useApi';
 import { useRoute } from 'vue-router';
 
 console.log("Itt vagyunk")
@@ -7,7 +7,7 @@ const changeStatusInDatabase = async () => {
     const route = useRoute()
     const id = parseInt(route.query['id'] as string)
     //const id = route.query['id'] as unknown as number
-    await useUpdateUserStatusById(id)
+    await useUpdateApplicationStatusById(id)
 }
 
 changeStatusInDatabase()

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException, HttpCode, Query } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
@@ -11,15 +11,14 @@ export class ApplicationsController {
     ){}
 
     @Post()
-    async createApplication(@Body() application: Application): Promise<MethodDecorator | Response>{
+    async createApplication(@Body() application: Application): Promise<ResultSet[] | Response>{
         try {
             const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndBookID(application.user_id, application.book_id)
             if(applicationFromDatabase.id != 0){
                 throw new BadRequestException("Erre a könyvre már jelentkeztek ezzel az email címmel!")
             }
             else{
-                await this.applicationService.createApplication(application);
-                return HttpCode(201);
+                return await this.applicationService.createApplication(application);
             }
           } catch (error: any) {
             if(error.status == 400){
@@ -51,6 +50,17 @@ export class ApplicationsController {
             console.error("Error updating application:", error);
             throw new HttpException("Error updating application", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Put()
+    async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]>{
+      try {
+        const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(id, 2);
+        return changedApplicationStatus
+      } catch (error) {
+        console.log('Error during status change!', error.stack);
+        throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+      }
     }
 
 }

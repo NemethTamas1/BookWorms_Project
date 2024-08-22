@@ -1,6 +1,6 @@
 import type { Application } from "@/models/Application";
 import type { User } from "@/models/User";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import type { Book } from "@/models/Book";
 
 const localURL = 'http://localhost:3000/'
@@ -48,10 +48,11 @@ export async function useNewUser(newUser: User): Promise<number> {
     }
 }
 
-export async function useNewApplication(newApplication: Application): Promise<number> {
+export async function useNewApplication(newApplication: Application): Promise<AxiosResponse<any, any>> {
     try {
         const response = await axios.post(localURL + 'applications', newApplication)
-        return response.status
+        console.log(response)
+        return response
     } catch (error: any) {
         return error.response.status
     }
@@ -111,9 +112,9 @@ export async function useGetUserById(userId: number): Promise<User | number> {
     }
 }
 
-export async function useUpdateUserStatusById(id: number): Promise<any>{
+export async function useUpdateApplicationStatusById(id: number): Promise<any>{
     try {
-        const response = await axios.put(localURL + `user/?id=${id}`)
+        const response = await axios.put(localURL + `applications/?id=${id}`)
         console.log(response)
         return response
     } catch (error) {

@@ -6,7 +6,7 @@ import { User } from 'src/users/user.interface';
 export class MailsenderService {
     mailerSend: MailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_TOKEN })
 
-    async sendVerificationEmailToGuest(user: User) {
+    async sendVerificationEmailToGuest(user: User, application_id: number) {
         const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
         const recipient = [new Recipient(user.email, user.first_name)]
         const emailParams = new EmailParams()
@@ -14,7 +14,7 @@ export class MailsenderService {
             .setTo(recipient)
             .setReplyTo(sentFrom)
             .setSubject("Visszaigazoló email jelentkezéshez")
-            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: http://localhost:5173/changeGuestStatus/?id=${user.id}`)
+            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: http://localhost:5173/changeGuestStatus/?id=${application_id}`)
 
         await this.mailerSend.email.send(emailParams)
     }

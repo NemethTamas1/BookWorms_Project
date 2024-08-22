@@ -26,7 +26,7 @@ async function changeStatus(application: Application, status: number) {
     id: application.id,
     book_id: application.book_id,
     user_id: application.user_id,
-    application_status: status, //means rejected
+    application_status: status,
     price: application.price,
     motivational_letter: application.motivational_letter,
   }
