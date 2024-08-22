@@ -35,13 +35,13 @@ function filterApplications(tab: string): Application[] {
     case 'Összes':
       break; // No filtering
     case 'Elfogadásra vár':
-      filteredApplications = filteredApplications.filter(app => app.application_status === 1);
-      break;
-    case 'Elfogadott':
       filteredApplications = filteredApplications.filter(app => app.application_status === 2);
       break;
-    case 'Elutasított':
+    case 'Elfogadott':
       filteredApplications = filteredApplications.filter(app => app.application_status === 3);
+      break;
+    case 'Elutasított':
+      filteredApplications = filteredApplications.filter(app => app.application_status === 4);
       break;
     default:
       return [];

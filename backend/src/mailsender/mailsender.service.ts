@@ -18,4 +18,17 @@ export class MailsenderService {
 
         await this.mailerSend.email.send(emailParams)
     }
+
+    async sendRegistrationEmailToGuest(user: User) {
+        const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
+        const recipient = [new Recipient(user.email, user.first_name)]
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipient)
+            .setReplyTo(sentFrom)
+            .setSubject("Regisztrációs email")
+            .setText(`Kattints a linkre a regisztrációhoz: http://localhost:5173/registration/?id=${user.id}`)
+
+        await this.mailerSend.email.send(emailParams)
+    }
 }

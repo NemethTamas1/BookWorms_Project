@@ -5,6 +5,7 @@ import UserLoginView from '../views/UserLoginView.vue';
 import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue';
 import MainPageComponent from '@/components/mainPage/MainPageComponent.vue';
 import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue';
+import RegistrationView from '@/views/RegistrationView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -55,6 +56,14 @@ const router = createRouter({
       component: ChangeGuestStatusView,
       meta: {
         title: 'Köszönjük a visszaigazolást!'
+      },
+    },
+    {
+      path: '/registration',
+      name: 'registration',
+      component: RegistrationView,
+      meta: {
+        title: 'Regisztráció'
       },
     },
   ]

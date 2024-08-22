@@ -104,4 +104,18 @@ export class UsersService {
         );
         return updatedUserStatus
     }
+
+    async changeUserStatusAndAddPasswordById(id: number, password: string){
+        const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{
+            sql: "UPDATE User SET status = :status, password = :password WHERE id = :id",
+            args: {
+                id: id as number,
+                status: 2,
+                password: password
+            }
+        }],
+            "write"
+        );
+        return changeUserStatusAndAddPassword
+    }
 }

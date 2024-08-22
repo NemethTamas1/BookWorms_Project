@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGetApplications, useGetUserById, useSendEmailToVerification, useUpdateApplication } from '@/composables/api/useApi';
+import { useGetApplications, useGetUserById, useSendEmailToRegistration, useSendEmailToVerification, useUpdateApplication } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { User } from '@/models/User';
 import { ref } from 'vue';
@@ -34,6 +34,18 @@ async function changeStatus(application: Application, status: number) {
   if(updatedApplicationResponseStatus == 200){
     props.applications.find(app => app == application)!.application_status = status
   }
+
+  if(status == 3){
+    sendEmailToRegistration(application)
+  }
+}
+
+async function sendEmailToRegistration(application: Application){
+  const user: User | number = await useGetUserById(application.user_id)
+  if(((user) as User).status == 1){
+    await useSendEmailToRegistration(((user) as User).id)
+    console.log("Email sent!")
+  }
 }
 
 
@@ -66,13 +78,13 @@ async function changeStatus(application: Application, status: number) {
           <td v-if="showPrice">{{ application.price }}</td>
           <td v-if="showMotivationalLetter">{{ application.motivational_letter }}</td>
           <td v-if="showCheckImage"> <!-- Add images in the table -->
-            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)" />
+            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)" />
           </td>
           <td v-if="showXImage">
-            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)"/>
+            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 4)"/>
           </td> 
           <td v-if="showBackImage">
-            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 1)"/>
+            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)"/>
           </td> 
         </tr>
       </tbody>

@@ -73,4 +73,15 @@ export class UsersController {
       throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
     }
   }
+
+  @Put('registration')
+  async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object) : Promise<ResultSet[]>{
+    try {
+      const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, password['password'])
+      return updatedUserResult
+    } catch (error) {
+      console.log('Error during registration!', error.stack);
+      throw new HttpException('Registration failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
 }

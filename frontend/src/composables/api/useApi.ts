@@ -96,6 +96,23 @@ export async function useSendEmailToVerification(userId: number): Promise<number
     }
 }
 
+export async function useSendEmailToRegistration(userId: number): Promise<number>{
+    try {
+        const response = await axios.put(localURL + 'mail/register', {id: userId})
+        if(response.status == 201){
+            console.log('Email sent!')
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
 export async function useGetUserById(userId: number): Promise<User | number> {
     try {
         const response = await axios.get(localURL + `user/?id=${userId}`)
@@ -120,5 +137,21 @@ export async function useUpdateApplicationStatusById(id: number): Promise<any>{
     } catch (error) {
         console.log(error)
         return null
+    }
+}
+
+export async function useAddUserPasswordAndUpdateStatus(userId: number, password: string) {
+    try {
+        const response = await axios.put(localURL + `user/registration/?id=${userId}`, {password : password})
+        if(response.status == 200){
+            return response.data
+        }
+        else{
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
     }
 }
