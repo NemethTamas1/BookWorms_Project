@@ -85,5 +85,38 @@ export class ApplicationsService {
 
     }
 
+    async getApplicationsByUserId(userId: number): Promise<Application[]> {
+      const applications: Application[] = []
+        const applicationFromDatabase = await this.dbConnect.turso.execute({
+            sql: "SELECT * FROM Application WHERE user_id = $userId",
+            args: {userId : userId}
+        });
+
+        if(applicationFromDatabase.rows.length > 0){
+          for (let i = 0; i < applicationFromDatabase["rows"].length; i++) {
+            const application: Application = {
+              id: applicationFromDatabase["rows"][i]["id"] as number,
+              book_id: applicationFromDatabase["rows"][i]["book_id"] as number,
+              user_id: applicationFromDatabase["rows"][i]["user_id"] as number,
+              application_status: applicationFromDatabase["rows"][i]["application_status"] as number,
+              price: applicationFromDatabase["rows"][i]["price"] as number | null,
+              motivational_letter: applicationFromDatabase["rows"][i]["motivational_letter"] as string
+            }
+            applications.push(application)
+          }
+          return applications
+        }
+    }
+
+    async getBiggestBid(bookId: number): Promise<number | null> {
+      const biggestBidFromDatabase = await this.dbConnect.turso.execute({
+          sql: "SELECT MAX(price) AS maxPrice FROM Application WHERE book_id = $bookId",
+          args: {bookId: bookId}
+      });
+      if(biggestBidFromDatabase.rows.length > 0){
+        return biggestBidFromDatabase.rows[0]["maxPrice"] as number
+      }
+      return null
+    }
 }
 

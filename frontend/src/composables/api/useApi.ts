@@ -77,3 +77,49 @@ export async function useUpdateApplication(updatedApplication: Application): Pro
     }
 }
 
+export async function useGetApplicationsByUserId(userId: number): Promise<Application[]> {
+    try {
+        const response = await axios.get(localURL + `applications/search-by-userid`, {
+            params: { userId: userId }
+        })
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+export async function useGetBiggestBid(bookId: number): Promise<number | null> {
+    try {
+        const response = await axios.get(localURL + `applications/search-by-bookid`,{
+            params: { bookId: bookId }
+        })
+        if(response.status == 200){
+            return response.data
+        }
+        else{
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+            console.log(error)
+            return 0
+    }
+}
+
+export async function useSendBid(application: Application, newBid: number, biggestBid: number): Promise<number> {
+    if(newBid <= biggestBid){
+        alert("A licited túl alacsony, addj meg egy magasabb összeget!")
+        return 0
+    }
+    else{
+        const updatedApplication = application
+        updatedApplication.price = newBid
+        try {
+            const response = await axios.put(localURL + `applications/${updatedApplication.id}`, updatedApplication)
+            return response.status
+        } catch (error: any) {
+            return error.response.status
+        }
+    }
+}
