@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useGetApplications, useUpdateApplication } from '@/composables/api/useApi';
+import { useGetApplications, useGetUserById, useSendEmailToVerification, useUpdateApplication } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
+import type { User } from '@/models/User';
 import { ref } from 'vue';
 const pic_x = new URL("@/assets/img/admin/x.png", import.meta.url).href;
 const pic_check = new URL("@/assets/img/admin/check.png", import.meta.url).href;

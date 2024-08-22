@@ -1,27 +1,34 @@
 <script setup lang="ts">
+    import { loginUserOrAdminAndStoreTokenIntoLocalStorage, user } from '@/composables/auth/auth';
     import { ref } from 'vue';
 
-    //Figyelni kívánt változók
-    const email = ref('');
-    const password = ref('');
-    const errorMessage = ref('');
+    // Figyelni kívánt változók
+    const email = ref<string>('');
+    const password = ref<string>('');
+    const errorMessage = ref<string>('');
 
-    //Rövid form check
-    const handleSubmit = () => {
+    // Rövid form check
+    const handleSubmit = async () => {
         if (!email.value || !password.value) {
             errorMessage.value = 'Kérjük töltse ki az összes mezőt.';
             return; 
         }
 
-        //Ellenőrzés
-        console.log('E-mail: ', email.value);
-        console.log('Jelszó: ', password.value);
+        const responseError:string|null = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
+        if(responseError){
+            errorMessage.value = responseError
+        }
 
-        //Form reset
+        // Form reset
         email.value='';
         password.value='';
     };
+
+    // Ellenőrzés
+    // console.log('E-mail: ', email.value);
+    // console.log('Jelszó: ', password.value);
 </script>
+
 
 <template>
     <div class="container">
@@ -30,12 +37,12 @@
                 <form @submit.prevent = handleSubmit>
                     <div class="mb-3">
                         <label for="email">E-mail</label>
-                        <input class="form-control" type="email" name="email" id="email" placeholder="example@example.com">
+                        <input v-model="email" class="form-control" type="email" name="email" id="email" placeholder="example@example.com">
                     </div>
 
                     <div class="mb-3">
                         <label for="password">Jelszó</label>
-                        <input class="form-control" type="password" name="password" id="password">
+                        <input v-model="password" class="form-control" type="password" name="password" id="password">
                     </div>
 
                     <div v-if="errorMessage" class="alert alert-danger">

@@ -48,6 +48,14 @@ const router = createRouter({
         title: 'Köszönjük a jelentkezését!'
       },
     },
+    {
+      path: '/changeGuestStatus',
+      name: 'changeGuestStatus',
+      component: ChangeGuestStatusView,
+      meta: {
+        title: 'Köszönjük a visszaigazolást!'
+      },
+    },
   ]
 })
 

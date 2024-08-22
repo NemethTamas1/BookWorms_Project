@@ -36,9 +36,11 @@ export async function useGetApplications(): Promise<Application[]> {
     }
 }
 
+
 export async function useNewUser(newUser: User): Promise<number> {
     try {
         const response = await axios.post(localURL + 'user', newUser)
+        console.log(response)
         return response.data
     } catch (error: any) {
         console.log(error)
@@ -76,3 +78,46 @@ export async function useUpdateApplication(updatedApplication: Application): Pro
     }
 }
 
+export async function useSendEmailToVerification(userId: number): Promise<number>{
+    try {
+        const response = await axios.post(localURL + 'mail', {id: userId})
+        if(response.status == 201){
+            console.log('Email sent!')
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useGetUserById(userId: number): Promise<User | number> {
+    try {
+        const response = await axios.get(localURL + `user/?id=${userId}`)
+        if(response.status == 200){
+            return response.data
+        }
+        else{
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useUpdateUserStatusById(id: number): Promise<any>{
+    try {
+        const response = await axios.put(localURL + `user/?id=${id}`)
+        console.log(response)
+        return response
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

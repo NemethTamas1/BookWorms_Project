@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useNewApplication, useNewUser } from '@/composables/api/useApi';
+import { useNewApplication, useNewUser, useSendEmailToVerification } from '@/composables/api/useApi';
+import { user } from '@/composables/auth/auth';
 import router from '@/router';
-import { HttpStatusCode } from 'node_modules/axios/index.cjs';
 import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.
 const props = defineProps(['selectedBook'])
-
 const first_name = ref<string>('');
 const family_name = ref<string>('');
 const email = ref<string>('');
@@ -43,7 +42,8 @@ const createNewUser = () => {
     first_name: first_name.value,
     family_name: family_name.value,
     email: email.value,
-    password: ''
+    password: '',
+    status: 1
   };
 
   return newUser;
@@ -67,6 +67,7 @@ const sendForm = async () => {
     console.log("Hiba a formon!");
   } else {
     const newUserIdFromDatabase: number = await useNewUser(createNewUser())
+    console.log(createNewUser)
     if (newUserIdFromDatabase != 0) {
       const useNewApplicationResponseStatus = await useNewApplication(createNewApplication(newUserIdFromDatabase))
       if (useNewApplicationResponseStatus == 400) {
@@ -74,6 +75,7 @@ const sendForm = async () => {
         console.log("Ezzel az email címmel erre a könyvre már történt jelentkezés!")
       }
       else if (useNewApplicationResponseStatus == 201) {
+        await useSendEmailToVerification(newUserIdFromDatabase)
         await router.push('/applicantReceived')
       }
     }
