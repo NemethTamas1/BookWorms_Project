@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 // See here how to get started:
 // https://playwright.dev/docs/intro
 
-const localURL = import.meta.env.VITE_URL;
+const localURL = 'http://localhost:3000/';
 
 test('Checking the title and the heading', async ({ page }) => {
   await page.goto(localURL+'books');
