@@ -1,7 +1,6 @@
 import type { Application } from "@/models/Application";
-import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
-import axios, { HttpStatusCode, type AxiosResponse } from "axios";
+import axios from "axios";
 import type { Book } from "@/models/Book";
 
 const localURL = 'http://localhost:3000/'
