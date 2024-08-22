@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { user } from './composables/auth/auth';
+import { useLoggedInUserStore } from './stores/userStore';
 
+const loggedInUser = useLoggedInUserStore()
 const router = useRouter();
 
 const navigateToLoginSite = () => {
@@ -9,13 +10,11 @@ const navigateToLoginSite = () => {
 }
 
 const logout = () => {
-  if(user.value?.status == 3){
+  if(loggedInUser.status == 2){
     localStorage.removeItem('userToken')
-    user.value = undefined
   }
   else{
     localStorage.removeItem('adminToken')
-    user.value = undefined
   }
 }
 

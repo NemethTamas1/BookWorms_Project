@@ -1,32 +1,39 @@
 <script setup lang="ts">
-    import { loginUserOrAdminAndStoreTokenIntoLocalStorage, user } from '@/composables/auth/auth';
-    import { ref } from 'vue';
+import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth';
+import type { User } from '@/models/User';
+import { useLoggedInUserStore } from '@/stores/userStore';
+import { ref } from 'vue';
 
-    // Figyelni kívánt változók
-    const email = ref<string>('');
-    const password = ref<string>('');
-    const errorMessage = ref<string>('');
+const userStore = useLoggedInUserStore()
 
-    // Rövid form check
-    const handleSubmit = async () => {
-        if (!email.value || !password.value) {
-            errorMessage.value = 'Kérjük töltse ki az összes mezőt.';
-            return; 
-        }
+// Figyelni kívánt változók
+const email = ref<string>('');
+const password = ref<string>('');
+const errorMessage = ref<string>('');
 
-        const responseError:string|null = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
-        if(responseError){
-            errorMessage.value = responseError
-        }
+// Rövid form check
+const handleSubmit = async () => {
+    if (!email.value || !password.value) {
+        errorMessage.value = 'Kérjük töltse ki az összes mezőt.';
+        return;
+    }
 
-        // Form reset
-        email.value='';
-        password.value='';
-    };
+    const response: string | User = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
+    if ((response as string).length > 0) {
+        errorMessage.value = response as string
+    }
+    else{
+        userStore.setLoggedInUser(response as User)
+    }
 
-    // Ellenőrzés
-    // console.log('E-mail: ', email.value);
-    // console.log('Jelszó: ', password.value);
+    // Form reset
+    email.value = '';
+    password.value = '';
+};
+
+// Ellenőrzés
+// console.log('E-mail: ', email.value);
+// console.log('Jelszó: ', password.value);
 </script>
 
 
@@ -34,10 +41,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form @submit.prevent = handleSubmit>
+                <form @submit.prevent=handleSubmit>
                     <div class="mb-3">
                         <label for="email">E-mail</label>
-                        <input v-model="email" class="form-control" type="email" name="email" id="email" placeholder="example@example.com">
+                        <input v-model="email" class="form-control" type="email" name="email" id="email"
+                            placeholder="example@example.com">
                     </div>
 
                     <div class="mb-3">
@@ -58,6 +66,7 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+
 .container {
     margin-top: 2rem;
     display: flex;
@@ -89,6 +98,6 @@ form {
 
 .btn {
     margin-top: 1rem;
-    background-color:#F5CD7E;
+    background-color: #F5CD7E;
 }
 </style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useNewApplication, useNewUser, useSendEmailToVerification } from '@/composables/api/useApi';
-import { user } from '@/composables/auth/auth';
 import router from '@/router';
 import { reactive, ref } from 'vue';
 // Prop létrehozása, mivel egz változót adtam át a szülőtől, azaz a BookComponent-ből, ő tudja, hogy ezt kapja meg. Több változó átadása is lehetséges.

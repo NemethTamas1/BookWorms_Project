@@ -21,7 +21,7 @@ export class MailsenderController {
                 return HttpCode(201)
             }
             else{
-                throw new HttpException("Felhasználó nem található!", HttpStatus.NOT_FOUND)
+                throw new HttpException("Felhasználó vagy jelentkezés nem található!", HttpStatus.NOT_FOUND)
             }
         } catch (error) {
             console.log(error)

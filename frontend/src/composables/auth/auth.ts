@@ -1,11 +1,9 @@
 import type { User } from "@/models/User";
 import axios from "axios";
-import { ref } from "vue";
 
-export const user = ref<User>()
-
-export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: string, password: string): Promise<null | string>{
+export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: string, password: string): Promise<string | User>{
     try {
+        let errorMessage = '';
         const response = await axios.post('http://localhost:3000/user/login', {
             email: email,
             password: password
@@ -15,21 +13,18 @@ export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: strin
         const responseUser = response.data.user
 
         if(responseUser.status == 2){
-            user.value = responseUser as User
             localStorage.setItem('userToken', token); // Store the token in local storage
             console.log('Logged in successfully!');
-            console.log(user.value)
-            return null
+            return responseUser
         }
         else if(responseUser.status == 3){
-            user.value = responseUser as User
             localStorage.setItem('adminToken', token);
             console.log('Logged in successfully!');
-            return null
+            return responseUser
         }
         else{
             console.log('Invalid user status!');
-            return null
+            return errorMessage = 'Hibás e-mail cím vagy jelszó.';
         }
     } catch (error) {
         console.log(error)

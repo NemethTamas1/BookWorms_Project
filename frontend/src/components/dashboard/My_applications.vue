@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, computed } from 'vue';
 import { useGetApplicationsByUserId, useGetBiggestBid, useGetBooks, useSendBid } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
-
+import { useLoggedInUserStore } from '@/stores/userStore';
 // Replace with actual user ID
+const loggedInUser = useLoggedInUserStore()
+console.log(loggedInUser)
 const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
