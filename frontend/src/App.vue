@@ -1,5 +1,24 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
+import { user } from './composables/auth/auth';
+
+const router = useRouter();
+
+const navigateToLoginSite = () => {
+  router.push('/login');
+}
+
+const logout = () => {
+  if(user.value?.status == 3){
+    localStorage.removeItem('userToken')
+    user.value = undefined
+  }
+  else{
+    localStorage.removeItem('adminToken')
+    user.value = undefined
+  }
+}
+
 </script>
 
 <template>
@@ -13,22 +32,34 @@ import { RouterView } from 'vue-router'
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#">Főoldal</a>
+            <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Könyvek</a>
+            <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Rólunk</a>
+            <RouterLink to="/" class="nav-link">Rólunk</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Kapcsolat</a>
+            <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
+          </li>
+        </ul>
+        <ul v-if="user == undefined" class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
+          </li>
+        </ul>
+        <ul v-if="user != undefined" class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <RouterLink to="/login" class="btn btn-outline-warning" v-on:click="logout()">Kijelentkezés</RouterLink>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <RouterView />
+  <Suspense>
+    <RouterView />
+  </Suspense>
 </template>
 
 <style>
@@ -40,10 +71,6 @@ import { RouterView } from 'vue-router'
   border-bottom: 2px solid #F5CD7E;
   padding: 0;
 }
-
-/* .navbar-brand>img {
-  width: 25%;
-} */
 
 .navbar-nav>li>a {
   color: #F5CD7E;

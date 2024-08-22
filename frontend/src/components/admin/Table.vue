@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useGetApplications, useUpdateApplication } from '@/composables/api/useApi';
+import { useGetApplications, useGetUserById, useSendEmailToRegistration, useSendEmailToVerification, useUpdateApplication } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
+import type { User } from '@/models/User';
 import { ref } from 'vue';
 const pic_x = new URL("@/assets/img/admin/x.png", import.meta.url).href;
 const pic_check = new URL("@/assets/img/admin/check.png", import.meta.url).href;
@@ -19,18 +20,32 @@ const props = defineProps<{
   showBackImage?: boolean;
 }>();
 
-
 // Method to change an application status (1 means pending, 2 means accepted, 3 means rejected)
-function changeStatus(application: Application, status: number) {
+async function changeStatus(application: Application, status: number) {
   let updatedApplication = {
     id: application.id,
     book_id: application.book_id,
     user_id: application.user_id,
-    application_status: status, //means rejected
+    application_status: status,
     price: application.price,
     motivational_letter: application.motivational_letter,
   }
-  useUpdateApplication(updatedApplication);
+  const updatedApplicationResponseStatus = await useUpdateApplication(updatedApplication);
+  if(updatedApplicationResponseStatus == 200){
+    props.applications.find(app => app == application)!.application_status = status
+  }
+
+  if(status == 3){
+    sendEmailToRegistration(application)
+  }
+}
+
+async function sendEmailToRegistration(application: Application){
+  const user: User | number = await useGetUserById(application.user_id)
+  if(((user) as User).status == 1){
+    await useSendEmailToRegistration(((user) as User).id)
+    console.log("Email sent!")
+  }
 }
 
 
@@ -63,13 +78,13 @@ function changeStatus(application: Application, status: number) {
           <td v-if="showPrice">{{ application.price }}</td>
           <td v-if="showMotivationalLetter">{{ application.motivational_letter }}</td>
           <td v-if="showCheckImage"> <!-- Add images in the table -->
-            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)" />
+            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)" />
           </td>
           <td v-if="showXImage">
-            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)"/>
+            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 4)"/>
           </td> 
           <td v-if="showBackImage">
-            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 1)"/>
+            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)"/>
           </td> 
         </tr>
       </tbody>

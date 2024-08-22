@@ -5,6 +5,8 @@ import { ApplicationsModule } from './applications/applications.module';
 import { UsersModule } from './users/users.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MailsenderModule } from './mailsender/mailsender.module';
+import { AuthModule } from './authentication/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { join } from 'path';
     BooksModule,
     ApplicationsModule,
     UsersModule,
+    MailsenderModule,
+    AuthModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
       exclude: ['/api*'], //correct? idk

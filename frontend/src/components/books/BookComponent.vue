@@ -1,12 +1,11 @@
  <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import BookCards from './subComponents/BookCards.vue'
 import BookForms from './subComponents/BookForms.vue'
 import type { Book } from '../../models/Book'
 import BookWelcome from './subComponents/BookWelcome.vue';
 
 // Refek létrehozása, hogy dinamikus legyen az adatáramlás.
-const formDisplayed = ref<boolean>(false)
 const selectedBook = ref<Book>({
     id: 0,
     title: '',
@@ -18,32 +17,15 @@ function setSelectedBook(book: Book){
     selectedBook.value = book
 }
 
-// A form láthatóságát állítja be. A true értéket szintén a BookCard componensből kapja, a loadDescription function-ön belül!
-function toggleForm(toogle: boolean){
-    if(toogle){
-        formDisplayed.value = true
-    }
-}
-
 </script>
 
 <template>
-    <div class="container-fluid topLabel mb-5">
-        <div class="topLabelText">
-            <h1>BookWorms</h1>
-            <h3>Ahol a motiváció és az irodalom kéz a kézben jár</h3>
-        </div>
-    </div>
-    <div>
-        <BookWelcome />
-    </div>
     <div>
         <!-- A @toggleForm és a @book emitek figyelése, és elkapása a belőlük származó adattal. A toggleForm és a setSelectedBook itt meghatározott functionok.--> 
-        <BookCards @toggleForm="toggleForm" @book="setSelectedBook"/>
+        <BookCards @book="setSelectedBook"/>
     </div>
     <div>
-        <!-- v-if-el megnézzük, hogy a form látható-e. v-bind-al az itteni selectedBook ref-et 'átadjuk' szintén selectedBook néven a BookForms, azaz a gyermek componensnek! Több változó átadása: {...prop1, ...prop2, ...prop3}-->
-        <BookForms v-if="formDisplayed" v-bind:selectedBook="selectedBook"/>
+        <BookForms :selectedBook="selectedBook"/>
     </div>
 
 </template>
@@ -58,7 +40,7 @@ function toggleForm(toogle: boolean){
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 30rem;
+    height: 100vh;
 }
 
 .topLabelText {
