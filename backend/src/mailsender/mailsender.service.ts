@@ -7,7 +7,7 @@ export class MailsenderService {
     mailerSend: MailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_TOKEN })
 
     async sendVerificationEmailToGuest(user: User, application_id: number) {
-        const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
+        const sentFrom = new Sender("MS_LTwPTa@trial-o65qngk1yzjlwr12.mlsender.net", "BookWorms")
         const recipient = [new Recipient(user.email, user.first_name)]
         const emailParams = new EmailParams()
             .setFrom(sentFrom)
@@ -20,7 +20,7 @@ export class MailsenderService {
     }
 
     async sendRegistrationEmailToGuest(user: User) {
-        const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
+        const sentFrom = new Sender("MS_LTwPTa@trial-o65qngk1yzjlwr12.mlsender.net", "BookWorms")
         const recipient = [new Recipient(user.email, user.first_name)]
         const emailParams = new EmailParams()
             .setFrom(sentFrom)
