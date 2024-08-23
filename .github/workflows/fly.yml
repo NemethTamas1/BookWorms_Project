@@ -28,7 +28,7 @@ jobs:
         working-directory: frontend
 
       - name: Build Frontend (Development)
-        run: npm run build:local
+        run: npm run build:localdev
         working-directory: frontend
 
       - name: Install Backend Dependencies
@@ -44,7 +44,7 @@ jobs:
         working-directory: frontend 
 
       - name: Run Playwright Tests
-        run: npm run build:localdev
+        run: test:e2e:localdev
         working-directory: frontend
 
       - uses: actions/upload-artifact@v4
