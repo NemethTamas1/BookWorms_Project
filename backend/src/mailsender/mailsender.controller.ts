@@ -3,7 +3,7 @@ import { MailsenderService } from './mailsender.service';
 import { UsersService } from 'src/users/users.service';
 import { ApplicationsService } from 'src/applications/applications.service';
 
-@Controller('mail')
+@Controller('api/mail')
 export class MailsenderController {
     constructor(
         private readonly mailsenderService: MailsenderService, 

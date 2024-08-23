@@ -3,6 +3,7 @@ import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/aut
 import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
 
 const userStore = useLoggedInUserStore()
 
@@ -10,6 +11,7 @@ const userStore = useLoggedInUserStore()
 const email = ref<string>('');
 const password = ref<string>('');
 const errorMessage = ref<string>('');
+const router = useRouter()
 
 // Rövid form check
 const handleSubmit = async () => {
@@ -28,6 +30,7 @@ const handleSubmit = async () => {
         localStorage.setItem('userEmail', userStore.getLoggedInUser.email.toString())
         localStorage.setItem('userFirstName', userStore.getLoggedInUser.first_name.toString())
         localStorage.setItem('userFamilyName', userStore.getLoggedInUser.family_name.toString())
+        router.push({ name: 'dashboardView' })
     }
 
     // Form reset

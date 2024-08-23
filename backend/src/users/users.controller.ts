@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { ResultSet } from '@libsql/client/.';
 
-@Controller('user')
+@Controller('api/user')
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 

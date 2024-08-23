@@ -8,7 +8,7 @@ export class AuthService {
     
     async generateTokenForUserOrAdmin(user: User): Promise<string> {
         const payload = { email: user.email, sub: user.id };
-        return this.jwtService.sign(payload);//Itt jön létre a token. A jwtService.sign egy objektumot vár, ami alapján generál kódot.
+        return this.jwtService.sign(payload);
     }
 }
 

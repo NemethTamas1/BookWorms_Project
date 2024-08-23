@@ -54,7 +54,7 @@ const cardPicsSrc =
         <div class="row my-4" :class="description ? 'detailedDescription' : ''">
             <div class="col-12 d-flex flex-column">
                 <p class="m-0">{{ description }}</p>
-                <button v-if="description" class="btn mt-3 mx-auto" data-bs-toggle="modal"
+                <button v-if="description" id="regisztralokALicitreGomb" class="btn mt-3 mx-auto" data-bs-toggle="modal"
                     data-bs-target="#bookFormModal">Regisztrálok a licitre</button>
             </div>
         </div>

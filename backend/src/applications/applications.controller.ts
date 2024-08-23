@@ -4,7 +4,7 @@ import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
 import { Response } from 'express';
 
-@Controller('applications')
+@Controller('api/applications')
 export class ApplicationsController {
     constructor(
         private readonly applicationService: ApplicationsService,
