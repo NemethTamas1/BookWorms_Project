@@ -1,4 +1,4 @@
-name: Fly Deploy
+name: Fly Deploy to the dev page
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
         working-directory: frontend
 
       - name: Build Frontend (Development)
-        run: npm run build:local
+        run: npm run build:localdev
         working-directory: frontend
 
       - name: Install Backend Dependencies

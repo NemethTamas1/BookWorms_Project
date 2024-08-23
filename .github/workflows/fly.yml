@@ -44,7 +44,7 @@ jobs:
         working-directory: frontend 
 
       - name: Run Playwright Tests
-        run: npm run test:e2e:local
+        run: npm run build:localdev
         working-directory: frontend
 
       - uses: actions/upload-artifact@v4
