@@ -5,9 +5,10 @@ import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
 import { useLoggedInUserStore } from '@/stores/userStore';
 // Replace with actual user ID
-const loggedInUser = useLoggedInUserStore()
-console.log(loggedInUser)
-const userId = 	269 as number;
+const userStore = useLoggedInUserStore()
+const userId = userStore.getLoggedInUser.id
+console.log(userId)
+//const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
 const applicationsResponse = await useGetApplicationsByUserId(userId);
