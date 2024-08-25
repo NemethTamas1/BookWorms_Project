@@ -81,7 +81,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 2">
+            <div v-if="application.application_status === 3">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 
