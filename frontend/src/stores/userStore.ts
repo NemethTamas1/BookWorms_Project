@@ -3,15 +3,17 @@ import { defineStore } from 'pinia'
 import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth'
 import type { User } from '@/models/User'
 
+const loggedInUser = ref<User>({
+  id: 0,
+  first_name: '',
+  family_name: '',
+  email: '',
+  password: '',
+  status: 0
+})
+
 export const useLoggedInUserStore = defineStore('user', () => {
-  const loggedInUser = ref<User>({
-    id: 0,
-    first_name: '',
-    family_name: '',
-    email: '',
-    password: '',
-    status: 0
-  })
+  
 
   if(localStorage.getItem("userId")){
     loggedInUser.value.id = parseInt(localStorage.getItem("userId")!)
@@ -37,3 +39,9 @@ export const useLoggedInUserStore = defineStore('user', () => {
 
   return { loggedInUser, setLoggedInUser, getLoggedInUser }
 })
+
+
+export const useLogOutUser = () => {
+  localStorage.clear();
+  loggedInUser.value.id = 0;
+}

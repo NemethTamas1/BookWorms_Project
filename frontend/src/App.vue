@@ -1,22 +1,37 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { useLoggedInUserStore } from './stores/userStore';
+import { useLoggedInUserStore, useLogOutUser } from './stores/userStore';
+import { computed, ref } from 'vue';
 
-const loggedInUser = useLoggedInUserStore()
+const userStore = useLoggedInUserStore()
 const router = useRouter();
+
+let userId = computed(() => userStore.getLoggedInUser?.id || 0);
+
 
 const navigateToLoginSite = () => {
   router.push('/login');
 }
 
-const logout = () => {
-  if(loggedInUser.status == 2){
-    localStorage.removeItem('userToken')
-  }
-  else{
-    localStorage.removeItem('adminToken')
-  }
+const handleSelection = (event: any) => {
+  const selectedValue = event.target.value;
+      if (selectedValue === "logOut") {
+        console.log("Első: ", userId.value)
+        useLogOutUser();
+        navigateToLoginSite()
+        console.log("Második: ", userId.value)
+      }
 }
+
+
+// const logout = () => {
+//   if(loggedInUser.status == 2){
+//     localStorage.removeItem('userToken')
+//   }
+//   else{
+//     localStorage.removeItem('adminToken')
+//   }
+// }
 
 </script>
 
@@ -43,15 +58,16 @@ const logout = () => {
             <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
           </li>
         </ul>
-        <ul v-if="user == undefined" class="navbar-nav ms-auto">
+        <ul v-if="userId == 0" class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
           </li>
         </ul>
-        <ul v-if="user != undefined" class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <RouterLink to="/login" class="btn btn-outline-warning" v-on:click="logout()">Kijelentkezés</RouterLink>
-          </li>
+        <ul v-if="userId != 0" class="navbar-nav ms-auto">
+          <select class="form-select" name="" id="" @change="handleSelection">
+              <option value="">Fiókom</option>
+              <option value="logOut">Kijelentkezés</option>
+          </select>
         </ul>
       </div>
     </div>
