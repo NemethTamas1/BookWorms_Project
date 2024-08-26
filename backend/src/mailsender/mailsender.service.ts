@@ -15,6 +15,7 @@ export class MailsenderService {
             .setReplyTo(sentFrom)
             .setSubject("Visszaigazoló email jelentkezéshez")
             .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: https://bookworms.fly.dev/changeGuestStatus/?id=${application_id}`)
+            
 
         await this.mailerSend.email.send(emailParams)
     }

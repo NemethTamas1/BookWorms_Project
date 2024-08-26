@@ -59,11 +59,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../../assets/img/Background-1.png");
+    background-image: url("../../assets/img/avif/Background-1.avif");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    background-color: #dcb750cf;
 }
 
 .topLabelText {
