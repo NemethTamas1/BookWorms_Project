@@ -4,31 +4,81 @@ import { User } from 'src/users/user.interface';
 
 @Injectable()
 export class MailsenderService {
-    mailerSend: MailerSend = new MailerSend({ apiKey: process.env.MAILERSEND_TOKEN })
+  mailerSend: MailerSend = new MailerSend({
+    apiKey: process.env.MAILERSEND_TOKEN,
+  });
 
-    async sendVerificationEmailToGuest(user: User, application_id: number) {
-        const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
-        const recipient = [new Recipient(user.email, user.first_name)]
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipient)
-            .setReplyTo(sentFrom)
-            .setSubject("Visszaigazoló email jelentkezéshez")
-            .setText(`Kattints a linkre a jelentkezés véglegesítéséhez: https://bookworms.fly.dev/changeGuestStatus/?id=${application_id}`)
+  async sendVerificationEmailToGuest(user: User, application_id: number) {
+    const sentFrom = new Sender(
+      'MS_zXBZBX@trial-3z0vklod5w1g7qrx.mlsender.net',
+      'bookworms',
+    );
+    const recipient = [new Recipient(user.email, user.first_name)];
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipient)
+      .setReplyTo(sentFrom)
+      .setSubject('Visszaigazoló email jelentkezéshez').setHtml(`
+       
+<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
+  <div style="background-color: #fff8dc; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1); max-width: 600px; margin: 0 auto;">
+    
+    <div style="text-align: center;">
+      <img src="https://kephost.net/p/MTM0ODc2NQ.png" alt="Bookworms céges kanapé" style="width: 66.66%; max-width: 150px; max-height: 100px;">
+      <h1 style="font-size: 24px; color: #3c64ae; margin-top: 20px;">Sikeres Regisztráció!</h1>
+      <hr style="border: 1px solid rgb(191, 125, 2); width: 80%;">
+    </div>
+    
+    <h2 style="margin-top: 20px; color: #333; font-size: 20px;">Kérjük erősítse meg e-mail címét!</h2>
+    <p style="font-size: 16px; color: #333;">Tisztelt ${user.first_name}!</p>
+    <p style="font-size: 16px; color: #333;">
+      Kérjük, a lenti gombra kattintva erősítse meg az e-mail címét, hogy megbizonyodhassunk jelentkezési szándékáról és valóban Ön jelentkezett a könyvre!
+    </p>
+    
+    <div style="margin: 20px 0; text-align: left;">
+      <a href="https://bookworms.fly.dev/changeGuestStatus/?id=${application_id}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+    </div>
 
-        await this.mailerSend.email.send(emailParams)
-    }
+    <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
+    <p style="font-family: 'Dancing Script', cursive; font-size: 1rem;">BookWorms Csapata</p>
+    
+    <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
+    <p style="font-size: 14px; color: #000000; text-align: center;">
+      Tekintse meg weboldalunk számtalan ritka és felbecsülhetetlen értékű könyvritkaságait és jelentkezzen aukcióinkra még ma!<br>
+      <a href="https://bookworms.fly.dev/books" style="color: #3c64ae;">BookWorms</a><br>
+      <i>Ahol a motiváció és az irodalom kéz a kézben jár.</i>
+    </p>
+    <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
+    
+    <div style="text-align: center;">
+      <img src="https://kephost.net/p/MTM0ODc2NA.png" alt="Bookworms logója" style="max-width: 100px; max-height: 100px;">
+    </div>
+    
+    <p style="font-size: 12px; color: #666; text-align: justify;">
+      Ezt az e-mailt azért kapta, mert a weboldalunkon jelentkezett egy Ön által kiválasztott könyvre. Amennyiben Ön nem jelentkezett oldalunkon érdeklődőként könyvritkaságaink egyikére, ezesetben elnézését kérjük és levelünket tekintse tárgytalannak!
+    </p>
+  </div>
+</div>
+      `);
 
-    async sendRegistrationEmailToGuest(user: User) {
-        const sentFrom = new Sender("MS_5UXyrv@trial-z3m5jgr5zedldpyo.mlsender.net", "BookWorms")
-        const recipient = [new Recipient(user.email, user.first_name)]
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipient)
-            .setReplyTo(sentFrom)
-            .setSubject("Regisztrációs email")
-            .setText(`Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}`)
+    await this.mailerSend.email.send(emailParams);
+  }
 
-        await this.mailerSend.email.send(emailParams)
-    }
+  async sendRegistrationEmailToGuest(user: User) {
+    const sentFrom = new Sender(
+      'MS_LTwPTa@trial-o65qngk1yzjlwr12.mlsender.net',
+      'BookWorms',
+    );
+    const recipient = [new Recipient(user.email, user.first_name)];
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipient)
+      .setReplyTo(sentFrom)
+      .setSubject('Regisztrációs email')
+      .setText(
+        `Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}`,
+      );
+
+    await this.mailerSend.email.send(emailParams);
+  }
 }

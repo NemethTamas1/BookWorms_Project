@@ -79,6 +79,9 @@ const logout = () => {
 .navbar-nav>li>a:hover {
   color: white;
 }
+.navbar-nav > li > .nav-link.router-link-active {
+  color: #F5CD7E;
+}
 
 * {
   padding: 0px;
