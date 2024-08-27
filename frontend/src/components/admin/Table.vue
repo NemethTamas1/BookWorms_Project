@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useGetApplications, useGetUserById, useSendEmailToRegistration, useSendEmailToVerification, useUpdateApplication } from '@/composables/api/useApi';
+import { useGetUserById, useSendEmailToRegistration, useUpdateApplication } from '@/composables/api/useApi';
+import { adminToken } from '@/composables/auth/auth';
 import type { Application } from '@/models/Application';
 import type { User } from '@/models/User';
-import { ref } from 'vue';
 const pic_x = new URL("@/assets/img/admin/x.png", import.meta.url).href;
 const pic_check = new URL("@/assets/img/admin/check.png", import.meta.url).href;
 const pic_back = new URL("@/assets/img/admin/back.png", import.meta.url).href;
@@ -41,7 +41,7 @@ async function changeStatus(application: Application, status: number) {
 }
 
 async function sendEmailToRegistration(application: Application){
-  const user: User | number = await useGetUserById(application.user_id)
+  const user: User | number = await useGetUserById(application.user_id, adminToken!)
   if(((user) as User).status == 1){
     await useSendEmailToRegistration(((user) as User).id)
     console.log("Email sent!")

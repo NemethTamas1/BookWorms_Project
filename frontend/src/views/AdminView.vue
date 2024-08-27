@@ -5,6 +5,7 @@ import Table from '@/components/admin/Table.vue';
 import { useGetApplications, useGetBooks } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
+import { adminToken } from '@/composables/auth/auth';
 
 // Define the tabs
 const tabs = ['Összes', 'Nem visszaigazolt', 'Elfogadásra vár', 'Elfogadott', 'Elutasított'];
@@ -17,9 +18,8 @@ const itemsPerPage = 10; // Number of items per page
 const currentPage = ref(0);
 const totalPages = ref(0);
 
-const applicationsResponse = await useGetApplications();
+const applicationsResponse = await useGetApplications(adminToken!);
 const applications = ref<Application[]>(applicationsResponse)
-
 const booksResponse = await useGetBooks();
 const books = ref<Book[]>(booksResponse)
 

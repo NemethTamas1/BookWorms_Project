@@ -27,9 +27,9 @@ const handleSubmit = async () => {
     else{
         userStore.setLoggedInUser(response as User)
         localStorage.setItem('userId', userStore.getLoggedInUser.id.toString())
-        localStorage.setItem('userEmail', userStore.getLoggedInUser.email.toString())
-        localStorage.setItem('userFirstName', userStore.getLoggedInUser.first_name.toString())
-        localStorage.setItem('userFamilyName', userStore.getLoggedInUser.family_name.toString())
+        // localStorage.setItem('userEmail', userStore.getLoggedInUser.email.toString())
+        // localStorage.setItem('userFirstName', userStore.getLoggedInUser.first_name.toString())
+        // localStorage.setItem('userFamilyName', userStore.getLoggedInUser.family_name.toString())
         router.push({ name: 'dashboardView' })
     }
 

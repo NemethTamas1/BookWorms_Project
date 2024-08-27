@@ -1,6 +1,9 @@
 import type { User } from "@/models/User";
 import axios from "axios";
 
+export const adminToken = localStorage.getItem('adminToken')
+export const userToken = localStorage.getItem('userToken')
+
 const baseUrl = import.meta.env.VITE_URL + 'api/'
 
 export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: string, password: string): Promise<string | User>{
