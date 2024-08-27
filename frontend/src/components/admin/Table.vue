@@ -86,19 +86,23 @@ table {
   width: 80%;
   border-collapse: collapse;
   margin: auto;
+  
 }
 
 th, td {
   border: 1px solid #f8d985;
   padding: 8px;
+  
 }
 
+/* ITT MÉG NEM KAPJA MEG A TÁBLÁZAT EZEKET A SZÍNEKET !!! */
 tr:nth-child(even){
-  background-color: #f5e8c3;
+  background-color: #f9e3a8;
 }
 
 th {
   background-color: #f9e3a8;
+  
 }
 
 h2{
