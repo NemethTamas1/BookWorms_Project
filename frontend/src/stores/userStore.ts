@@ -1,6 +1,5 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth'
 import type { User } from '@/models/User'
 
 export const useLoggedInUserStore = defineStore('user', () => {

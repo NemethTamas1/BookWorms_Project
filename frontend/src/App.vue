@@ -2,7 +2,7 @@
 import { RouterView, useRouter } from 'vue-router'
 import { useLoggedInUserStore } from './stores/userStore';
 
-const loggedInUser = useLoggedInUserStore()
+const loggedInUser = useLoggedInUserStore().loggedInUser
 const router = useRouter();
 
 const navigateToLoginSite = () => {
@@ -10,7 +10,7 @@ const navigateToLoginSite = () => {
 }
 
 const logout = () => {
-  if(loggedInUser.status == 2){
+  if(loggedInUser!.status == 2){
     localStorage.removeItem('userToken')
   }
   else{
@@ -43,12 +43,12 @@ const logout = () => {
             <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
           </li>
         </ul>
-        <ul v-if="user == undefined" class="navbar-nav ms-auto">
+        <ul v-if="loggedInUser == undefined" class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
           </li>
         </ul>
-        <ul v-if="user != undefined" class="navbar-nav ms-auto">
+        <ul v-if="loggedInUser != undefined" class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning" v-on:click="logout()">Kijelentkezés</RouterLink>
           </li>

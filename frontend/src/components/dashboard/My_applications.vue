@@ -5,7 +5,7 @@ import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
 import { useLoggedInUserStore } from '@/stores/userStore';
 // Replace with actual user ID
-const loggedInUser = useLoggedInUserStore()
+const loggedInUser = useLoggedInUserStore().loggedInUser
 console.log(loggedInUser)
 const userId = 	269 as number;
 
