@@ -1,23 +1,15 @@
-
 import { Injectable } from '@nestjs/common';
-import { Counter, register } from 'prom-client';
+import { booksAccessedCounter, register } from './metrics.config';
 
 @Injectable()
 export class MetricsService {
-  private readonly booksAccessedCounter: Counter<string>;
-
-  constructor() {
-    // Register the metric once in the constructor
-    this.booksAccessedCounter = new Counter({
-      name: 'books_accessed',
-      help: 'Number of times the books endpoint was accessed',
-    });
+  incrementBooksAccessed() {
+    // Increment the counter when books endpoint is accessed
+    booksAccessedCounter.inc();
   }
 
-  async getMetrics() {
-    // Increment the counter
-    this.booksAccessedCounter.inc();
-    // Return all metrics
+  async getMetrics(): Promise<string> {
+    // Return all metrics from the registry
     return register.metrics();
   }
 }
