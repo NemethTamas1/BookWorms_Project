@@ -81,14 +81,22 @@ function changePage(newPage: number) {
 
 <template>
   <div>
-    <h1>Jelentkezések:</h1>
+    <div class="jelenkezesek">
+        <div>
+          <h1>Jelentkezések</h1>
+        </div>
+    </div>
+  </div>
+  
+  
+
     <!-- Dropdown for filtering by book ID -->
     <div class="filter-container">
-      <label for="bookIdSelect">Szűrés a könyv ID alapján: </label>
+      <label for="bookIdSelect">Szűrés könyv ID alapján: </label>
       <select id="bookIdSelect" v-model="selectedBookId">
-        <option :value="null">Nincs</option> <!-- Correctly handle null for 'All' -->
+        <option :value="null">Összes</option> <!-- Correctly handle null for 'All' -->
         <option v-for="book in books" :key="book.id" :value="book.id">
-          {{ book.id }}
+          {{ book.id +". könyv" }}
         </option>
       </select>
     </div>
@@ -173,7 +181,7 @@ function changePage(newPage: number) {
         />
       </template>
     </Tabs>
-  </div>
+
 </template>
 <style scoped>
 .pagination {
@@ -186,9 +194,88 @@ function changePage(newPage: number) {
 .pagination button {
   margin: 0 10px;
   padding: 5px 10px;
+  background-color: #f5e8c3;
+  border-radius: 10px;
+  border: 2px solid #faeabe;
+  color: rgb(37, 24, 1);
+}
+
+.pagination button:hover {
+  border: 2px solid #f6ba14;
+  background-color: #f3b50b;
+  color: rgb(37, 24, 1);
 }
 
 .pagination span {
   margin: 0 10px;
+  color: #d3a72e;
 }
+
+
+
+.jelenkezesek {
+    position: relative;
+    width: 100%;
+    height: 23vh; 
+    overflow: hidden; /* Ha a tartalom kilógna a konténerből */
+}
+
+.jelenkezesek::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("./src/assets/img/Background-1.png"); 
+    background-size: contain;
+    background-position: center;
+    opacity: 0.48; 
+    z-index: 0; /* Háttérként való megjelenítés */
+}
+
+.jelenkezesek h1 {
+display: flex;
+position: relative;
+z-index: 1; /* A szöveg a kép előtt lesz */
+color: #201a02; 
+justify-content: center;
+text-shadow: 2px 2px 5px #120d01;
+font-family: "Playfair Display", serif;
+font-style: italic;
+font-size: 3rem;
+margin-top: 9vh;
+text-shadow: 2px 2px 2px #574d0cc4;
+background-color: #9f91343e;
+box-shadow: 0 0 50px 50px #9f91343e;
+  
+}
+
+.filter-container{
+  text-align: center;
+  margin: 2rem 0; 
+}
+#bookIdSelect {
+  margin: 0 1.5rem;
+  padding: 5px 10px;
+  background-color: #f5e8c3;
+  border-radius: 10px;
+  border: 2px solid #faeabe;
+  color: rgb(37, 24, 1);
+}
+
+#bookIdSelect:hover {
+  border: 2px solid #f6ba14;
+  background-color: #f3b50b;
+  color: rgb(37, 24, 1);
+}
+
+label {
+  text-align: center;
+  color: #d3a72e;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
 </style>
