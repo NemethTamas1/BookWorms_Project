@@ -21,12 +21,13 @@ export async function useGetBooks(): Promise<Book[]> {
     }
 }
 
-export async function useGetApplications(): Promise<Application[]> {
+export async function useGetApplications(token: string): Promise<Application[]> {
     try {
         const response = await axios.get(baseURL + 'applications', {
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
+                'Authorization' : `Admin ${token}`
             }
         })
         return response.data
@@ -113,9 +114,13 @@ export async function useSendEmailToRegistration(userId: number): Promise<number
     }
 }
 
-export async function useGetUserById(userId: number): Promise<User | number> {
+export async function useGetUserById(userId: number, token: string): Promise<User | number> {
     try {
-        const response = await axios.get(baseURL + `user/?id=${userId}`)
+        const response = await axios.get(baseURL + `user/?id=${userId}`, {
+            headers: {
+                'Authorization' : `Admin ${token}`
+            }
+        })
         if(response.status == 200){
             return response.data
         }

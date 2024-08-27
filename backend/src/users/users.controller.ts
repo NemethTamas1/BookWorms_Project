@@ -1,7 +1,8 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, Put } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { ResultSet } from '@libsql/client/.';
+import { AuthGuardByAdmin } from 'src/authentication/auth.guard';
 
 @Controller('api/user')
 export class UsersController {
@@ -9,6 +10,7 @@ export class UsersController {
 
   constructor(private readonly userService: UsersService) {}
 
+  @UseGuards(AuthGuardByAdmin)
   @Get()
   async getUser(@Query('id') id: number): Promise<User>{
     try {

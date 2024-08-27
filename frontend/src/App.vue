@@ -6,7 +6,7 @@ import { computed, ref } from 'vue';
 const userStore = useLoggedInUserStore()
 const router = useRouter();
 
-let userId = computed(() => userStore.getLoggedInUser?.id || 0);
+let userId = computed(() => userStore.getLoggedInUser.id);
 
 
 const navigateToLoginSite = () => {
@@ -20,6 +20,9 @@ const handleSelection = (event: any) => {
         useLogOutUser();
         navigateToLoginSite()
         console.log("Második: ", userId.value)
+      }
+      else if(selectedValue === "myDashboard"){
+        router.push('/dashboard')
       }
 }
 
@@ -65,7 +68,8 @@ const handleSelection = (event: any) => {
         </ul>
         <ul v-if="userId != 0" class="navbar-nav ms-auto">
           <select class="form-select" name="" id="" @change="handleSelection">
-              <option value="">Fiókom</option>
+            <option value="valasszon">Válasszon a lehetőségek közül...</option>  
+            <option value="myDashboard">Fiókom</option>
               <option value="logOut">Kijelentkezés</option>
           </select>
         </ul>

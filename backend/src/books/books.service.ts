@@ -9,7 +9,6 @@ export class BooksService {
   async getBooks() {
     const books: Book[] = [];
     const bookFromDatabase = await this.dbConnect.turso.execute("SELECT * FROM Book")
-    console.log(bookFromDatabase["rows"])
     for (let i = 0; i < bookFromDatabase["rows"].length; i++) {
       const book: Book = {
         id: bookFromDatabase["rows"][i]["id"] as number,

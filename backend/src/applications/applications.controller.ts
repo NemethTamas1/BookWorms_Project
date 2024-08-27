@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException, HttpCode, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException, HttpCode, Query, UseGuards } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
 import { Response } from 'express';
+import { AuthGuardByAdmin, AuthGuardByUser } from 'src/authentication/auth.guard';
 
 @Controller('api/applications')
 export class ApplicationsController {
@@ -30,6 +31,7 @@ export class ApplicationsController {
           }
     }
 
+    @UseGuards(AuthGuardByAdmin)
     @Get()
     async getAllApplications(): Promise<Application[]>{
         return await this.applicationService.getApplications();
@@ -62,6 +64,7 @@ export class ApplicationsController {
       }
     }
 
+    //@UseGuards(AuthGuardByUser)
     @Get('search-by-userid')
     async getApplicationsByUserId(@Query('userId') userId: number): Promise<Application[]> {
         try {
@@ -80,7 +83,7 @@ export class ApplicationsController {
     async getBiggestBid(@Query('bookId') bookId: number): Promise<number | number> {
         try {
             const biggestBid = await this.applicationService.getBiggestBid(bookId);
-            if (!biggestBid) {
+            if (biggestBid == null) {
                 throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
             }
             return biggestBid as number;

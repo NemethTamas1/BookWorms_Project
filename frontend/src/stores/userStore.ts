@@ -1,6 +1,5 @@
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth'
 import type { User } from '@/models/User'
 
 const loggedInUser = ref<User>({
@@ -13,20 +12,18 @@ const loggedInUser = ref<User>({
 })
 
 export const useLoggedInUserStore = defineStore('user', () => {
-  
-
   if(localStorage.getItem("userId")){
     loggedInUser.value.id = parseInt(localStorage.getItem("userId")!)
   }
-  if(localStorage.getItem("userEmail")){
-    loggedInUser.value.email = localStorage.getItem("userEmail")!
-  }
-  if(localStorage.getItem("userFirstName")){
-    loggedInUser.value.first_name = localStorage.getItem("userFirstName")!
-  }
-  if(localStorage.getItem("userFamilyName")){
-    loggedInUser.value.family_name = localStorage.getItem("userFamilyName")!
-  }
+  // if(localStorage.getItem("userEmail")){
+  //   loggedInUser.value.email = localStorage.getItem("userEmail")!
+  // }
+  // if(localStorage.getItem("userFirstName")){
+  //   loggedInUser.value.first_name = localStorage.getItem("userFirstName")!
+  // }
+  // if(localStorage.getItem("userFamilyName")){
+  //   loggedInUser.value.family_name = localStorage.getItem("userFamilyName")!
+  // }
 
   const getLoggedInUser = computed(() => loggedInUser.value)
   
@@ -37,7 +34,7 @@ export const useLoggedInUserStore = defineStore('user', () => {
     loggedInUser.value.email = user.email
   }
 
-  return { loggedInUser, setLoggedInUser, getLoggedInUser }
+  return { setLoggedInUser, getLoggedInUser }
 })
 
 
