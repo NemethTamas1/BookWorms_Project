@@ -9,8 +9,13 @@ const props = defineProps<{
 // Use the tabs prop from the props object
 const selectedTab = ref(props.tabs[0]);
 
+// Define the emit function
+const emit = defineEmits(['tab-changed']);
+
 function selectTab(tab: string) {
   selectedTab.value = tab;
+  // Emit the event to inform the parent component about the tab change
+  emit('tab-changed', tab);
 }
 </script>
 

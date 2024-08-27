@@ -1,10 +1,12 @@
 import type { User } from "@/models/User";
 import axios from "axios";
 
+const baseUrl = import.meta.env.VITE_URL + 'api/'
+
 export async function loginUserOrAdminAndStoreTokenIntoLocalStorage(email: string, password: string): Promise<string | User>{
     try {
         let errorMessage = '';
-        const response = await axios.post('http://localhost:3000/user/login', {
+        const response = await axios.post(baseUrl+ 'user/login', {
             email: email,
             password: password
         });

@@ -1,10 +1,10 @@
-name: Fly Deploy
+name: Fly Deploy to the dev page
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ dev ]
     
 jobs:
   setup:
@@ -67,7 +67,7 @@ jobs:
         working-directory: frontend
 
       - name: Build Frontend (Production)
-        run: npm run build:prod
+        run: npm run build:dev
         working-directory: frontend
 
       - name: Set up Flyctl
@@ -76,6 +76,6 @@ jobs:
       - name: Deploy Backend
         run: |
           cd backend
-          flyctl deploy --no-cache
+          flyctl deploy -c fly.dev.toml --no-cache
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
