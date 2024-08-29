@@ -1,45 +1,15 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { useLoggedInUserStore, useLogOutUser } from './stores/userStore';
-import { computed, ref } from 'vue';
 
-const userStore = useLoggedInUserStore()
 const router = useRouter();
-
-let userId = computed(() => userStore.getLoggedInUser.id);
-
 
 const navigateToLoginSite = () => {
   router.push('/login');
 }
-
-const handleSelection = (event: any) => {
-  const selectedValue = event.target.value;
-      if (selectedValue === "logOut") {
-        console.log("Első: ", userId.value)
-        useLogOutUser();
-        navigateToLoginSite()
-        console.log("Második: ", userId.value)
-      }
-      else if(selectedValue === "myDashboard"){
-        router.push('/dashboard')
-      }
-}
-
-
-// const logout = () => {
-//   if(loggedInUser.status == 2){
-//     localStorage.removeItem('userToken')
-//   }
-//   else{
-//     localStorage.removeItem('adminToken')
-//   }
-// }
-
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"><img src="./assets/img/kesz_resized.png" alt=""></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -52,7 +22,7 @@ const handleSelection = (event: any) => {
             <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
+            <RouterLink to="/" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/" class="nav-link">Rólunk</RouterLink>
@@ -61,17 +31,10 @@ const handleSelection = (event: any) => {
             <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
           </li>
         </ul>
-        <ul v-if="userId == 0" class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
           </li>
-        </ul>
-        <ul v-if="userId != 0" class="navbar-nav ms-auto">
-          <select class="form-select" name="" id="" @change="handleSelection">
-            <option value="valasszon">Válasszon a lehetőségek közül...</option>  
-            <option value="myDashboard">Fiókom</option>
-              <option value="logOut">Kijelentkezés</option>
-          </select>
         </ul>
       </div>
     </div>
@@ -85,7 +48,7 @@ const handleSelection = (event: any) => {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 .navbar {
-  background-color: #191416;
+  background-color: #191814;
   border-top: 2px solid #F5CD7E;
   border-bottom: 2px solid #F5CD7E;
   padding: 0;
@@ -98,9 +61,6 @@ const handleSelection = (event: any) => {
 
 .navbar-nav>li>a:hover {
   color: white;
-}
-.navbar-nav > li > .nav-link.router-link-active {
-  color: #F5CD7E;
 }
 
 * {

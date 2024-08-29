@@ -88,8 +88,8 @@ const handleSubmit = async () => {
 
 
 form {
-    font-family: "Playfair Display SC", serif;
-    background-color: #191416;
+    margin-top: 4rem;
+    background-color: #191814;
     padding: 30px;
     border-radius: 5px;
     border: 2px solid #F5CD7E;
@@ -103,8 +103,17 @@ form {
     margin-bottom: .5rem;
 }
 
+label {
+    margin-bottom: 1rem;
+  text-align: center;
+  color: #d3a72e;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
 .btn {
     margin-top: 1rem;
     background-color: #F5CD7E;
+    font-family: "Playfair Display", serif;
 }
 </style>
