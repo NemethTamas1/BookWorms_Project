@@ -360,34 +360,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.row.g-4 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.row.g-4 .col-lg-4 {
-  flex: 0 0 33.3333%; /* Az első sorban 3 elem */
-  max-width: 33.3333%;
-}
-
-@media (max-width: 1200px) {
-  /* XL méret alatti elrendezés */
-
-  /* Az első két sorban 2 elem legyen */
-  .row.g-4 .col-sm-6,
-  .row.g-4 .col-md-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-
-  /* Az utolsó sorban 1 elem legyen */
-  .row.g-4 .col-lg-4:nth-child(5) {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
-
 #aboutus {
   color: rgb(255, 174, 0);
   padding: 20px;
