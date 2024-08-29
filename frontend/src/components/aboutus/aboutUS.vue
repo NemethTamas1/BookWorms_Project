@@ -111,7 +111,7 @@ onMounted(() => {
       </div>
       <div class="row g-4 justify-content-center">
         <!-- Első csapat tag -->
-        <div class="col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
           <div class="team-item rounded">
             <div class="team-img">
               <img
@@ -119,18 +119,30 @@ onMounted(() => {
                 class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
-              <div class="team-icon">
-                <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+              <div class="col team-icon">
+                <a
+                  class="btn btn-primary btn-sm-square text-white rounded-circle mt-1 mb-xl-3"
+                  href=""
+                >
                   <i class="fas fa-share-alt"></i>
                 </a>
-                <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                <div class="col team-icon-share">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-0" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
@@ -144,29 +156,50 @@ onMounted(() => {
             </div>
           </div>
         </div>
+
         <!-- Második csapat tag -->
-        <div class="col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+        <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
           <div class="team-item rounded">
-            <div class="team-img">
+            <div class="col team-img">
               <img
                 src="https://img.freepik.com/free-photo/businessman-with-blue-eyes-beard-standing-self-assured-formal-suit-holding-laptop-hand-gazing-pleased-assured-being-ambitious-successful_176420-22701.jpg"
                 class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
-              <div class="team-icon">
-                <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
-                  <i class="fas fa-share-alt"></i>
-                </a>
-                <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
-                    <i class="fab fa-facebook-f"></i>
+              <div class="col team-icon">
+                <div class="row">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mt-1 mb-xl-3"
+                    href=""
+                  >
+                    <i class="fas fa-share-alt"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-0" href="">
-                    <i class="fab fa-instagram"></i>
-                  </a>
+                </div>
+                <div class="col team-icon-share">
+                  <div class="row">
+                    <a
+                      class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                      href=""
+                    >
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </div>
+                  <div class="row">
+                    <a
+                      class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                      href=""
+                    >
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </div>
+                  <div class="row">
+                    <a
+                      class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                      href=""
+                    >
+                      <i class="fab fa-instagram"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -178,27 +211,40 @@ onMounted(() => {
             </div>
           </div>
         </div>
+
         <!-- Harmadik csapat tag -->
-        <div class="col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
+        <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
           <div class="team-item rounded">
             <div class="team-img">
               <img
-                src="https://clasebcn.com/wp-content/uploads/2020/04/harold-03.jpg"
+                src="https://kephost.net/p/MTM1NTYyMw.png"
                 class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
-              <div class="team-icon">
-                <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+              <div class="col team-icon">
+                <a
+                  class="btn btn-primary btn-sm-square text-white rounded-circle mt-1 mb-xl-3"
+                  href=""
+                >
                   <i class="fas fa-share-alt"></i>
                 </a>
-                <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                <div class="col team-icon-share">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-0" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
@@ -213,9 +259,10 @@ onMounted(() => {
           </div>
         </div>
       </div>
+
       <div class="row g-4 justify-content-center">
         <!-- Negyedik csapat tag -->
-        <div class="col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.7s">
+        <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.7s">
           <div class="team-item rounded">
             <div class="team-img">
               <img
@@ -223,18 +270,30 @@ onMounted(() => {
                 class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
-              <div class="team-icon">
-                <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+              <div class="col team-icon">
+                <a
+                  class="btn btn-primary btn-sm-square text-white rounded-circle mt-1 mb-xl-3"
+                  href=""
+                >
                   <i class="fas fa-share-alt"></i>
                 </a>
-                <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                <div class="col team-icon-share">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-0" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
@@ -248,8 +307,9 @@ onMounted(() => {
             </div>
           </div>
         </div>
+
         <!-- Ötödik csapat tag -->
-        <div class="col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.9s">
+        <div class="col-12 col-sm-6 col-lg-4 wow fadeInUp" data-wow-delay="0.9s">
           <div class="team-item rounded">
             <div class="team-img">
               <img
@@ -257,18 +317,30 @@ onMounted(() => {
                 class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
-              <div class="team-icon">
-                <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+              <div class="col team-icon">
+                <a
+                  class="btn btn-primary btn-sm-square text-white rounded-circle mt-1 mb-xl-3"
+                  href=""
+                >
                   <i class="fas fa-share-alt"></i>
                 </a>
-                <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                <div class="col team-icon-share">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-3" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-0" href="">
+                  <a
+                    class="btn btn-primary btn-sm-square text-white rounded-circle mb-1 mb-xl-3"
+                    href=""
+                  >
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
@@ -288,6 +360,34 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.row.g-4 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.row.g-4 .col-lg-4 {
+  flex: 0 0 33.3333%; /* Az első sorban 3 elem */
+  max-width: 33.3333%;
+}
+
+@media (max-width: 1200px) {
+  /* XL méret alatti elrendezés */
+
+  /* Az első két sorban 2 elem legyen */
+  .row.g-4 .col-sm-6,
+  .row.g-4 .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  /* Az utolsó sorban 1 elem legyen */
+  .row.g-4 .col-lg-4:nth-child(5) {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 #aboutus {
   color: rgb(255, 174, 0);
   padding: 20px;
@@ -2338,7 +2438,7 @@ onMounted(() => {
   .project-content-inner
   .project-icon
   i {
-  color: var(--bs-white) !important;
+  color: white;
   transition: 0.5s;
 }
 
