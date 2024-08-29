@@ -113,4 +113,27 @@ li {
   margin: 10px 0;
   font-size: 18px;
 }
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: auto;
+  margin-top: 3rem;
+  
+}
+
+th, td {
+  border: 1px solid #f8d985;
+  padding: 8px;
+}
+
+tr:nth-child(even){
+  background-color: #f5e8c3;
+}
+
+th {
+  background-color: #f9e3a8;
+}
+
+
 </style>

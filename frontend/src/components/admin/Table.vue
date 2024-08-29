@@ -26,7 +26,7 @@ async function changeStatus(application: Application, status: number) {
     id: application.id,
     book_id: application.book_id,
     user_id: application.user_id,
-    application_status: status,
+    application_status: status, //means rejected
     price: application.price,
     motivational_letter: application.motivational_letter,
   }
@@ -78,13 +78,13 @@ async function sendEmailToRegistration(application: Application){
           <td v-if="showPrice">{{ application.price }}</td>
           <td v-if="showMotivationalLetter">{{ application.motivational_letter }}</td>
           <td v-if="showCheckImage"> <!-- Add images in the table -->
-            <img :src="pic_check" alt="Check image" style="width: 50px; height: auto;" @click="changeStatus(application, 3)" />
+            <img :src="pic_check" alt="Check image" style="width: 30px; height: auto;" @click="changeStatus(application, 2)" />
           </td>
           <td v-if="showXImage">
-            <img :src="pic_x" alt="X image" style="width: 50px; height: auto;" @click="changeStatus(application, 4)"/>
+            <img :src="pic_x" alt="X image" style="width: 30px; height: auto;" @click="changeStatus(application, 3)"/>
           </td> 
           <td v-if="showBackImage">
-            <img :src="pic_back" alt="Back arrow image" style="width: 50px; height: auto;" @click="changeStatus(application, 2)"/>
+            <img :src="pic_back" alt="Back arrow image" style="width: 30px; height: auto;" @click="changeStatus(application, 1)"/>
           </td> 
         </tr>
       </tbody>
@@ -93,19 +93,43 @@ async function sendEmailToRegistration(application: Application){
 </template>
   
 <style scoped>
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: auto;
   
-  th,
-  td {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
+}
+
+th, td {
+  border: 1px solid #f8d985;
+  padding: 8px;
   
-  th {
-    background-color: #f4f4f4;
-  }
+}
+
+/* ITT MÉG NEM KAPJA MEG A TÁBLÁZAT EZEKET A SZÍNEKET !!! */
+tr:nth-child(even){
+  background-color: #f9e3a8;
+}
+
+th {
+  background-color: #f9e3a8;
+  
+}
+
+h2{
+margin: 3rem;
+text-align: center;
+color: #d3a72e;
+font-family: "Playfair Display", serif;
+font-weight: 600;
+font-size: 2rem;  
+}
+
+h1{
+  background-color:#d3a72e;
+  text-align: center;
+}
 </style>
   

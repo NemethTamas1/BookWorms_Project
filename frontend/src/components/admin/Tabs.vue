@@ -20,9 +20,10 @@ function selectTab(tab: string) {
 </script>
 
 <template>
+  
   <div>
     <div class="tabs">
-      <button
+      <button 
         v-for="tab in tabs"
         :key="tab"
         @click="selectTab(tab)"
@@ -40,21 +41,27 @@ function selectTab(tab: string) {
 <style>
 .tabs {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 .tabs button {
-  padding: 10px;
+  margin-left: 0.2rem;
+  padding: 1rem  ;
   cursor: pointer;
-  background-color: #f0f0f0;
-  border: none;
-  border-bottom: 2px solid transparent;
+  background-color: #f5e8c3;
+  border: 2px solid #faeabe;
+  border-radius: 10px;
 }
 .tabs button.active {
-  border-bottom: 2px solid #42b983;
+  border: 2px solid #f6ba14;
+  background-color: #f8d985;
 }
+
 .tab-content {
   padding: 10px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
+  padding-bottom: 3rem;
 }
 </style>
