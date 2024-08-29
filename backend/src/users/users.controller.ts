@@ -79,7 +79,7 @@ export class UsersController {
   @Put('registration')
   async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object) : Promise<ResultSet[]>{
     try {
-      const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, password['password'])
+      const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, await this.userService.hashPassword(password['password']))
       return updatedUserResult
     } catch (error) {
       console.log('Error during registration!', error.stack);
