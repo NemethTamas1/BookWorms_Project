@@ -1,49 +1,43 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { useLoggedInUserStore, useLogOutUser } from './stores/userStore';
-import { computed, ref } from 'vue';
+import { useLoggedInUserStore, useLogOutUser } from './stores/userStore'
+import { computed, ref } from 'vue'
 
 const userStore = useLoggedInUserStore()
-const router = useRouter();
+const router = useRouter()
 
-let userId = computed(() => userStore.getLoggedInUser.id);
-
+let userId = computed(() => userStore.getLoggedInUser.id)
 
 const navigateToLoginSite = () => {
-  router.push('/login');
+  router.push('/login')
 }
 
 const handleSelection = (event: any) => {
-  const selectedValue = event.target.value;
-      if (selectedValue === "logOut") {
-        console.log("Első: ", userId.value)
-        useLogOutUser();
-        navigateToLoginSite()
-        console.log("Második: ", userId.value)
-      }
-      else if(selectedValue === "myDashboard"){
-        router.push('/dashboard')
-      }
+  const selectedValue = event.target.value
+  if (selectedValue === 'logOut') {
+    console.log('Első: ', userId.value)
+    useLogOutUser()
+    navigateToLoginSite()
+    console.log('Második: ', userId.value)
+  } else if (selectedValue === 'myDashboard') {
+    router.push('/dashboard')
+  }
 }
-
-
-// const logout = () => {
-//   if(loggedInUser.status == 2){
-//     localStorage.removeItem('userToken')
-//   }
-//   else{
-//     localStorage.removeItem('adminToken')
-//   }
-// }
-
 </script>
 
 <template>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img src="./assets/img/kesz_resized.png" alt=""></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand" href="/"><img src="./assets/img/kesz_resized.png" alt="" /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
@@ -55,10 +49,10 @@ const handleSelection = (event: any) => {
             <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Rólunk</RouterLink>
+            <RouterLink to="/aboutus" class="nav-link">Rólunk</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Kapcsolat</RouterLink>
+            <a href="/./#kapcsolat" class="nav-link">Kapcsolat</a>
           </li>
         </ul>
         <ul v-if="userId == 0" class="navbar-nav ms-auto">
@@ -68,9 +62,9 @@ const handleSelection = (event: any) => {
         </ul>
         <ul v-if="userId != 0" class="navbar-nav ms-auto">
           <select class="form-select" name="" id="" @change="handleSelection">
-            <option value="valasszon">Válasszon a lehetőségek közül...</option>  
+            <option value="valasszon">Válasszon a lehetőségek közül...</option>
             <option value="myDashboard">Fiókom</option>
-              <option value="logOut">Kijelentkezés</option>
+            <option value="logOut">Kijelentkezés</option>
           </select>
         </ul>
       </div>
@@ -86,21 +80,21 @@ const handleSelection = (event: any) => {
 
 .navbar {
   background-color: #191416;
-  border-top: 2px solid #F5CD7E;
-  border-bottom: 2px solid #F5CD7E;
+  border-top: 2px solid #f5cd7e;
+  border-bottom: 2px solid #f5cd7e;
   padding: 0;
 }
 
-.navbar-nav>li>a {
-  color: #F5CD7E;
-  font-family: "Playfair Display", serif;
+.navbar-nav > li > a {
+  color: #f5cd7e;
+  font-family: 'Playfair Display', serif;
 }
 
-.navbar-nav>li>a:hover {
+.navbar-nav > li > a:hover {
   color: white;
 }
 .navbar-nav > li > .nav-link.router-link-active {
-  color: #F5CD7E;
+  color: #f5cd7e;
 }
 
 * {
