@@ -1,39 +1,40 @@
-import { Controller, Get, Post, Body, HttpException, HttpStatus, Param, Put, BadRequestException, HttpCode, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Put, BadRequestException, Query, UseGuards, Req } from '@nestjs/common';
 import { ApplicationsService } from './applications.service';
 import { Application } from './applications.interface';
 import { ResultSet } from '@libsql/client/.';
 import { Response } from 'express';
-import { AuthGuardByAdmin, AuthGuardByUser } from 'src/authentication/auth.guard';
+import { AuthGuard, idFromToken } from 'src/authentication/auth.guard';
+import { Roles } from 'src/authentication/roles.decorator';
+import { Role } from 'src/enums/role.enum';
 
 @Controller('api/applications')
 export class ApplicationsController {
     constructor(
-        private readonly applicationService: ApplicationsService,
-    ){}
+        private readonly applicationService: ApplicationsService
+    ) { }
 
     @Post()
-    async createApplication(@Body() application: Application): Promise<ResultSet[] | Response>{
+    async createApplication(@Body() application: Application): Promise<ResultSet[] | Response> {
         try {
             const applicationFromDatabase = await this.applicationService.getApplicationWithUserIDAndBookID(application.user_id, application.book_id)
-            if(applicationFromDatabase.id != 0){
+            if (applicationFromDatabase.id != 0) {
                 throw new BadRequestException("Erre a könyvre már jelentkeztek ezzel az email címmel!")
             }
-            else{
+            else {
                 return await this.applicationService.createApplication(application);
             }
-          } catch (error: any) {
-            if(error.status == 400){
-                throw new HttpException("Erre a könyvre már jelentkeztek ezzel az email címmel!", HttpStatus.BAD_REQUEST)    
+        } catch (error: any) {
+            if (error.status == 400) {
+                throw new HttpException("Erre a könyvre már jelentkeztek ezzel az email címmel!", HttpStatus.BAD_REQUEST)
             }
-            else{
+            else {
                 throw new HttpException("Hiba a jelentkezés létrehozása közben", HttpStatus.INTERNAL_SERVER_ERROR)
             }
-          }
+        }
     }
 
-    @UseGuards(AuthGuardByAdmin)
     @Get()
-    async getAllApplications(): Promise<Application[]>{
+    async getAllApplications(): Promise<Application[]> {
         return await this.applicationService.getApplications();
     }
 
@@ -54,29 +55,36 @@ export class ApplicationsController {
     }
 
     @Put()
-    async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]>{
-      try {
-        const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(id, 2);
-        return changedApplicationStatus
-      } catch (error) {
-        console.log('Error during status change!', error.stack);
-        throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
-      }
+    async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]> {
+        try {
+            const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(id, 2);
+            return changedApplicationStatus
+        } catch (error) {
+            console.log('Error during status change!', error.stack);
+            throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+        }
     }
 
-    //@UseGuards(AuthGuardByUser)
+    @Roles(Role.Admin, Role.User)
+    @UseGuards(AuthGuard)
     @Get('search-by-userid')
     async getApplicationsByUserId(@Query('userId') userId: number): Promise<Application[]> {
-        try {
-            const applications = await this.applicationService.getApplicationsByUserId(userId);
-            if (!applications) {
-                throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
+            if(idFromToken == userId){
+                try {
+                    const applications = await this.applicationService.getApplicationsByUserId(userId);
+                    if (!applications) {
+                        throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
+                    }
+                    return applications;
+                }
+                catch (error) {
+                    console.error("Error getting application by id:", error);
+                    throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
+                } 
             }
-            return applications;
-        } catch (error) {
-            console.error("Error getting application by id:", error);
-            throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            else{
+                throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
+            }  
     }
 
     @Get('search-by-bookid')
