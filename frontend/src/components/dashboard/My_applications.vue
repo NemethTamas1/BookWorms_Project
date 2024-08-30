@@ -97,7 +97,9 @@ async function submit(application: Application, userBid: number, biggestBid: num
         <tr v-for="(application, index) in applications" :key="application.book_id">
           <td>{{ application.id }}</td>
           <td>{{ books[application.book_id - 1].title }}</td>
-          <td>{{ application.application_status }}</td>
+          <td v-if="application.application_status == 1">Megerősítésre vár</td>
+          <td v-if="application.application_status == 2">Elfogadásra vár</td>
+          <td v-if="application.application_status == 3">Elfogadott</td>
           <td>{{ application.price }}  Ft</td>
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>

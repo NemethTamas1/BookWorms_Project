@@ -42,7 +42,7 @@ const handleSubmit = async () => {
             localStorage.setItem('adminToken', token);
             localStorage.setItem('status', '3');
             adminToken.value = token
-            router.push({ name: 'dashboardView' })
+            router.push({ name: 'adminView' })
         }
         else{
             errorMessage.value = "Valami hiba történt..."

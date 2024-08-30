@@ -7,6 +7,7 @@ const userStore = useLoggedInUserStore()
 const router = useRouter()
 
 let userId = computed(() => userStore.getLoggedInUser.id)
+let userStatus = computed(() => userStore.getLoggedInUser.status)
 
 const navigateToLoginSite = () => {
   router.push('/login')
@@ -14,6 +15,7 @@ const navigateToLoginSite = () => {
 
 const handleSelection = (event: any) => {
   const selectedValue = event.target.value
+  console.log(selectedValue)
   if (selectedValue === 'logOut') {
     console.log('Első: ', userId.value)
     useLogOutUser()
@@ -21,6 +23,12 @@ const handleSelection = (event: any) => {
     console.log('Második: ', userId.value)
   } else if (selectedValue === 'myDashboard') {
     router.push('/dashboard')
+  }
+  else if (selectedValue === 'admin') {
+    router.push('/admin')
+  }
+  else if (selectedValue === 'account') {
+    router.push('/account')
   }
 }
 </script>
@@ -63,7 +71,9 @@ const handleSelection = (event: any) => {
         <ul v-if="userId != 0" class="navbar-nav ms-auto">
           <select class="form-select" name="" id="" @change="handleSelection">
             <option value="valasszon">Válasszon a lehetőségek közül...</option>
-            <option value="myDashboard">Fiókom</option>
+            <option v-if="userStatus == 3" value="admin">Admin oldal</option>
+            <option value="myDashboard">Jelentkezéseim</option>
+            <option value="account">Fiókom</option>
             <option value="logOut">Kijelentkezés</option>
           </select>
         </ul>

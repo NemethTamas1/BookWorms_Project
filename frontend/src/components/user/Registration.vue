@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAddUserPasswordAndUpdateStatus } from '@/composables/api/useApi';
+import router from '@/router';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -13,6 +14,7 @@ const id = parseInt(route.query['id'] as string)
 const addPasswordAndChangeStatusInDatabase = async () => {
     if (password.value == passwordAgain.value) {
         await useAddUserPasswordAndUpdateStatus(id, password.value)
+        router.push("/login")
     }
     else {
         errorMessage.value = "A két jelszó nem egyezik meg!"
@@ -22,7 +24,7 @@ const addPasswordAndChangeStatusInDatabase = async () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="addPasswordAndChangeStatusInDatabase()">
