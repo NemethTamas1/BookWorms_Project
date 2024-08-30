@@ -39,7 +39,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("./src/assets/img/Background-1.png"); 
+    background-image: url("../src/assets/main/Background-1.png"); 
     background-size: contain;
     background-position: center;
     opacity: 0.44; 

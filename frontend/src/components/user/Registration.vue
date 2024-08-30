@@ -26,6 +26,10 @@ const addPasswordAndChangeStatusInDatabase = async () => {
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="addPasswordAndChangeStatusInDatabase()">
+                    <h1>Örömmel látjuk, hogy regisztrálni szeretnél!</h1>
+                    <h3>Kérlek adj meg egy jelszót</h3>
+                    <label class="form-label" for="username">E-mail cím</label>
+                    <input class="form-control" type="username" name="username" id="username" placeholder="example@example.com">
                     <label class="form-label" for="password">Jelszó:</label>
                     <input class="form-control" type="password" name="password" id="password" v-model="password">
                     <label class="form-label" for="passwordAgain">Jelszó mégegyszer:</label>
@@ -41,3 +45,10 @@ const addPasswordAndChangeStatusInDatabase = async () => {
         </div>
     </div>
 </template>
+
+<style scoped>
+
+input::placeholder{
+    color:rgb(173, 166, 149);
+}
+</style>

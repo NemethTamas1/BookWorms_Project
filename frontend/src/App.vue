@@ -26,7 +26,7 @@ const handleSelection = (event: any) => {
 </script>
 
 <template>
-  <nav class="navbar fixed-top navbar-expand-lg">
+  <nav class="navbar sticky-top navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><img src="./assets/img/kesz_resized.png" alt="" /></a>
       <button
@@ -46,13 +46,13 @@ const handleSelection = (event: any) => {
             <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Könyvek</RouterLink>
+            <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/aboutus" class="nav-link">Rólunk</RouterLink>
           </li>
           <li class="nav-item">
-            <a href="/./#kapcsolat" class="nav-link">Kapcsolat</a>
+            <a href="/contact" class="nav-link">Kapcsolat</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -79,7 +79,7 @@ const handleSelection = (event: any) => {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 .navbar {
-  background-color: #191416;
+  background-color: #191814f9;
   border-top: 2px solid #f5cd7e;
   border-bottom: 2px solid #f5cd7e;
   padding: 0;

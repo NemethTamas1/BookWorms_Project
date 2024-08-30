@@ -4,6 +4,7 @@ import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import { useMediaQuery } from '@vueuse/core'
 
 const userStore = useLoggedInUserStore()
 
@@ -45,75 +46,160 @@ const handleSubmit = async () => {
 
 
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+    <div class="container-fluid fullContainer">
+        <div class="row justify-content-center ">
+            <div class="col bookwormsFelirat ">
+                <h1>BookWorms</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row bejelentkezesRow">
+       <div class="col-12 col-xs-12 col-sm-12 col-lg-4 ondesktop"></div>
+        <div class="col-12 col-sm-12 col-lg-12 bejelentkezesForm">
                 <form @submit.prevent=handleSubmit>
-                    <div class="mb-3">
-                        <label for="email">E-mail</label>
+                    <div class="col-12 col-xs-4 col-sm-8 col-lg-12">
+                        <label for="email">E-mail cím</label>
                         <input v-model="email" class="form-control" type="email" name="email" id="email"
                             placeholder="example@example.com">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="password">Jelszó</label>
                         <input v-model="password" class="form-control" type="password" name="password" id="password">
-                    </div>
+                    
 
-                    <div v-if="errorMessage" class="alert alert-danger">
+                    <div v-if="errorMessage" class=" col-12 col-sm-6 col-lg-12 mb-3 alert alert-danger">
                         {{ errorMessage }}
                     </div>
+                </div>
 
                     <button type="submit" class="btn">Bejelentkezés</button>
                 </form>
             </div>
-        </div>
     </div>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
 
-.container {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.row {
+.fullContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-image: url("../src/assets/main/oneBookCircle.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.50; 
+    z-index: 0;
+
 }
 
+.bookwormsFelirat{
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    font-family: "Playfair Display", serif;
+    color: #201a02; 
+    text-shadow: 2px 2px 5px #120d01;
+    font-style: italic;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+    padding-top: 9vh;
+    
+ }
+ 
+ input::placeholder{
+     color:rgb(173, 166, 149);
+ }
 
 
-form {
-    margin-top: 4rem;
-    background-color: #191814;
-    padding: 30px;
+.bejelentkezesForm {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-start;
+    color: #201a02;    
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    margin: 2rem;
+    margin-top: -9vh;
+    padding: 2rem;
+    padding-top: -9vh;
+    width:30%;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+    background-color: rgb(255, 255, 255);
     border-radius: 5px;
     border: 2px solid #F5CD7E;
 
     div>label {
-        color: #F5CD7E;
+        color: #191814;
+        
     }
 }
+ .form-control {
+    width: 150%;
+ }
+ .bejelentkezesRow {
+    height: 80vh;
+    display: flex;
+   align-items: center;
+    
+ }
 
-.form-label {
-    margin-bottom: .5rem;
-}
+
+
+
 
 label {
-    margin-bottom: 1rem;
-  text-align: center;
-  color: #d3a72e;
-  font-family: "Playfair Display", serif;
-  font-weight: 400;
-  font-size: 1.5rem;
+margin: 1rem;
+
+color: #191814;
+font-family: "Playfair Display", serif;
+font-weight: 400;
+font-size: 1rem;
 }
+
 .btn {
     margin-top: 1rem;
     background-color: #F5CD7E;
     font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1rem;
 }
+
+.btn:hover {
+    background-color: #191814;
+    border-color: #F5CD7E;
+    color: #F5CD7E;
+}
+
+@media (min-width: 260px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+
+}
+
+
+@media (max-width: 760px) {
+  .show-on-mobile { display: none !important; }
+  .ondesktop {
+    display: none;
+  }
+  .bejelentkezesForm {
+        align-items: center;
+        width: 80%;
+    }
+    .form {
+        width:100%;
+    }
+}
+
+
 </style>
