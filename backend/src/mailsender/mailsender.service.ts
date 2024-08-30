@@ -10,7 +10,7 @@ export class MailsenderService {
 
   async sendVerificationEmailToGuest(user: User, application_id: number) {
     const sentFrom = new Sender(
-      'MS_zXBZBX@trial-3z0vklod5w1g7qrx.mlsender.net',
+      'MS_Kbvm9k@trial-z86org866jn4ew13.mlsender.net',
       'bookworms',
     );
     const recipient = [new Recipient(user.email, user.first_name)];
@@ -66,7 +66,7 @@ export class MailsenderService {
 
   async sendRegistrationEmailToGuest(user: User) {
     const sentFrom = new Sender(
-      'MS_LTwPTa@trial-o65qngk1yzjlwr12.mlsender.net',
+      'MS_Kbvm9k@trial-z86org866jn4ew13.mlsender.net',
       'BookWorms',
     );
     const recipient = [new Recipient(user.email, user.first_name)];
