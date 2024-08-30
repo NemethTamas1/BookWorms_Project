@@ -13,6 +13,33 @@ const navigateToLoginSite = () => {
   router.push('/login');
 }
 
+//Navbar összenyomása, amikor kikattintunk belőle
+//Navbar összenyomása, amikor root-ot váltunk
+let navBar = null;
+
+document.addEventListener('click', (event: MouseEvent) => {
+  navBar = document.getElementById('navbarNav');
+  if (!navBar?.contains(event.target as Node) && navBar?.classList.contains('show')) {
+    navBar?.classList.remove('show');
+  }
+});
+
+// const closeNavBar = () => {
+//   navBar = document.getElementById('navbarNav');
+//   if (navBar?.classList.contains("show")) {
+//     navBar?.classList.remove("show");
+//   }
+// };
+
+router.afterEach(() => {
+  navBar = document.getElementById('navbarNav');
+  if (navBar?.classList.contains('show')) {
+    navBar?.classList.remove('show');
+  }
+});
+
+
+
 const handleSelection = (event: any) => {
   const selectedValue = event.target.value;
       if (selectedValue === "logOut") {
