@@ -46,7 +46,7 @@ const handleSelection = (event: any) => {
             <RouterLink to="/" class="nav-link">Főoldal</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/" class="nav-link">Könyvek</RouterLink>
+            <RouterLink to="/books" class="nav-link">Könyvek</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/aboutus" class="nav-link">Rólunk</RouterLink>
@@ -55,7 +55,7 @@ const handleSelection = (event: any) => {
             <a href="/./#kapcsolat" class="nav-link">Kapcsolat</a>
           </li>
         </ul>
-        <ul class="navbar-nav ms-auto">
+        <ul v-if="userId == 0" class="navbar-nav ms-auto">
           <li class="nav-item">
             <RouterLink to="/login" class="btn btn-outline-warning">Bejelentkezés</RouterLink>
           </li>
