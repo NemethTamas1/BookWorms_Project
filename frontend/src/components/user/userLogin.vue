@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth';
+import { adminToken, loginUserOrAdminAndStoreTokenIntoLocalStorage, userToken } from '@/composables/auth/auth';
 import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
+import type { Axios, AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 
@@ -20,17 +21,32 @@ const handleSubmit = async () => {
         return;
     }
 
-    const response: string | User = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
+    const response: string | AxiosResponse<any, any> = await loginUserOrAdminAndStoreTokenIntoLocalStorage(email.value, password.value)
     if ((response as string).length > 0) {
         errorMessage.value = response as string
     }
     else{
-        userStore.setLoggedInUser(response as User)
+        const user = (response as AxiosResponse).data.user
+        const token = (response as AxiosResponse).data.access_token
+        console.log(user)
+        console.log(token)
+        userStore.setLoggedInUser(user)
         localStorage.setItem('userId', userStore.getLoggedInUser.id.toString())
-        // localStorage.setItem('userEmail', userStore.getLoggedInUser.email.toString())
-        // localStorage.setItem('userFirstName', userStore.getLoggedInUser.first_name.toString())
-        // localStorage.setItem('userFamilyName', userStore.getLoggedInUser.family_name.toString())
-        router.push({ name: 'dashboardView' })
+        if(user.status == 2){
+            localStorage.setItem('userToken', token);
+            localStorage.setItem('status', '2');
+            userToken.value = token
+            router.push({ name: 'dashboardView' })
+        }
+        else if(user.status == 3){
+            localStorage.setItem('adminToken', token);
+            localStorage.setItem('status', '3');
+            adminToken.value = token
+            router.push({ name: 'adminView' })
+        }
+        else{
+            errorMessage.value = "Valami hiba történt..."
+        }
     }
 
     // Form reset
@@ -88,8 +104,8 @@ const handleSubmit = async () => {
 
 
 form {
-    font-family: "Playfair Display SC", serif;
-    background-color: #191416;
+    margin-top: 4rem;
+    background-color: #191814;
     padding: 30px;
     border-radius: 5px;
     border: 2px solid #F5CD7E;
@@ -103,8 +119,17 @@ form {
     margin-bottom: .5rem;
 }
 
+label {
+    margin-bottom: 1rem;
+  text-align: center;
+  color: #d3a72e;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
 .btn {
     margin-top: 1rem;
     background-color: #F5CD7E;
+    font-family: "Playfair Display", serif;
 }
 </style>

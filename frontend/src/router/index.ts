@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BookView from '../views/BookView.vue'
 import AdminView from '../views/AdminView.vue'
-import UserLoginView from '../views/UserLoginView.vue';
-import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue';
-import MainPageComponent from '@/components/mainPage/MainPageComponent.vue';
-import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue';
-import RegistrationView from '@/views/RegistrationView.vue';
-import DashboardView from '@/views/DashboardView.vue';
+import UserLoginView from '../views/UserLoginView.vue'
+import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue'
+import MainPageComponent from '@/components/mainPage/MainPageComponent.vue'
+import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue'
+import RegistrationView from '@/views/RegistrationView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import AboutUS from '@/components/aboutus/aboutUS.vue'
+import AccountView from '@/views/AccountView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,7 +19,7 @@ const router = createRouter({
       component: MainPageComponent,
       meta: {
         title: 'Üdvözöljük!'
-      },
+      }
     },
     {
       path: '/books',
@@ -25,7 +27,7 @@ const router = createRouter({
       component: BookView,
       meta: {
         title: 'Könyvek'
-      },
+      }
     },
     {
       path: '/admin',
@@ -33,7 +35,7 @@ const router = createRouter({
       component: AdminView,
       meta: {
         title: 'Admin felület'
-      },
+      }
     },
     {
       path: '/login',
@@ -41,7 +43,7 @@ const router = createRouter({
       component: UserLoginView,
       meta: {
         title: 'Bejelentkezési felület'
-      },
+      }
     },
     {
       path: '/applicantReceived',
@@ -49,7 +51,7 @@ const router = createRouter({
       component: ApplicantReceivedView,
       meta: {
         title: 'Köszönjük a jelentkezését!'
-      },
+      }
     },
     {
       path: '/changeGuestStatus',
@@ -57,7 +59,7 @@ const router = createRouter({
       component: ChangeGuestStatusView,
       meta: {
         title: 'Köszönjük a visszaigazolást!'
-      },
+      }
     },
     {
       path: '/registration',
@@ -65,7 +67,15 @@ const router = createRouter({
       component: RegistrationView,
       meta: {
         title: 'Regisztráció'
-      },
+      }
+    },
+    {
+      path: '/aboutus',
+      name: 'aboutus',
+      component: AboutUS,
+      meta: {
+        title: 'Rólunk'
+      }
     },
     {
       path: '/dashboard',
@@ -73,15 +83,23 @@ const router = createRouter({
       component: DashboardView,
       meta: {
         title: 'Jelentkezéseim'
-      },
+      }
     },
+    {
+      path: '/account',
+      name: 'accountView',
+      component: AccountView,
+      meta: {
+        title: 'Fiókom'
+      }
+    }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  const title = to.meta.title as string | undefined;
-  document.title = title || "Default Title";
-  next();
-});
+  const title = to.meta.title as string | undefined
+  document.title = title || 'Default Title'
+  next()
+})
 
 export default router

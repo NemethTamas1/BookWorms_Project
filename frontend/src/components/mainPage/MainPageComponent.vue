@@ -1,6 +1,56 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
+
+// NINCS LIMITÁLVA A LEFUTÁSA
+onMounted(() => {
+  setTimeout(() => {
+    const element = document.getElementById('welcome_container')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, 3000)
+})
+// 'LEUGRÁS VÉGE' \\
+
+// LAP TETEJÉRE GOMB \\
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Finom görgetés az oldal tetejére
+  })
+}
+
+const handleScroll = () => {
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn')
+  if (window.scrollY > window.innerHeight / 2) {
+    scrollToTopBtn!.style.display = 'block'
+  } else {
+    scrollToTopBtn!.style.display = 'none'
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+// LAP TETEJÉRE GOMB \\
+</script>
 
 <template>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Oldal tetejére gomb -->
+  <button id="scrollToTopBtn" @click="scrollToTop" title="Ugrás az oldal tetejére">
+    <i class="fas fa-circle-up"></i>
+  </button>
+  <!-- Oldal tetejére gomb -->
+
   <div class="container-fluid topLabel mb-5">
     <div class="topLabelText">
       <a href="#fooldal_nyitoszoveg" id="anchor_foOldalon">
@@ -19,7 +69,7 @@
               <h4>
                 <hr />
                 <div class="row">
-                  <div class="col" >
+                  <div class="col">
                     Örömmel köszöntjük a <b><i>Prémium Könyvek Webáruházában</i></b
                     >, ahol olyan könyvritkaságokat tárunk Ön elé, melyekről a legelszántabb gyűjtök
                     is csak álmodoznak.
@@ -73,7 +123,7 @@
             <div class="col col-xl-6" id="konyvespolc">
               <div class="row">
                 <div class="col col-xl-4" id="book1">
-                  <img src= "https://kephost.net/p/MTM0ODc2MA.png" />
+                  <img src="https://kephost.net/p/MTM0ODc2MA.png" />
                 </div>
                 <div class="col col-xl-4" id="book2">
                   <img src="https://kephost.net/p/MTM0ODc1NA.png" />
@@ -157,8 +207,6 @@
           </div>
           <!-- 4. SOR || 1. OSZLOP -->
 
-          
-
           <div class="row">
             <div class="col col-xl-6" id="safe">
               <RouterLink to="/books">
@@ -210,7 +258,109 @@
               </div>
             </div>
             <hr />
+            <hr />
           </div>
+
+          <!-- // FOOOOTER \\ -->
+          <section id="kapcsolat">
+            <div class="container">
+              <div class="row mb-3">
+                <div class="col-6" id="footer_cim">
+                  Kérdése van, vagy további információra van szüksége?
+                </div>
+                <div class="col-6" id="footer_cim">Örömmel állunk rendelkezésére!</div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <section id="form_div">
+                    <form method="post" action="#">
+                      <div class="mb-3">
+                        <label for="name_form_question"> Adja meg a teljes nevét:</label>
+                        <input
+                          name="name"
+                          placeholder="Teljes neve"
+                          type="text"
+                          class="form-control"
+                          id="name_form_question"
+                          minlength="8"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="email_form_question">Adja meg az e-mail címét:</label>
+                        <input
+                          name="e-mail"
+                          placeholder="pelda@pelda.hu"
+                          type="text"
+                          class="form-control"
+                          id="email_form_question"
+                          minlength="10"
+                          maxlength="80"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="message_form_question">Kérdése:</label>
+                        <textarea
+                          name="message"
+                          placeholder="Kérjük fejtse ki kérdését!"
+                          class="form-control"
+                          id="message_form_question"
+                          maxlength="500"
+                        ></textarea>
+                      </div>
+                      <div class="text-center">
+                        <a href="#" class="btn btn-primary form-button-submit">Üzenet küldése</a>
+                      </div>
+                    </form>
+                  </section>
+                </div>
+                <div class="col-6">
+                  <div class="row mb-3">
+                    <div class="col">
+                      <p>
+                        Csapatunk elkötelezett amellett, hogy a legjobb ügyfélszolgálati élményt
+                        nyújtsa Önnek. Akár a termékeinkkel, szolgáltatásainkkal kapcsolatban van
+                        kérdése, akár segítségre van szüksége egy megrendelés során, mi itt vagyunk,
+                        hogy segítsünk. ű
+                      </p>
+                      <p>
+                        Töltse ki az alábbi űrlapot, és mi a lehető leghamarabb felvesszük Önnel a
+                        kapcsolatot. Minden megkeresést nagyra értékelünk, és arra törekszünk, hogy
+                        minden kérdésre gyors és hatékony választ adjunk.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col col-xl-6" id="cim_telefon_email">
+                      <p class="address">
+                        <a href="https://shorturl.at/1wm3z">
+                          <section>Hős utca 1/A Budapest, 1101 Magyarország</section>
+                        </a>
+                      </p>
+                      <p class="phone">+36 (1) 220-2020</p>
+                      <p class="email">info@bookworms.hu</p>
+                    </div>
+
+                    <div class="col col-xl-6" id="socialmedia_links">
+                      <p>
+                        <a href="/" class="facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                      </p>
+                      <p>
+                        <a href="/" class="instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                      </p>
+                      <p>
+                        <a href="/" class="tiktok"><i class="fab fa-tiktok"></i> TikTok</a>
+                      </p>
+                      <p>
+                        <a href="/" class="twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- kapcsolat VÉGE -->
         </div>
       </div>
     </div>
@@ -227,7 +377,192 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap');
 
 /* További módosítások || További módosítások || További módosítások || További módosítások || További módosítások || További módosítások || */
-#koszononto_uzenet{
+
+#scrollToTopBtn {
+  display: none; /* Alapértelmezetten rejtve */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 28px;
+  background-color: #d1a221cf;
+  color: white;
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    font-size 0.3s ease,
+    background-color 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #c99505cf;
+  width: 70px;
+  height: 70px;
+  font-size: 32px;
+}
+
+/* kapcsolat Ikonjai */
+.address::before {
+  /* Házikó ikon */
+  content: '\f015';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.phone::before {
+  /* Telefon ikon */
+  content: '\f095';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 10px;
+}
+
+.email::before {
+  /* Levél ikon */
+  content: '\f0e0';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 10px;
+}
+.facebook {
+  text-decoration: none;
+  color: #3b5998;
+  margin-right: 10px;
+}
+
+/* Instagram */
+.instagram {
+  text-decoration: none;
+  color: #e4405f;
+  margin-right: 10px;
+}
+
+/* TikTok */
+.tiktok {
+  text-decoration: none;
+  color: #010101;
+  margin-right: 10px;
+}
+
+/* Twitter */
+.twitter {
+  text-decoration: none;
+  color: #1da1f2;
+  margin-right: 10px;
+}
+.address > a {
+  color-scheme: unset;
+  text-decoration: none;
+}
+#cim_telefon_email a {
+  color: #777;
+}
+.phone,
+.email {
+  font-size: 1.1rem;
+}
+.email {
+  user-select: none;
+}
+#socialmedia_links > p > a {
+  font-size: 1.3rem;
+}
+#socialmedia_links {
+  padding-left: 60px;
+}
+/* |||  |||  Ikonok VÉGE  |||  ||| */
+/* kapcsolat Section */
+#kapcsolat {
+  border-radius: 5rem;
+  background-color: rgb(255, 238, 197);
+  padding: 50px 0;
+}
+
+#kapcsolat header {
+  font-size: 1.5rem;
+  color: #777;
+  margin-bottom: 30px;
+}
+
+#kapcsolat header strong {
+  color: #333;
+}
+
+#kapcsolat .container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+#kapcsolat .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+#kapcsolat .col-6 {
+  flex: 0 0 48%;
+}
+
+#kapcsolat input[type='text'],
+#kapcsolat textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#kapcsolat textarea {
+  height: 150px;
+}
+
+#kapcsolat .btn {
+  background-color: #f76c6c;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+#kapcsolat .btn:hover {
+  background-color: #f55656;
+}
+
+#kapcsolat p {
+  color: #777;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+#kapcsolat .col-6 p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+#kapcsolat .text-center {
+  text-align: center;
+}
+
+/* kapcsolat VÉGE */
+
+#header {
+  margin-top: 3rem;
+  font-size: 3rem;
+  font-family: 'Libre Baskerville', serif;
+}
+
+#koszononto_uzenet {
   background-color: #a48e51;
 }
 
@@ -294,6 +629,11 @@ h4 hr {
   font-weight: bold;
   text-align: center;
   font-size: 1.2rem;
+}
+#footer_cim {
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.1rem;
 }
 
 #konyvespolc {

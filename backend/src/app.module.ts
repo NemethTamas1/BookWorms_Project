@@ -7,6 +7,8 @@ import { MailsenderModule } from './mailsender/mailsender.module';
 import { AuthModule } from './authentication/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './authentication/auth.guard';
 
 @Module({
   imports: [
@@ -20,6 +22,6 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'client'),
       //exclude: ['/api*'], //correct? idk
     }),
-  ],
+  ]
 })
 export class AppModule {}

@@ -1,19 +1,40 @@
 <script setup lang="ts">
-import { defineComponent, ref, onMounted, computed } from 'vue';
+import { defineComponent, ref, onMounted, computed, type Ref, type App } from 'vue';
 import { useGetApplicationsByUserId, useGetBiggestBid, useGetBooks, useSendBid } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
 import { useLoggedInUserStore } from '@/stores/userStore';
+import { adminToken, userToken } from '@/composables/auth/auth';
 // Replace with actual user ID
+
 const userStore = useLoggedInUserStore()
+const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
-console.log(userId)
+console.log(userStatus, 'Status')
+console.log(userId, 'Id')
+console.log(userStore.getLoggedInUser.email, 'Email')
+console.log(adminToken.value, 'Admin')
+console.log(userToken.value, 'User')
 //const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
-const applicationsResponse = await useGetApplicationsByUserId(userId);
-const applications = ref<Application[]>(applicationsResponse);
+const checkStatusForApplications = async (): Promise<Ref<Application[]>> => {
+  if(userStatus == 2){
+  const applicationsResponse = await useGetApplicationsByUserId(userId, userToken.value!);
+  const applications = ref<Application[]>(applicationsResponse);
+  return applications
+}
+else if(userStatus == 3){
+  const applicationsResponse = await useGetApplicationsByUserId(userId, adminToken.value!);
+  const applications = ref<Application[]>(applicationsResponse);
+  return applications
+}
+else{
+  return ref<Application[]>([])
+}
+}
 
+const applications: Ref<Application[]> = await checkStatusForApplications()
 const booksResponse = await useGetBooks();
 const books = ref<Book[]>(booksResponse);
 
@@ -76,12 +97,14 @@ async function submit(application: Application, userBid: number, biggestBid: num
         <tr v-for="(application, index) in applications" :key="application.book_id">
           <td>{{ application.id }}</td>
           <td>{{ books[application.book_id - 1].title }}</td>
-          <td>{{ application.application_status }}</td>
+          <td v-if="application.application_status == 1">Megerősítésre vár</td>
+          <td v-if="application.application_status == 2">Elfogadásra vár</td>
+          <td v-if="application.application_status == 3">Elfogadott</td>
           <td>{{ application.price }}  Ft</td>
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 2">
+            <div v-if="application.application_status === 3">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 

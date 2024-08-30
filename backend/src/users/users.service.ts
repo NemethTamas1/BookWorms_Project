@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from './user.interface';
 import { DatabaseService } from 'src/database/db.service';
 import { AuthService } from 'src/authentication/auth.service';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -77,7 +78,7 @@ export class UsersService {
 
     async validateUserOrAdmin(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
-        if ( user && user.password === password && (user.status == 2 || user.status == 3) ) {
+        if ( this.comparePasswords(password, user.password) && user && (user.status == 2 || user.status == 3) ) {
             return user;
         }
         return null;
@@ -119,5 +120,15 @@ export class UsersService {
             "write"
         );
         return changeUserStatusAndAddPassword
+    }
+
+    async hashPassword(plainTextPassword: string): Promise<string> {
+        const saltRounds = 10; // Number of salt rounds
+        const hash = await bcrypt.hash(plainTextPassword, saltRounds);
+        return hash;
+    }
+
+    async comparePasswords(plainTextPassword: string, hashedPassword: string): Promise<boolean> {
+        return await bcrypt.compare(plainTextPassword, hashedPassword);
     }
 }

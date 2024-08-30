@@ -2,7 +2,6 @@ import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, 
 import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { ResultSet } from '@libsql/client/.';
-import { AuthGuardByAdmin } from 'src/authentication/auth.guard';
 
 @Controller('api/user')
 export class UsersController {
@@ -10,7 +9,6 @@ export class UsersController {
 
   constructor(private readonly userService: UsersService) {}
 
-  @UseGuards(AuthGuardByAdmin)
   @Get()
   async getUser(@Query('id') id: number): Promise<User>{
     try {
@@ -42,7 +40,6 @@ export class UsersController {
       throw new HttpException('Hiba a felhasználó létrehozása közben', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
 
   @Post('login')
   async login(@Body() loginDto: { email: string; password: string }) {
@@ -79,7 +76,7 @@ export class UsersController {
   @Put('registration')
   async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object) : Promise<ResultSet[]>{
     try {
-      const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, password['password'])
+      const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, await this.userService.hashPassword(password['password']))
       return updatedUserResult
     } catch (error) {
       console.log('Error during registration!', error.stack);
