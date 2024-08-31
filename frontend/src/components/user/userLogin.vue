@@ -5,6 +5,8 @@ import { useLoggedInUserStore } from '@/stores/userStore';
 import type { Axios, AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import ForgottenPassword from './ForgottenPassword.vue';
+
 
 const userStore = useLoggedInUserStore()
 
@@ -57,6 +59,11 @@ const handleSubmit = async () => {
 // Ellenőrzés
 // console.log('E-mail: ', email.value);
 // console.log('Jelszó: ', password.value);
+
+const navigateToForgottenPasswordSite = () => {
+    router.push({name: 'forgottenPasswordView'})
+    console.log("Router navigálás")
+}
 </script>
 
 
@@ -81,6 +88,8 @@ const handleSubmit = async () => {
                     </div>
 
                     <button type="submit" class="btn">Bejelentkezés</button>
+
+                    <a @click="navigateToForgottenPasswordSite" href="#">Elfelejtett jelszó</a>
                 </form>
             </div>
         </div>

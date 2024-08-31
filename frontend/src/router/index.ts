@@ -9,6 +9,8 @@ import RegistrationView from '@/views/RegistrationView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import AboutUS from '@/components/aboutus/aboutUS.vue'
 import AccountView from '@/views/AccountView.vue'
+import ForgottenPasswordView from '@/views/ForgottenPasswordView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -91,6 +93,14 @@ const router = createRouter({
       component: AccountView,
       meta: {
         title: 'Fiókom'
+      }
+    },
+    {
+      path: '/forgottenPasswordView',
+      name: 'forgottenPasswordView',
+      component: ForgottenPasswordView,
+      meta: {
+        title: 'Elfelejtett jelszó'
       }
     }
   ]
