@@ -4,7 +4,7 @@ import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
-import { useMediaQuery } from '@vueuse/core'
+// import { useMediaQuery } from '@vueuse/core';
 
 const userStore = useLoggedInUserStore()
 
@@ -46,16 +46,16 @@ const handleSubmit = async () => {
 
 
 <template>
-    <div class="container-fluid fullContainer">
-        <div class="row justify-content-center ">
+<div class="container-fluid fullContainer">
+     <div class="row justify-content-center ">
             <div class="col bookwormsFelirat ">
                 <h1>BookWorms</h1>
             </div>
-        </div>
     </div>
+    
 
     <div class="row bejelentkezesRow">
-       <div class="col-12 col-xs-12 col-sm-12 col-lg-4 ondesktop"></div>
+       <!-- <div class="col-12 col-xs-12 col-sm-12 col-lg-4 uresDiv"></div> -->
         <div class="col-12 col-sm-12 col-lg-12 bejelentkezesForm">
                 <form @submit.prevent=handleSubmit>
                     <div class="col-12 col-xs-4 col-sm-8 col-lg-12">
@@ -71,10 +71,19 @@ const handleSubmit = async () => {
                     </div>
                 </div>
 
-                    <button type="submit" class="btn">Bejelentkezés</button>
+                    <button type="submit" class="btn bejelentkezesGomb">Bejelentkezés</button>
                 </form>
-            </div>
+               
+        </div>     
     </div>
+    <div class="row visszaGombRow">
+        <div class="col-12 col-xs-12 col-sm-12 col-lg-4 visszaGombDiv ">
+            <button type="submit" class="btn visszaGomb">Vissza a Főoldalra</button>        
+            
+                </div> 
+    </div>   
+</div>
+
 </template>
 
 <style scoped>
@@ -87,12 +96,11 @@ const handleSubmit = async () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../src/assets/main/oneBookCircle.png");
+    background-image: url("/src/assets/img/main/oneBookCircle.png");
     background-size: cover;
     background-position: center;
-    opacity: 0.50; 
+    opacity: 0.40; 
     z-index: 0;
-
 }
 
 .bookwormsFelirat{
@@ -116,15 +124,21 @@ const handleSubmit = async () => {
      color:rgb(173, 166, 149);
  }
 
+.bejelentkezesRow {
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+    align-items: center;
+
+}
+
 
 .bejelentkezesForm {
     position: relative;
     z-index: 1;
     display: flex;
     justify-content: flex-start;
-    color: #201a02;    
-    font-family: "Playfair Display", serif;
-    font-style: italic;
+    color: #201a02;
     margin: 2rem;
     margin-top: -9vh;
     padding: 2rem;
@@ -132,7 +146,7 @@ const handleSubmit = async () => {
     width:30%;
     background-color: #9f91343e;
     box-shadow: 0 0 50px 50px #9f91343e;
-    background-color: rgb(255, 255, 255);
+    background-color: whitesmoke;
     border-radius: 5px;
     border: 2px solid #F5CD7E;
 
@@ -144,32 +158,27 @@ const handleSubmit = async () => {
  .form-control {
     width: 150%;
  }
- .bejelentkezesRow {
-    height: 80vh;
-    display: flex;
-   align-items: center;
-    
- }
-
 
 
 
 
 label {
-margin: 1rem;
-
-color: #191814;
-font-family: "Playfair Display", serif;
-font-weight: 400;
-font-size: 1rem;
-}
-
-.btn {
+    font-family:  "Libre Baskerville", serif;
+    margin-bottom: 1rem;
     margin-top: 1rem;
-    background-color: #F5CD7E;
-    font-family: "Playfair Display", serif;
+    margin-left: 0.2rem;
+    color: #191814;
     font-weight: 400;
     font-size: 1rem;
+}
+
+.bejelentkezesGomb {
+    margin-top: 1rem;
+    background-color: #F5CD7E;
+    font-weight: 400;
+    font-size: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    font-family:  "Libre Baskerville", serif;
 }
 
 .btn:hover {
@@ -177,19 +186,53 @@ font-size: 1rem;
     border-color: #F5CD7E;
     color: #F5CD7E;
 }
+.visszaGomb{
+    margin-top: 1rem;
+    background-color: #F5CD7E;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin-bottom: 10rem;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    font-family:  "Libre Baskerville", serif;
+}
 
-@media (min-width: 260px) {
-    h1 {
-        font-size: 3.5rem;
-    }
+.visszaGombRow {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
     
-
+   
+}
+.visszaGombDiv {
+    display: flex;
+    justify-content: center;
 }
 
 
-@media (max-width: 760px) {
-  .show-on-mobile { display: none !important; }
-  .ondesktop {
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+    .bejelentkezesForm {
+        width: 80%;
+        max-width: 500px;
+    }
+    .form-control {
+        width: 100%;
+    }
+    
+  }
+
+
+
+@media (min-width: 769px) {
+  /* .uresDiv {
     display: none;
   }
   .bejelentkezesForm {
@@ -198,8 +241,37 @@ font-size: 1rem;
     }
     .form {
         width:100%;
-    }
+    } */
 }
 
+#scrollToTopBtn {
+  display: none; /* Alapértelmezetten rejtve */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  font-size: 28px;
+  background-color: #d1a221cf;
+  color: white;
+  border: none;
+  outline: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    font-size 0.3s ease,
+    background-color 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+  background-color: #c99505cf;
+  width: 70px;
+  height: 70px;
+  font-size: 32px;
+}
 
 </style>

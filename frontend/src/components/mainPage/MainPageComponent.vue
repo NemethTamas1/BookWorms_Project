@@ -1,20 +1,62 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 
+// NINCS LIMITÁLVA A LEFUTÁSA
+onMounted(() => {
+  setTimeout(() => {
+    const element = document.getElementById('welcome_container')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, 3000)
+})
+// 'LEUGRÁS VÉGE' \\
+
+// LAP TETEJÉRE GOMB \\
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth' // Finom görgetés az oldal tetejére
+  })
+}
+
+const handleScroll = () => {
+  const scrollToTopBtn = document.getElementById('scrollToTopBtn')
+  if (window.scrollY > window.innerHeight / 2) {
+    scrollToTopBtn!.style.display = 'block'
+  } else {
+    scrollToTopBtn!.style.display = 'none'
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+// LAP TETEJÉRE GOMB \\
 </script>
 
 <template>
-
-<div class="container-fluid fullContainer">
+    <!-- Oldal tetejére gomb -->
+    <button id="scrollToTopBtn" @click="scrollToTop" title="Ugrás az oldal tetejére">
+    <i class="fas fa-circle-up"></i>
+  </button>
+  <!-- Oldal tetejére gomb -->
+<div class="container-fluid fullContainer hidden bg-background font-geist-sans text-foreground antialiased md:block">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 headerPic ">       
+    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 headerPic ">       
             <div class="headerText">
                 <h1>BookWorms</h1>
                 <h3>Ahol a motiváció és az irodalom kéz a kézben jár</h3>
             </div>
     </div>
-    <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 headerTextRigth ">       
+    <div class="col-12 col-sm-12 col-md-6 col-l-6 col-xl-6 headerTextRigth ">       
                <!-- BEJELENTKEZÉS ÉS REGISZTRÁCIÓ GOMBOK -->
                 <div class="col jobbSzovegEgy">
+   
                   <h3>Üdvözöljük Könyvesboltunkban!</h3>
                 </div>
                 <div class="col jobbSzovegKetto"> 
@@ -30,7 +72,7 @@
                <RouterLink to="/registration" class="btn btn-outline-warning ketFoGomb">Regisztráció</RouterLink>
                </div>
                <div class="col jobbSzovegNegy">
-                <a href="/books">Tudj meg többet</a>
+                <a href="/books">Lássuk egyből a könyveket!</a>
                   
                 </div>
                 <div class="col jobbSzovegOt">
@@ -42,58 +84,27 @@
     </div>
   </div>
   <div class="row kotoSor"> 
-    <div class="col-12 ">
-      <p>Mi az a licitálás?</p>
+    <div class="col-12 kotoSorDiv ">
+      <p>Hogyan működik?</p>
     </div>
   </div>
-  <!--  <div class="row masodikSor">
-    <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 mb-2 masodikSorEgy ">   
-                <div class="welcome">
-                    <p>Nagy örömmel köszöntjük Önt az Értékes Könyvek webáruházában! Oldalunk célja, hogy minőségi és
-                        különleges könyveket kínáljunk mindazoknak, akik szenvedélyesen szeretik az olvasást és
-                        értékelik a
-                        kultúra szépségeit.
-                    </p>
+</div>
 
-                  </div>
-                </div>
-                <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 mb-2 masodikSorKetto">   
-                    <p>
-                        Kínálatunkban megtalálható három egyedi remekmű: egy különleges szótár, egy személyes fotókönyv
-                        és A
-                        Filozófia Nagykönyve.
-                        Minden egyes könyvet gondosan válogatunk, hogy biztosítsuk, csak a legkiválóbb minőségű és
-                        legérdekesebb példányok kerüljenek polcainkra.
-                    </p>
-                  </div>
-                </div>
+<div class="row lorem">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-                  <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 mb-2 ">   
-                    <p>
-                        Lentebb három kivételes könyv rövid bemutatóját találja.
-                        Kérjük, válassza ki az Önt leginkább érdeklő példányt, és az alul megjelenő űrlap kitöltésével
-                        jelentkezzen licitálásra.
-                        Mivel rendkívül nagy az érdeklődés ezekre a könyvekre, kérjük, küldjön egy motivációs levelet
-                        is,
-                        amelyben részletesen kifejti,
-                        miért szeretné megszerezni a kiválasztott könyvet.
-                        Jelentkezését gondos elbírálás követi, és ha megfelelőnek ítéljük, lehetősége nyílik a licitáló
-                        felületünkre lépni és részt venni az aukción.
-                    </p>
-                  </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-l-6 col-xl-6 mb-2 ">   
-                    <p>
-                        Nagyon köszönjük, hogy Minket választott! Kellemes böngészést és jó olvasást kívánunk!
-                    </p>
-                    <div class="col-12 text-center">
-                        <RouterLink to="/books" class="btn btn-outline-warning">Tovább a könyvekhez</RouterLink>
-                    </div>
-                  </div> 
-                
-             </div>-->
-       
-    </div> 
+
+</div>
+
 </template>
 
 
@@ -110,17 +121,14 @@
     justify-content: center;
     align-items: flex-start;
     padding-top:10vh;
-    background: url("../src/assets/main/andrew-neel.jpg");
+    background: url("/src/assets/img/main/rey-seven.jpg");
     /* opacity: 0.9;  */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
-    box-shadow: rgba(81, 50, 26, 0.728) 0px 1px 3px, rgba(75, 35, 2, 0.678) 0px 1px 2px;    
-    
-}
+    box-shadow: rgba(81, 50, 26, 0.728) 0px 1px 3px, rgba(75, 35, 2, 0.678) 0px 1px 2px;       
+  }
 .headerPic:hover {
-  
   opacity: 1;
   text-shadow: none;
   box-shadow: none;
@@ -132,51 +140,40 @@
   font-size: 3rem;
 }
 .headerPic h3 {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-family:Arial, Helvetica, sans-serif;
-  font-size: 1.5rem;
- 
-  
+  font-size: 1.5rem; 
 }
 
 .headerText {
-  font-family:Arial, Helvetica, sans-serif;
-    font-style: italic;
-    color: white;
-    text-align: center;
-    text-shadow: 2px 2px 2px #191416;
-    /* background-color: #39362b8c; */
-    border-radius: 10px;
-    /* box-shadow: 0px 0px 20px 13px #39362b8c; */
+  font-family:"Libre Baskerville", serif;
+  /* font-family: Geist Sans, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji"; */
+  font-style: italic;
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px 2px #191416;
+  border-radius: 10px;
 }
 
 
 .headerTextRigth {
-  font-style: italic;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:  "Libre Baskerville", serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  border: 1rem solid white;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-  
-
-  
+  border: 1rem solid whitesmoke;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; 
 }
 .jobbSzovegEgy {
   display: flex;
   justify-content: center;
   align-items:end;
   margin: 0;
-  
-
 }
 .jobbSzovegKetto, .jobbSzovegNegy{
   display: flex;
   justify-content: center;
   align-items:flex-end ;
-
 }
 
 .jobbSzovegHarom {
@@ -184,14 +181,13 @@
   justify-content: center;
   align-items:flex-start ;
   font-style: italic;
-
 }
 .jobbSzovegNegy{
-  font-size: 2rem;
+  font-size: 1rem;
  
 }
 .jobbSzovegNegy>a {
-  text-decoration: none;
+  text-decoration: underline;
   color:#191416;
 }
 
@@ -214,62 +210,23 @@
 
 .btn{
   align-items: center;
-  
 }
 
 .kotoSor{
   background-color: whitesmoke;
-  height: 8vh;
   display: flex;
-  font-style: italic;
   text-align: center;
-  font-size: 2rem;
-  
 }
 .kotoSor p {
+  font-family:"Libre Baskerville", serif;
   display: flex;
-justify-content: center;
-align-self: center;
-
-}
-.masodikSor{
-  height: 50vh;
-    
-}
-.masodikSorEgy {
-  border: 3px solid #191416;
-  padding: 1em 2em 1em 2em;
-  position: relative;
-  box-shadow: 5px 5px 30px grey;
-  background-color: whitesmoke;
-  border: 2px solid #191416;
-  padding: 1em 2em 1em 2em;
-  position: relative;
-  margin: 0em;
-    
+  justify-content: center;
+  font-size: 2rem;
+  padding: 3rem;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
-.masodikSorKetto {
-  
-  padding: 1em 2em 1em 2em;
-  position: relative;
-  box-shadow: 5px 5px 30px grey;
-  background-color: #dcb750cf;
-  padding: 1em 2em 1em 2em;
-  position: relative;
-}
 
-/* h1 {
-    font-family: "Playfair Display SC", serif;
-    font-size: 3rem;
-}
-
-h3 {
-    font-family: "Playfair Display SC", serif;
-    font-style: normal;
-    margin:0;
-    font-size: 1.5rem;
-} */
 
 h2 {
     font-family: "Playfair Display SC", serif;
@@ -280,27 +237,95 @@ h2 {
 p {
     font-family: "Roboto", sans-serif;
     text-align: justify;
+
 }
 
-.welcome {
-   
-}
 
-.welcome:before {
-    background: none;
-    border: 3px solid #191416;
-    content: "";
-    display: block;
-    position: absolute;
-    top: .1rem;
-    left: .1rem;
-    right: .1rem;
-    bottom: .1rem;
-    pointer-events: none;
-}
 
 .btn {
     background-color: #dcb750cf;
     color: black;
 }
+
+@media only screen and (max-width: 768px) {
+ 
+  .headerPic {
+    height: 40vh;
+}
+.headerTextRigth{
+  width: 100vh;
+}
+.headerText h1 {
+  font-size: 2rem;
+}
+.headerText h3 {
+  font-size: 1rem;
+}
+.jobbSzovegEgy h3 {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  font-size: 1rem;
+}
+.jobbSzovegKetto h4 {
+  font-size: 0.8rem;
+  padding-bottom: 1rem;
+}
+.jobbSzovegHarom h6 {
+  font-size: 0.6rem;
+  padding-bottom: 1rem;
+}
+.jobbGombok .ketFoGomb {
+  font-size: 1rem;
+height: 2.5rem;
+
+}
+.jobbSzovegNegy a {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.kotoSorDiv p {
+  font-size: 1.5rem;
+  border-right: none;
+}
+
+
+}
+@media only screen and (min-width: 769px) {
+  .headerPic {
+    height: 75vh;
+    background-size: cover;
+    
+  }
+  .headerText h1{
+font-size: 3rem;
+  }
+  .headerText h3{
+font-size: 1rem;
+  }
+  .jobbSzovegEgy h3 {
+  padding-top: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.jobbSzovegKetto h4 {
+  font-size: 1.3rem;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+ 
+ 
+}
+
+@media only screen and (min-width: 993px) {
+  .headerPic {
+    height: 80vh;
+   
+  }
+ 
+}
+.lorem {
+  margin: 1rem; 
+}
+
 </style>

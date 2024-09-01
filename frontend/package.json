@@ -20,6 +20,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@geist-ui/react": "^2.2.5",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.3",
     "bootstrap": "^5.3.3",

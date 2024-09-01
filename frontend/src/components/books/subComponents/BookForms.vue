@@ -138,7 +138,7 @@ const sendForm = async () => {
 }
 
 .modal-content {
-  background-color: #dcb750cf;
+  background-color: #eac45c;
   border: 3px solid #191416;
   padding: 2em;
   position: relative;
@@ -165,7 +165,10 @@ p {
 
 input,
 textarea {
-  font-family: "Roboto", sans-serif;
+  margin-bottom: 1rem;
+}
+.form-label{
+  font-family:  "Libre Baskerville", serif;
 }
 
 input::placeholder {
@@ -176,8 +179,18 @@ textarea::placeholder {
   color: rgb(192, 184, 165)
 }
 
-.btn-success,
-.btn-secondary {
-  background-color: black;
+
+.btn {
+    margin-top: 1rem;
+    background-color: #191814;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background-color: #F5CD7E;
+    border-color: #191814;
+    color:  #191814;
 }
 </style>

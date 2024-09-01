@@ -79,11 +79,17 @@ const handleSelection = (event: any) => {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 .navbar {
-  background-color: #191814f9;
+  background-color: #040403f9;
   border-top: 2px solid #f5cd7e;
   border-bottom: 2px solid #f5cd7e;
   padding: 0;
 }
+span  {
+ color: #f5cd7e;
+ background-color: #f5cd7e;
+ border-radius: 2px;
+}
+
 
 .navbar-nav > li > a {
   color: #f5cd7e;
@@ -97,9 +103,23 @@ const handleSelection = (event: any) => {
   color: #f5cd7e;
 }
 
+
+
 * {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 992px) {
+  .form-select {
+  margin-top: .5rem;
+  margin-bottom: 1.5rem;
+
+}
+.nav-item:last-child {
+  margin-bottom: 1rem;
+  }
+  
 }
 </style>

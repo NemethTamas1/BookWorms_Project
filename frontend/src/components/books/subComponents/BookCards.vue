@@ -20,16 +20,22 @@ function loadDescription(id: number) {
 
 const cardPicsSrc =
     [
-        new URL("../../../assets/img/szotar.jpg", import.meta.url).href,
-        new URL("../../../assets/img/fotokonyv.jpg", import.meta.url).href,
-        new URL("../../../assets/img/filozofia.jpg", import.meta.url).href
+        new URL("../../../assets/img/szotar2.jpg", import.meta.url).href,
+        new URL("../../../assets/img/fotokonyv2.jpg", import.meta.url).href,
+        new URL("../../../assets/img/filozofia2.jpg", import.meta.url).href
     ]
 
 </script>
 
 <template>
+<div class="container ">
+    <div class="row bookCardsCim">
+        <h1> Elérhető könyveink</h1>
+    </div>
+
+
     <!--Cardok-->
-    <div class="container ">
+    
         <div class="row holder">
             <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
 
@@ -51,8 +57,9 @@ const cardPicsSrc =
                 <h1>Valami hiba történt a könyvek betöltése közben, kérjük nézzen vissza később!</h1>
             </div>
         </div>
-        <div class="row my-4" :class="description ? 'detailedDescription' : ''">
-            <div class="col-12 d-flex flex-column">
+        <div class="row my-4 " :class="description ? 'detailedDescription' : ''">
+            <div class="col-12 d-flex flex-column reszletesLeiras" >
+                <h4>Részletesebb leírás a választott könyvről: </h4>
                 <p class="m-0">{{ description }}</p>
                 <button v-if="description" id="regisztralokALicitreGomb" class="btn mt-3 mx-auto" data-bs-toggle="modal"
                     data-bs-target="#bookFormModal">Regisztrálok a licitre</button>
@@ -64,17 +71,36 @@ const cardPicsSrc =
 
 <!--Style-->
 <style scoped>
+.bookCardsCim {
+    font-family: "Playfair Display", serif;
+    display: flex;
+    text-align: center;
+    padding-top: 3rem;
+}
+
 .btn {
-    background-color: #dcb750cf;
+    margin-top: 1rem;
+    background-color: #F5CD7E;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background-color: #191814;
+    border-color: #F5CD7E;
+    color: #F5CD7E;
 }
 
 .detailedDescription {
-    background-color: #dcb750cf;
+    background-color: #f7f5f1cf;
     border: 3px solid #191416;
     padding: 2em;
     position: relative;
     box-shadow: 5px 5px 30px grey;
     margin: 3rem 0 10rem 0;
+  
+
 }
 
 .detailedDescription:before {
@@ -89,11 +115,19 @@ const cardPicsSrc =
     bottom: .1rem;
     pointer-events: none;
 }
+.reszletesLeiras h4 {
+    font-family: "Playfair Display", serif;
+    margin-bottom: 3rem;
+}
 
+.card-title{
+    font-family:  "Libre Baskerville", serif;
+
+}
 .card-text {
+    font-family:'Lucida Sans', sans-serif;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: "Roboto", sans-serif;
     margin: 3rem 0;
     display: -webkit-box;
     -webkit-line-clamp: 8;
@@ -107,7 +141,7 @@ p {
 
 .card {
     min-height: 100%;
-    background-color: #dcb750cf;
+    background-color: #f7f5f1cf;
     border: 2px solid #ebb00dcf;
     padding: 2em;
     position: relative;
@@ -127,6 +161,7 @@ p {
     pointer-events: none;
 }
 
+
 /* glowing effect */
 
 /* body {
@@ -140,22 +175,20 @@ p {
 
 
 .bar {
-    background: rgba(255, 215, 0, 0.5);
+    background: rgba(255, 217, 0, 0.809);
     box-shadow: 0px 0px 4px rgba(255, 215, 0, 0.8),
-        0px 0px 8px rgba(255, 215, 0, 0.6),
+        0px 0px 8px rgba(167, 144, 15, 0.6),
         0px 0px 16px rgba(255, 215, 0, 0.4);
     border-radius: 4px;
     position: absolute;
 }
 
 
-.left,
-.right {
+.left, .right {
     width: 4px;
 }
 
-.top,
-.bottom {
+.top, .bottom {
     height: 4px;
 }
 
@@ -178,9 +211,9 @@ p {
     }
 
     40% {
-        height: 0;
+        height: 0%;
         top: 0;
-        left: 0;
+        left: 0%;
     }
 }
 
@@ -245,7 +278,7 @@ p {
     20% {
         width: 0;
         top: 0;
-        left: 0;
+        left: 100px;
     }
 
     40% {
