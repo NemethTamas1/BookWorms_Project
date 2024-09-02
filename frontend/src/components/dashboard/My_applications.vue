@@ -81,13 +81,13 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 3">
+            <div class="btnDiv" v-if="application.application_status === 3">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 
                 placeholder="Adj meg egy licitet"
               />
-              <button 
+              <button  class="btn"
                 @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
                 Licit
               </button>
@@ -135,5 +135,23 @@ th {
   background-color: #f9e3a8;
 }
 
+.btn {
+    background-color: #F5CD7E;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-left: 1rem;
+    
+}
+.btnDiv {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn:hover {
+    background-color: #191814;
+    border-color: #F5CD7E;
+    color: #F5CD7E;
+}
 
 </style>

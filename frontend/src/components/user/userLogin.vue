@@ -2,6 +2,7 @@
 import { loginUserOrAdminAndStoreTokenIntoLocalStorage } from '@/composables/auth/auth';
 import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
+import MainPageView from '@/views/MainPageView.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
 // import { useMediaQuery } from '@vueuse/core';
@@ -78,7 +79,8 @@ const handleSubmit = async () => {
     </div>
     <div class="row visszaGombRow">
         <div class="col-12 col-xs-12 col-sm-12 col-lg-4 visszaGombDiv ">
-            <button type="submit" class="btn visszaGomb">Vissza a Főoldalra</button>        
+            <a href="/" class="btn visszaGomb">Vissza a Főoldalra</a>
+                  
             
                 </div> 
     </div>   
@@ -199,10 +201,11 @@ label {
     margin-bottom: 10rem;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     font-family:  "Libre Baskerville", serif;
+    z-index: 1;
 }
 
 .visszaGombRow {
-    background-color: whitesmoke;
+    
     display: flex;
     justify-content: center;
     

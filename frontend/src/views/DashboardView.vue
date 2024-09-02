@@ -3,18 +3,27 @@ import Dashboard from '@/components/dashboard/My_applications.vue';
 </script>
 
 <template>
-    <div>
-    <div class="jelenkezesek">
-        <div>
-          <h1>Saját jelentkezéseim</h1>
+    <div class="container-fluid">
+      <div class="row">
+         <div class="col-12 jelenkezesek">
+              <div>
+                <h1>Saját jelentkezéseim</h1>
+              </div>
         </div>
+      </div>
+     
+        <div class="row">
+          <div class="col-12 dashboardDiv">
+            
+            <Dashboard />
+          </div>
+        </div>
+        
+          
+
+
     </div>
-  </div>
-  
-    <div>
-      
-      <Dashboard />
-    </div>
+   
 </template>
 
 <style scoped>
@@ -39,7 +48,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../src/assets/main/Background-1.png"); 
+    background-image: url("/src/assets/img/main/Background-1.png"); 
     background-size: contain;
     background-position: center;
     opacity: 0.44; 
@@ -62,6 +71,7 @@ background-color: #9f91343e;
 box-shadow: 0 0 50px 50px #9f91343e;
   
 }
+
 
 
 </style>

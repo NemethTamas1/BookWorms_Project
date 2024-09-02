@@ -26,8 +26,8 @@ const addPasswordAndChangeStatusInDatabase = async () => {
         <div class="row">
             <div class="col-12">
                 <form @submit.prevent="addPasswordAndChangeStatusInDatabase()">
-                    <h1>Örömmel látjuk, hogy regisztrálni szeretnél!</h1>
-                    <h3>Kérlek adj meg egy jelszót</h3>
+                    <h1>Örömmel látjuk, hogy regisztrálni szeretne!</h1>
+                    
                     <label class="form-label" for="username">E-mail cím</label>
                     <input class="form-control" type="username" name="username" id="username" placeholder="example@example.com">
                     <label class="form-label" for="password">Jelszó:</label>
@@ -48,7 +48,64 @@ const addPasswordAndChangeStatusInDatabase = async () => {
 
 <style scoped>
 
+.row {
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+    align-items: center;
+    width: 90%;
+
+}
+.form {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-start;
+    color: #201a02;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    border: 2px solid #F5CD7E;
+}
+input{
+    width: 40vh;
+}
+
+h1{
+    font-family:  "Libre Baskerville", serif;
+    
+}
+
+
+label {
+    font-family:  "Libre Baskerville", serif;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-left: 0.2rem;
+    color: #191814;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.btn {
+    margin-top: 1rem;
+    background-color: #F5CD7E;
+    font-weight: 400;
+    font-size: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    font-family:  "Libre Baskerville", serif;
+}
+
+.btn:hover {
+    background-color: #191814;
+    border-color: #F5CD7E;
+    color: #F5CD7E;
+}
+
 input::placeholder{
     color:rgb(173, 166, 149);
 }
+
+
 </style>
