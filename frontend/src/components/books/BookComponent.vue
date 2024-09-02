@@ -36,7 +36,7 @@ function setSelectedBook(book: Book){
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../../assets/img/Background-1.png");
+    background: url("../../assets/img/main/Background-1.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

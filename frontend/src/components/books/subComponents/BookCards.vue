@@ -37,7 +37,7 @@ const cardPicsSrc =
     <!--Cardok-->
     
         <div class="row holder">
-            <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
+            <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5 cardDiv">
 
                 <div class="card">
                     <div class="bar left"></div>
@@ -47,7 +47,7 @@ const cardPicsSrc =
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
-                        <p class="card-text">{{ book.description }}</p>
+                        <!-- <p class="card-text">{{ book.description }}</p> -->
                         <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Tovább</button>
                     </div>
 
@@ -122,6 +122,7 @@ const cardPicsSrc =
 
 .card-title{
     font-family:  "Libre Baskerville", serif;
+    margin-bottom: 3rem;
 
 }
 .card-text {
@@ -146,9 +147,10 @@ p {
     padding: 2em;
     position: relative;
     box-shadow: 5px 5px 30px grey;
+
 }
 
-.card:before {
+.card::before {
     background: none;
     /* border: 2px solid #191416; */
     content: "";
@@ -160,7 +162,23 @@ p {
     bottom: .1rem;
     pointer-events: none;
 }
-
+@media only screen and (max-width: 768px){
+    .card {
+        width: 70%;
+        
+    }
+    .cardDiv{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+}
+@media only screen and (min-width: 769px){
+    .card {
+        width: 100%;
+    }
+  
+}
 
 /* glowing effect */
 
