@@ -1,11 +1,18 @@
 <script setup lang="ts">
     import { useGetUserById } from '@/composables/api/useApi';
     import { useLoggedInUserStore } from '@/stores/userStore';
-    import { userToken } from '@/composables/auth/auth';
+    import { adminToken, userToken } from '@/composables/auth/auth';
     import type { User } from '@/models/User';
     const userStore = useLoggedInUserStore()
     const userId = userStore.getLoggedInUser.id
-    const user = await useGetUserById(userId, userToken.value!) as User
+    const status = userStore.getLoggedInUser.status
+    let user = {} as User
+    if(status == 2){
+        user = await useGetUserById(userId, userToken.value!) as User
+    }
+    else if(status == 3){
+        user = await useGetUserById(userId, adminToken.value!) as User
+    }
 </script>
 
 <template>

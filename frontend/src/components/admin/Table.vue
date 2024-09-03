@@ -30,7 +30,7 @@ async function changeStatus(application: Application, status: number) {
     price: application.price,
     motivational_letter: application.motivational_letter,
   }
-  const updatedApplicationResponseStatus = await useUpdateApplication(updatedApplication);
+  const updatedApplicationResponseStatus = await useUpdateApplication(updatedApplication, adminToken.value!);
   if(updatedApplicationResponseStatus == 200){
     props.applications.find(app => app == application)!.application_status = status
   }
@@ -41,7 +41,7 @@ async function changeStatus(application: Application, status: number) {
 }
 
 async function sendEmailToRegistration(application: Application){
-  const user: User | number = await useGetUserById(application.user_id, adminToken!)
+  const user: User | number = await useGetUserById(application.user_id, adminToken.value!)
   if(((user) as User).status == 1){
     await useSendEmailToRegistration(((user) as User).id)
     console.log("Email sent!")
@@ -78,13 +78,13 @@ async function sendEmailToRegistration(application: Application){
           <td v-if="showPrice">{{ application.price }}</td>
           <td v-if="showMotivationalLetter">{{ application.motivational_letter }}</td>
           <td v-if="showCheckImage"> <!-- Add images in the table -->
-            <img :src="pic_check" alt="Check image" style="width: 30px; height: auto;" @click="changeStatus(application, 2)" />
+            <img :src="pic_check" alt="Check image" style="width: 30px; height: auto;" @click="changeStatus(application, 3)" />
           </td>
           <td v-if="showXImage">
-            <img :src="pic_x" alt="X image" style="width: 30px; height: auto;" @click="changeStatus(application, 3)"/>
+            <img :src="pic_x" alt="X image" style="width: 30px; height: auto;" @click="changeStatus(application, 4)"/>
           </td> 
           <td v-if="showBackImage">
-            <img :src="pic_back" alt="Back arrow image" style="width: 30px; height: auto;" @click="changeStatus(application, 1)"/>
+            <img :src="pic_back" alt="Back arrow image" style="width: 30px; height: auto;" @click="changeStatus(application, 2)"/>
           </td> 
         </tr>
       </tbody>

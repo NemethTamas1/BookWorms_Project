@@ -5,6 +5,7 @@ import { Request } from 'express';
 import { Role } from 'src/enums/role.enum';
 
 export let idFromToken:number = 0
+export let statusFromToken: number = 0
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,7 +19,6 @@ export class AuthGuard implements CanActivate {
         const token = this.extractTokenFromHeader(request);
         let payload: object;
         let requiredRoles = []
-        console.log(token)
         if (!token) {
             throw new UnauthorizedException();
         }
@@ -37,18 +37,17 @@ export class AuthGuard implements CanActivate {
             if (!requiredRoles) {
                 return true;
             }
-            console.log(requiredRoles)
-            console.log(payload)
         } catch {
             throw new UnauthorizedException();
         }
         idFromToken = payload['sub']
+        statusFromToken = payload['status']
         return requiredRoles.some((role) => payload['status'] == role);
     }
 
+    //Extract the token from the header
     private extractTokenFromHeader(request: Request): string | undefined {
-        console.log(request.headers.authorization)
         const [type, token] = request.headers.authorization?.split(' ') ?? [];
-        return type === 'User' ? token : type === 'Admin' ? token : undefined;
+        return type === 'User' ? token : type === 'Admin' ? token : type === 'Guest' ? token : undefined;
     }
 }

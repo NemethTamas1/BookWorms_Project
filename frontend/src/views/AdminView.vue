@@ -18,7 +18,7 @@ const itemsPerPage = 10; // Number of items per page
 const currentPage = ref(0);
 const totalPages = ref(0);
 
-const applicationsResponse = await useGetApplications(adminToken!);
+const applicationsResponse = await useGetApplications(adminToken.value!);
 const applications = ref<Application[]>(applicationsResponse)
 const booksResponse = await useGetBooks();
 const books = ref<Book[]>(booksResponse)

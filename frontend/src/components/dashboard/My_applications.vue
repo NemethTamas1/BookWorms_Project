@@ -10,11 +10,6 @@ import { adminToken, userToken } from '@/composables/auth/auth';
 const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
-console.log(userStatus, 'Status')
-console.log(userId, 'Id')
-console.log(userStore.getLoggedInUser.email, 'Email')
-console.log(adminToken.value, 'Admin')
-console.log(userToken.value, 'User')
 //const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
@@ -43,7 +38,7 @@ books.value = books.value.filter(book => applications.value.some(application => 
 
 // Define a dictionary to store the biggest bid for each book
 interface BiggestBidDictionary  {
-  [key: number]: number;  // Keys are numbers, values are numbers
+  [key: number]: number|string;  // Keys are numbers, values are numbers
 }
 
 // Create a dictionary of the biggest bids for each book
@@ -52,10 +47,21 @@ async function createBiggestBidDictionary(books: { value: Book[] }): Promise<Big
 
   for (let i = 0; i < books.value.length; i++) {
     const bookId = books.value[i].id;
-    const biggestBidResponse = await useGetBiggestBid(bookId);
-    const biggestBid = biggestBidResponse as number;
+    let token:string = '';
+    if(userStatus == 2){
+      token = userToken.value!
+    }
+    else if(userStatus == 3){
+      token = adminToken.value!
+    }
+    const biggestBidResponse = await useGetBiggestBid(bookId, token);
     // Store the biggest bid for the book in the dictionary
-    biggestBids[bookId] = biggestBid;
+    if(biggestBidResponse != null){
+      biggestBids[bookId] = biggestBidResponse;
+    }
+    else{
+      biggestBids[bookId] = 'Nem elérhető.';
+    }
   }
 
   return biggestBids;
@@ -67,9 +73,11 @@ biggestBidDictionary.value = await createBiggestBidDictionary(books);
 
 const userBid: number[] = []
 
-async function submit(application: Application, userBid: number, biggestBid: number) {
+async function submit(application: Application, userBid: number, biggestBid: number | string) {
   try {
-    const response = await useSendBid(application, userBid, biggestBid);
+    if(typeof biggestBid === 'number'){
+      const response = await useSendBid(application, userBid, biggestBid);
+    }
     biggestBidDictionary.value = await createBiggestBidDictionary(books);
   } catch (error) {
     console.error("An error occurred during the submission process:", error);
@@ -104,7 +112,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 3">
+            <div v-if="application.application_status === 3 && typeof biggestBidDictionary[application.book_id] === 'number'">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 

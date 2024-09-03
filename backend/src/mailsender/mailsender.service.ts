@@ -8,7 +8,7 @@ export class MailsenderService {
     apiKey: process.env.MAILERSEND_TOKEN,
   });
 
-  async sendVerificationEmailToGuest(user: User, application_id: number) {
+  async sendVerificationEmailToGuest(user: User, application_id: number, guestToken: string) {
     const sentFrom = new Sender(
       'MS_Kbvm9k@trial-z86org866jn4ew13.mlsender.net',
       'bookworms',
@@ -36,7 +36,7 @@ export class MailsenderService {
     </p>
     
     <div style="margin: 20px 0; text-align: left;">
-      <a href="https://bookworms.fly.dev/changeGuestStatus/?id=${application_id}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+      <a href="https://bookworms.fly.dev/changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
     </div>
 
     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
@@ -64,7 +64,7 @@ export class MailsenderService {
     await this.mailerSend.email.send(emailParams);
   }
 
-  async sendRegistrationEmailToGuest(user: User) {
+  async sendRegistrationEmailToGuest(user: User, guestToken: string) {
     const sentFrom = new Sender(
       'MS_Kbvm9k@trial-z86org866jn4ew13.mlsender.net',
       'BookWorms',
@@ -76,7 +76,7 @@ export class MailsenderService {
       .setReplyTo(sentFrom)
       .setSubject('Regisztrációs email')
       .setText(
-        `Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}`,
+        `Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}&token=${guestToken}`,
       );
 
     await this.mailerSend.email.send(emailParams);

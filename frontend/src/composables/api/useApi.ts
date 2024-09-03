@@ -22,13 +22,13 @@ export async function useGetBooks(): Promise<Book[]> {
     }
 }
 
-export async function useGetApplications(token: string): Promise<Application[]> {
+export async function useGetApplications(adminToken: string): Promise<Application[]> {
     try {
         const response = await axios.get(baseURL + 'applications', {
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
-                'Authorization': `Admin ${token}`
+                'Authorization': `Admin ${adminToken}`
             }
         })
         return response.data
@@ -63,9 +63,10 @@ export async function useNewApplication(newApplication: Application): Promise<Ax
 
 
 //what happens when we call this function with a wrong id?
-export async function useUpdateApplication(updatedApplication: Application): Promise<number> {
+export async function useUpdateApplication(updatedApplication: Application, adminToken: string): Promise<number> {
     try {
-        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication)
+        const headers = {'Authorization': `Admin ${adminToken}`}
+        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication, {headers})
         if (response.status == 200) {
             console.log('Application updated successfully!');
             console.log('Updated application data:', response);
@@ -117,9 +118,11 @@ export async function useSendEmailToRegistration(userId: number): Promise<number
 
 export async function useGetUserById(userId: number, token: string): Promise<User | number> {
     try {
+        console.log(token)
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
         const response = await axios.get(baseURL + `user/?id=${userId}`, {
             headers: {
-                'Authorization': `Admin ${token}`
+                'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
             }
         })
         if (response.status == 200) {
@@ -135,9 +138,14 @@ export async function useGetUserById(userId: number, token: string): Promise<Use
     }
 }
 
-export async function useUpdateApplicationStatusById(id: number): Promise<any> {
+export async function useUpdateApplicationStatusById(userId: number, applicationId:number, guestToken: string): Promise<any> {
     try {
-        const response = await axios.put(baseURL + `applications/?id=${id}`)
+        console.log(guestToken)
+        const response = await axios.put(baseURL + `applications/?userId=${userId}&applicationId=${applicationId}`, null, {
+            headers: {
+                'Authorization': `Guest ${guestToken}`
+            }
+        })
         console.log(response)
         return response
     } catch (error) {
@@ -176,9 +184,11 @@ export async function useAddUserPasswordAndUpdateStatus(userId: number, password
     }
 }
 
-export async function useGetBiggestBid(bookId: number): Promise<number | null> {
+export async function useGetBiggestBid(bookId: number, token:String): Promise<number | null> {
     try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
         const response = await axios.get(baseURL + `applications/search-by-bookid`, {
+            headers: {'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`},
             params: { bookId: bookId }
         })
         if (response.status == 200) {
@@ -186,11 +196,11 @@ export async function useGetBiggestBid(bookId: number): Promise<number | null> {
         }
         else {
             console.log("Something went wrong!")
-            return 0
+            return null
         }
     } catch (error) {
         console.log(error)
-        return 0
+        return null
     }
 }
 

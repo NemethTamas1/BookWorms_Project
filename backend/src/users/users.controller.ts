@@ -2,27 +2,55 @@ import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, 
 import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { ResultSet } from '@libsql/client/.';
+import { Role } from 'src/enums/role.enum';
+import { Roles } from 'src/authentication/roles.decorator';
+import { AuthGuard } from 'src/authentication/auth.guard';
+import { statusFromToken, idFromToken } from 'src/authentication/auth.guard';
 
 @Controller('api/user')
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UsersService) { }
 
+  @Roles(Role.Admin, Role.User)
+  @UseGuards(AuthGuard)
   @Get()
-  async getUser(@Query('id') id: number): Promise<User>{
-    try {
-      const userFromDatabase = await this.userService.getUserById(id)
-      if(userFromDatabase.id != 0){
-        return userFromDatabase
+  async getUser(@Query('id') id: number): Promise<User> {
+    if (statusFromToken == 3) {
+      try {
+        const userFromDatabase = await this.userService.getUserById(id)
+        if (userFromDatabase.id != 0) {
+          return userFromDatabase
+        }
+        else {
+          throw new HttpException('Nem található user a megadott id-val!', HttpStatus.NOT_FOUND);
+        }
+      } catch (error) {
+        console.log(error)
+        throw new HttpException('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR);
       }
-      else{
-        throw new HttpException('Nem található user a megadott id-val!', HttpStatus.NOT_FOUND);
-      }
-    } catch (error) {
-      console.log(error)
-      throw new HttpException('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    else if (statusFromToken == 2) {
+      if (idFromToken == id) {
+        try {
+          const userFromDatabase = await this.userService.getUserById(id)
+          if (userFromDatabase.id != 0) {
+            return userFromDatabase
+          }
+          else {
+            throw new HttpException('Nem található user a megadott id-val!', HttpStatus.NOT_FOUND);
+          }
+        } catch (error) {
+          console.log(error)
+          throw new HttpException('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+      }
+      else {
+        throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
+      }
+    }
+
   }
 
   @Post()
@@ -40,6 +68,7 @@ export class UsersController {
       throw new HttpException('Hiba a felhasználó létrehozása közben', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
 
   @Post('login')
   async login(@Body() loginDto: { email: string; password: string }) {
@@ -62,19 +91,19 @@ export class UsersController {
     }
   }
 
-  @Put()
-  async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]>{
-    try {
-      const changedUserStatus = await this.userService.changeUserStatusById(id, 2);
-      return changedUserStatus
-    } catch (error) {
-      console.log('Error during status change!', error.stack);
-      throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
-    }
-  }
+  // @Put()
+  // async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]> {
+  //   try {
+  //     const changedUserStatus = await this.userService.changeUserStatusById(id, 2);
+  //     return changedUserStatus
+  //   } catch (error) {
+  //     console.log('Error during status change!', error.stack);
+  //     throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+  //   }
+  // }
 
   @Put('registration')
-  async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object) : Promise<ResultSet[]>{
+  async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object): Promise<ResultSet[]> {
     try {
       const updatedUserResult = await this.userService.changeUserStatusAndAddPasswordById(id, await this.userService.hashPassword(password['password']))
       return updatedUserResult

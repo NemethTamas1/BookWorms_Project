@@ -2,12 +2,13 @@
 import { useUpdateApplicationStatusById } from '@/composables/api/useApi';
 import { useRoute } from 'vue-router';
 
-console.log("Itt vagyunk")
 const changeStatusInDatabase = async () => {
     const route = useRoute()
-    const id = parseInt(route.query['id'] as string)
+    const userId = parseInt(route.query['userId'] as string)
+    const applicationId = parseInt(route.query['applicationId'] as string)
+    const guestToken = route.query['token'] as string
     //const id = route.query['id'] as unknown as number
-    await useUpdateApplicationStatusById(id)
+    await useUpdateApplicationStatusById(userId, applicationId, guestToken)
 }
 
 changeStatusInDatabase()
@@ -26,7 +27,7 @@ changeStatusInDatabase()
               </p>
               <p>
                 Kollégáink elkezdték motivációs levelének és szándékainak alapos átvizsgálását.
-                <b>Az átvizsgálás maximum 24 órát vesz igény </b>, de addig is tekintse át antik könyveink tárházát!
+                <b>Az átvizsgálás maximum 24 órát vesz igénybe </b>, de addig is tekintse át antik könyveink tárházát!
               </p>
               <hr />
               <div class="row">

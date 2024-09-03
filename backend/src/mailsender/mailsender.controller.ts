@@ -2,13 +2,15 @@ import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Put } from
 import { MailsenderService } from './mailsender.service';
 import { UsersService } from 'src/users/users.service';
 import { ApplicationsService } from 'src/applications/applications.service';
+import { AuthService } from 'src/authentication/auth.service';
 
 @Controller('api/mail')
 export class MailsenderController {
     constructor(
         private readonly mailsenderService: MailsenderService, 
         private readonly applicationService: ApplicationsService,
-        private readonly userService: UsersService
+        private readonly userService: UsersService,
+        private readonly authService: AuthService
     ) { }
 
     @Post()
@@ -16,8 +18,9 @@ export class MailsenderController {
         try {
             const applicationFromDatabase = await this.applicationService.getApplicationById(body['id'])
             const userFromDatabase = await this.userService.getUserById(applicationFromDatabase.user_id)
+            const guestToken = await this.authService.generateToken(userFromDatabase)
             if(applicationFromDatabase.id != 0 && userFromDatabase.id != 0){
-                await this.mailsenderService.sendVerificationEmailToGuest(userFromDatabase, applicationFromDatabase.id);
+                await this.mailsenderService.sendVerificationEmailToGuest(userFromDatabase, applicationFromDatabase.id, guestToken);
                 return HttpCode(201)
             }
             else{
@@ -33,8 +36,9 @@ export class MailsenderController {
     async sendRegistrationEmailToGuest(@Body() body: object): Promise<MethodDecorator>{
         try {
             const userFromDatabase = await this.userService.getUserById(body['id'])
+            const guestToken = await this.authService.generateToken(userFromDatabase)
             if(userFromDatabase.id != 0){
-                await this.mailsenderService.sendRegistrationEmailToGuest(userFromDatabase);
+                await this.mailsenderService.sendRegistrationEmailToGuest(userFromDatabase, guestToken);
                 return HttpCode(201)
             }
             else{

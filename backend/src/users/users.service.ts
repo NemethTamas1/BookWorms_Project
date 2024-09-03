@@ -88,25 +88,25 @@ export class UsersService {
         const user = await this.validateUserOrAdmin(email, password);
         console.log(user)
         if (user) {
-            const token = await this.authService.generateTokenForUserOrAdmin(user)
+            const token = await this.authService.generateToken(user)
             return {token: token, user: user}
         }
         console.log(`Failed login attempt with email: ${email}`);
         return null;
     }
 
-    async changeUserStatusById(id: number, status: number){
-        const updatedUserStatus = await this.dbConnect.turso.batch([{
-            sql: "UPDATE User SET status = :status WHERE id = :id",
-            args: {
-                id: id as number,
-                status: status as number
-            }
-        }],
-            "write"
-        );
-        return updatedUserStatus
-    }
+    // async changeUserStatusById(id: number, status: number){
+    //     const updatedUserStatus = await this.dbConnect.turso.batch([{
+    //         sql: "UPDATE User SET status = :status WHERE id = :id",
+    //         args: {
+    //             id: id as number,
+    //             status: status as number
+    //         }
+    //     }],
+    //         "write"
+    //     );
+    //     return updatedUserStatus
+    // }
 
     async changeUserStatusAndAddPasswordById(id: number, password: string){
         const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{

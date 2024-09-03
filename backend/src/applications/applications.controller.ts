@@ -33,11 +33,15 @@ export class ApplicationsController {
         }
     }
 
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard)
     @Get()
     async getAllApplications(): Promise<Application[]> {
         return await this.applicationService.getApplications();
     }
 
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard)
     @Put('/:id')
     async updateApplication(
         @Body() application: Application
@@ -54,15 +58,23 @@ export class ApplicationsController {
         }
     }
 
+    @Roles(Role.Guest)
+    @UseGuards(AuthGuard)
     @Put()
-    async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]> {
-        try {
-            const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(id, 2);
-            return changedApplicationStatus
-        } catch (error) {
-            console.log('Error during status change!', error.stack);
-            throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    async changeApplicationStatusById(@Query() query: any): Promise<ResultSet[]> {
+        const {userId, applicationId} = query
+        if(idFromToken == userId){
+            try {
+                const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(applicationId, 2);
+                return changedApplicationStatus
+            } catch (error) {
+                console.log('Error during status change!', error.stack);
+                throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+            }
         }
+        else{
+            throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
+        } 
     }
 
     @Roles(Role.Admin, Role.User)
@@ -87,6 +99,8 @@ export class ApplicationsController {
             }  
     }
 
+    @Roles(Role.Admin, Role.User)
+    @UseGuards(AuthGuard)
     @Get('search-by-bookid')
     async getBiggestBid(@Query('bookId') bookId: number): Promise<number | number> {
         try {

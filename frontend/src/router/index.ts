@@ -9,6 +9,7 @@ import RegistrationView from '@/views/RegistrationView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import AboutUS from '@/components/aboutus/aboutUS.vue'
 import AccountView from '@/views/AccountView.vue'
+import PageNotFoundView from '@/views/PageNotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -92,7 +93,16 @@ const router = createRouter({
       meta: {
         title: 'Fiókom'
       }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'page-not-found',
+      component: PageNotFoundView,
+      meta: {
+        title: 'Oldal nem található'
+      }
     }
+
   ]
 })
 
