@@ -41,7 +41,7 @@ const cardPicsSrc =
                     <div class="bar bottom"></div>
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
                     <div>
-                        <BookCountdown/>
+                        <BookCountdown :date="book.bid_end_date"/>
                     </div>
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>

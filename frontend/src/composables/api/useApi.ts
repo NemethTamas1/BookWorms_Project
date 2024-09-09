@@ -210,3 +210,12 @@ export async function useSendBid(application: Application, newBid: number, bigge
         }
     }
 }
+
+export async function updateBook(book: Book): Promise<number> {
+    try {
+        const response = await axios.put(baseURL + `books`, book)
+        return response.status
+    } catch (error: any) {
+        return error.response.status
+    }
+}
