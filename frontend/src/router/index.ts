@@ -9,6 +9,8 @@ import RegistrationView from '@/views/RegistrationView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import AboutUS from '@/components/aboutus/aboutUS.vue'
 import AccountView from '@/views/AccountView.vue'
+import ModifyBooksView from '@/views/ModifyBooksView.vue'
+import PageNotFoundView from '@/views/PageNotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
