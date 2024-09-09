@@ -57,6 +57,9 @@ const handleSelection = (event: any) => {
   else if (selectedValue === 'account') {
     router.push('/account')
   }
+  else if (selectedValue === 'modifyBooks') {
+    router.push('/modifyBooks')
+  }
 }
 </script>
 
@@ -99,6 +102,7 @@ const handleSelection = (event: any) => {
           <select class="form-select" name="" id="" @change="handleSelection">
             <option value="valasszon">Válasszon a lehetőségek közül...</option>
             <option v-if="userStatus == 3" value="admin">Admin oldal</option>
+            <option v-if="userStatus == 3" value="modifyBooks">Könyvek módosítása</option>
             <option value="myDashboard">Jelentkezéseim</option>
             <option value="account">Fiókom</option>
             <option value="logOut">Kijelentkezés</option>

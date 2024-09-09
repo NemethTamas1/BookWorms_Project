@@ -9,7 +9,6 @@ import RegistrationView from '@/views/RegistrationView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import AboutUS from '@/components/aboutus/aboutUS.vue'
 import AccountView from '@/views/AccountView.vue'
-import PageNotFoundView from '@/views/PageNotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -92,6 +91,14 @@ const router = createRouter({
       component: AccountView,
       meta: {
         title: 'Fiókom'
+      }
+    },
+    {
+      path: '/modifyBooks',
+      name: 'modifyBooks',
+      component: ModifyBooksView,
+      meta: {
+        title: 'Könyvek módosítása'
       }
     },
     {

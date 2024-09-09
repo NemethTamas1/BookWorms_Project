@@ -9,7 +9,8 @@ import BookWelcome from './subComponents/BookWelcome.vue';
 const selectedBook = ref<Book>({
     id: 0,
     title: '',
-    description: ''
+    description: '',
+    bid_end_date: new Date("Sep 07, 2024 22:10:15")
 })
 
 // A book értéket a @book emit-ből kapjuk! Beállítjuk a selectedBook-ot a BookCards componensről kapott bookkal! Ez minden eseménykor, amikor kattintunk, megtörténik!
