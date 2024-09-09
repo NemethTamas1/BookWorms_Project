@@ -2,6 +2,7 @@
 import { useGetBooks } from '@/composables/api/useApi';
 import type { Book } from '@/models/Book';
 import { ref } from 'vue';
+import BookCountdown from './BookCountdown.vue';
 
 const booksResponse = await useGetBooks();
 const books = ref<Book[]>(booksResponse)
@@ -39,6 +40,9 @@ const cardPicsSrc =
                     <div class="bar right"></div>
                     <div class="bar bottom"></div>
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
+                    <div>
+                        <BookCountdown/>
+                    </div>
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
