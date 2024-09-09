@@ -204,7 +204,7 @@ export async function useGetBiggestBid(bookId: number, token:String): Promise<nu
     }
 }
 
-export async function useSendBid(application: Application, newBid: number, biggestBid: number): Promise<number> {
+export async function useSendBid(application: Application, newBid: number, biggestBid: number, token: string): Promise<number> {
     if (newBid <= biggestBid) {
         alert("A licited túl alacsony, addj meg egy magasabb összeget!")
         return 0
@@ -213,7 +213,12 @@ export async function useSendBid(application: Application, newBid: number, bigge
         const updatedApplication = application
         updatedApplication.price = newBid
         try {
-            const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication)
+            const userStatus = useLoggedInUserStore().getLoggedInUser.status
+            const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, application, {
+                headers: {
+                    'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
+                }
+            })
             return response.status
         } catch (error: any) {
             return error.response.status

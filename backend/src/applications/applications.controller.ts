@@ -40,7 +40,7 @@ export class ApplicationsController {
         return await this.applicationService.getApplications();
     }
 
-    @Roles(Role.Admin)
+    @Roles(Role.Admin, Role.User)
     @UseGuards(AuthGuard)
     @Put('/:id')
     async updateApplication(

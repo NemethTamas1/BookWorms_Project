@@ -10,23 +10,33 @@ import { adminToken, userToken } from '@/composables/auth/auth';
 const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
+const token = ref<string>('')
+
+const setToken = () => {
+  if (userStatus == 2) {
+    token.value = userToken.value!
+  }
+  else if (userStatus == 3) {
+    token.value = adminToken.value!
+  }
+}
 //const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
 const checkStatusForApplications = async (): Promise<Ref<Application[]>> => {
-  if(userStatus == 2){
-  const applicationsResponse = await useGetApplicationsByUserId(userId, userToken.value!);
-  const applications = ref<Application[]>(applicationsResponse);
-  return applications
-}
-else if(userStatus == 3){
-  const applicationsResponse = await useGetApplicationsByUserId(userId, adminToken.value!);
-  const applications = ref<Application[]>(applicationsResponse);
-  return applications
-}
-else{
-  return ref<Application[]>([])
-}
+  if (userStatus == 2) {
+    const applicationsResponse = await useGetApplicationsByUserId(userId, userToken.value!);
+    const applications = ref<Application[]>(applicationsResponse);
+    return applications
+  }
+  else if (userStatus == 3) {
+    const applicationsResponse = await useGetApplicationsByUserId(userId, adminToken.value!);
+    const applications = ref<Application[]>(applicationsResponse);
+    return applications
+  }
+  else {
+    return ref<Application[]>([])
+  }
 }
 
 const applications: Ref<Application[]> = await checkStatusForApplications()
@@ -37,8 +47,8 @@ const books = ref<Book[]>(booksResponse);
 books.value = books.value.filter(book => applications.value.some(application => application.book_id === book.id));
 
 // Define a dictionary to store the biggest bid for each book
-interface BiggestBidDictionary  {
-  [key: number]: number|string;  // Keys are numbers, values are numbers
+interface BiggestBidDictionary {
+  [key: number]: number | string;  // Keys are numbers, values are numbers
 }
 
 // Create a dictionary of the biggest bids for each book
@@ -47,19 +57,13 @@ async function createBiggestBidDictionary(books: { value: Book[] }): Promise<Big
 
   for (let i = 0; i < books.value.length; i++) {
     const bookId = books.value[i].id;
-    let token:string = '';
-    if(userStatus == 2){
-      token = userToken.value!
-    }
-    else if(userStatus == 3){
-      token = adminToken.value!
-    }
-    const biggestBidResponse = await useGetBiggestBid(bookId, token);
+    setToken();
+    const biggestBidResponse = await useGetBiggestBid(bookId, token.value);
     // Store the biggest bid for the book in the dictionary
-    if(biggestBidResponse != null){
+    if (biggestBidResponse != null) {
       biggestBids[bookId] = biggestBidResponse;
     }
-    else{
+    else {
       biggestBids[bookId] = 'Nem elérhető.';
     }
   }
@@ -75,8 +79,9 @@ const userBid: number[] = []
 
 async function submit(application: Application, userBid: number, biggestBid: number | string) {
   try {
-    if(typeof biggestBid === 'number'){
-      const response = await useSendBid(application, userBid, biggestBid);
+    if (typeof biggestBid === 'number') {
+      setToken();
+      const response = await useSendBid(application, userBid, biggestBid, token.value);
     }
     biggestBidDictionary.value = await createBiggestBidDictionary(books);
   } catch (error) {
@@ -108,18 +113,14 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td v-if="application.application_status == 1">Megerősítésre vár</td>
           <td v-if="application.application_status == 2">Elfogadásra vár</td>
           <td v-if="application.application_status == 3">Elfogadott</td>
-          <td>{{ application.price }}  Ft</td>
+          <td>{{ application.price }} Ft</td>
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 3 && typeof biggestBidDictionary[application.book_id] === 'number'">
-              <input ref="inputField"
-                type="number" 
-                v-model.number="userBid[index]" 
-                placeholder="Adj meg egy licitet"
-              />
-              <button 
-                @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
+            <div
+              v-if="application.application_status === 3 && typeof biggestBidDictionary[application.book_id] === 'number'">
+              <input ref="inputField" type="number" v-model.number="userBid[index]" placeholder="Adj meg egy licitet" />
+              <button @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
                 Licit
               </button>
             </div>
@@ -136,10 +137,12 @@ h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   margin: 10px 0;
   font-size: 18px;
@@ -150,21 +153,20 @@ table {
   border-collapse: collapse;
   margin: auto;
   margin-top: 3rem;
-  
+
 }
 
-th, td {
+th,
+td {
   border: 1px solid #f8d985;
   padding: 8px;
 }
 
-tr:nth-child(even){
+tr:nth-child(even) {
   background-color: #f5e8c3;
 }
 
 th {
   background-color: #f9e3a8;
 }
-
-
 </style>
