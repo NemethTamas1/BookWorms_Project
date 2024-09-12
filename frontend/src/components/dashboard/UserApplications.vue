@@ -109,6 +109,7 @@ function isBidEnded(end_date: Date): boolean {
           <th>Jelentkezés azon.</th>
           <th>Könyv címe</th>
           <th>Státusz</th>
+          <th>Licit vége</th>
           <th>Saját licit (Ft)</th>
           <th>Legnagyobb licit (Ft)</th>
           <th>Licitálás</th>
