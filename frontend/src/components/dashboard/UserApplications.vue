@@ -10,6 +10,15 @@ import { adminToken, userToken } from '@/composables/auth/auth';
 const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
+const token = ref<string>('')
+const setToken = () => {
+  if (userStatus == 2) {
+    token.value = userToken.value!
+  }
+  else if (userStatus == 3) {
+    token.value = adminToken.value!
+  }
+}
 console.log(userStatus, 'Status')
 console.log(userId, 'Id')
 console.log(userStore.getLoggedInUser.email, 'Email')
@@ -52,7 +61,8 @@ async function createBiggestBidDictionary(books: { value: Book[] }): Promise<Big
 
   for (let i = 0; i < books.value.length; i++) {
     const bookId = books.value[i].id;
-    const biggestBidResponse = await useGetBiggestBid(bookId);
+    setToken();
+    const biggestBidResponse = await useGetBiggestBid(bookId, token.value);
     const biggestBid = biggestBidResponse as number;
     // Store the biggest bid for the book in the dictionary
     biggestBids[bookId] = biggestBid;
@@ -69,7 +79,7 @@ const userBid: number[] = []
 
 async function submit(application: Application, userBid: number, biggestBid: number) {
   try {
-    const response = await useSendBid(application, userBid, biggestBid);
+    const response = await useSendBid(application, userBid, biggestBid, token.value);
     biggestBidDictionary.value = await createBiggestBidDictionary(books);
   } catch (error) {
     console.error("An error occurred during the submission process:", error);
