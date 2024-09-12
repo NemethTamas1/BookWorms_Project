@@ -87,6 +87,17 @@ async function submit(application: Application, userBid: number, biggestBid: num
   }
 }
 
+function isBidEnded(end_date: Date): boolean {
+  let countDownDate = new Date(end_date).getTime(); // The deadline //Book bid_date
+  let now = new Date().getTime();
+  let distance = countDownDate - now;
+  if(distance >= 0){
+    return false
+  }
+  else{
+    return true
+  }
+}
 
 </script>
 
@@ -110,11 +121,13 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td v-if="application.application_status == 1">Megerősítésre vár</td>
           <td v-if="application.application_status == 2">Elfogadásra vár</td>
           <td v-if="application.application_status == 3">Elfogadott</td>
+          <td>{{ books[application.book_id - 1].bid_end_date }}</td>
           <td>{{ application.price }}  Ft</td>
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 3">
+            <p v-if="isBidEnded(books[application.book_id - 1].bid_end_date)">A licitnek vége</p>
+            <div v-if="application.application_status === 3 && !isBidEnded(books[application.book_id - 1].bid_end_date)">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 
