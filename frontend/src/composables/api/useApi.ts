@@ -219,3 +219,13 @@ export async function updateBook(book: Book): Promise<number> {
         return error.response.status
     }
 }
+
+export async function useGetBookById(bookId: number): Promise<Book| number> {
+    try {
+        const response = await axios.get(baseURL + `books/${bookId}`)
+        return response.data
+    } catch (error: any) {
+        console.log(error)
+        return error.response.status
+    }
+}

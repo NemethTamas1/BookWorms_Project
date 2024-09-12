@@ -15,4 +15,9 @@ export class BooksController {
     async modifyBookById(@Body() book: Book): Promise<ResultSet[]>{
         return await this.booksService.modifyBookById(book);
     }
+
+    @Get('id')
+    async getBookById(@Body() id: number): Promise<Book>{
+        return await this.booksService.getBookById(id);
+    }
 }

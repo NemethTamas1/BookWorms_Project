@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineComponent, ref, onMounted, computed, type Ref, type App } from 'vue';
-import { useGetApplicationsByUserId, useGetBiggestBid, useGetBooks, useSendBid } from '@/composables/api/useApi';
+import { useGetApplicationsByUserId, useGetBiggestBid, useGetBookById, useGetBooks, useSendBid } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
 import { useLoggedInUserStore } from '@/stores/userStore';
@@ -10,11 +10,11 @@ import { adminToken, userToken } from '@/composables/auth/auth';
 const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
-console.log(userStatus, 'Status')
-console.log(userId, 'Id')
-console.log(userStore.getLoggedInUser.email, 'Email')
-console.log(adminToken.value, 'Admin')
-console.log(userToken.value, 'User')
+// console.log(userStatus, 'Status')
+// console.log(userId, 'Id')
+// console.log(userStore.getLoggedInUser.email, 'Email')
+// console.log(adminToken.value, 'Admin')
+// console.log(userToken.value, 'User')
 //const userId = 	269 as number;
 
 //Define a reactive reference to hold the applications
@@ -77,6 +77,18 @@ async function submit(application: Application, userBid: number, biggestBid: num
   }
 }
 
+function isBidEnded(end_date: Date): boolean {
+  let countDownDate = new Date(end_date).getTime(); // The deadline //Book bid_date
+  let now = new Date().getTime();
+  let distance = countDownDate - now;
+  if(distance >= 0){
+    return false
+  }
+  else{
+    return true
+  }
+}
+
 
 </script>
 
@@ -88,6 +100,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <th>Jelentkezés azon.</th>
           <th>Könyv címe</th>
           <th>Státusz</th>
+          <th>Licit vége</th>
           <th>Saját licit (Ft)</th>
           <th>Legnagyobb licit (Ft)</th>
           <th>Licitálás</th>
@@ -100,11 +113,13 @@ async function submit(application: Application, userBid: number, biggestBid: num
           <td v-if="application.application_status == 1">Megerősítésre vár</td>
           <td v-if="application.application_status == 2">Elfogadásra vár</td>
           <td v-if="application.application_status == 3">Elfogadott</td>
+          <td>{{ books[application.book_id - 1].bid_end_date }}</td>
           <td>{{ application.price }}  Ft</td>
           <td>{{ biggestBidDictionary[application.book_id] }} Ft</td>
           <td>
             <!-- Textbox for user input and submit button -->
-            <div v-if="application.application_status === 3">
+            <p v-if="isBidEnded(books[application.book_id - 1].bid_end_date)">A licitnek vége</p>
+            <div v-if="application.application_status === 3 && !isBidEnded(books[application.book_id - 1].bid_end_date)">
               <input ref="inputField"
                 type="number" 
                 v-model.number="userBid[index]" 

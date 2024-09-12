@@ -19,8 +19,8 @@ let x = setInterval(() => {
 
    if (distance <= 0) {
       clearInterval(x);
-      countdown.value = "Too late!" // Text at the end of the countdown
-      console.log("Too late!") // Text at the end of the countdown
+      countdown.value = "A licitnek vége" // Text at the end of the countdown
+      //console.log("Too late!") // Text at the end of the countdown
    }
 }, 1000)
 
