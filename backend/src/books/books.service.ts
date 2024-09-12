@@ -36,4 +36,17 @@ export class BooksService {
     );
     return updatedBook
   }
+
+  async getBookById(id: number): Promise<Book> {
+    const bookFromDatabase = await this.dbConnect.turso.execute({
+      sql: "SELECT * FROM Book WHERE id = $id",
+      args: { id: id }})
+    const book: Book = {
+      id: bookFromDatabase["rows"][0]["id"] as number,
+      title: bookFromDatabase["rows"][0]["title"] as string,
+      description: bookFromDatabase["rows"][0]["description"] as string,
+      bid_end_date: bookFromDatabase["rows"][0]["bid_end_date"] as unknown as Date,
+    }
+    return book  
+  }
 }
