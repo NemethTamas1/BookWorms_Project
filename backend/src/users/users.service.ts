@@ -3,6 +3,7 @@ import { User } from './user.interface';
 import { DatabaseService } from 'src/database/db.service';
 import { AuthService } from 'src/authentication/auth.service';
 import * as bcrypt from 'bcrypt';
+import { ResultSet } from '@libsql/client/.';
 
 
 @Injectable()
@@ -24,6 +25,22 @@ export class UsersService {
             "write"
         )
         return Number(createdUser[0]["lastInsertRowid"])
+    }
+
+    async changeUserOrAdminData(user: User): Promise<ResultSet[]>{
+        const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{
+            sql: "UPDATE User SET first_name = :first_name, family_name = :family_name, email = :email, password = :password WHERE id = :id",
+            args: {
+                first_name: user.first_name as string,
+                family_name: user.family_name as string,
+                email: user.email as string,
+                password: user.password as string,
+                id: user.id as number,
+            }
+        }],
+            "write"
+        );
+        return changeUserStatusAndAddPassword
     }
 
     async getUserByEmail(email:string):Promise<User>{

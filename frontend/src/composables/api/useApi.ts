@@ -50,6 +50,21 @@ export async function useNewUser(newUser: User): Promise<number> {
     }
 }
 
+export async function useChangeUserOrAdminData(user: User, token: string) :Promise<number> {
+    try {
+        const response = await axios.put(baseURL + 'user', user, {
+            headers: {
+                'Authorization': `${user.status == 2 ? 'User' : user.status == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        console.log(response)
+        return response.data
+    } catch (error: any) {
+        console.log(error)
+        return 0
+    }
+}
+
 export async function useNewApplication(newApplication: Application): Promise<AxiosResponse<any, any>> {
     try {
         const response = await axios.post(baseURL + 'applications', newApplication)
@@ -140,7 +155,6 @@ export async function useGetUserById(userId: number, token: string): Promise<Use
 
 export async function useUpdateApplicationStatusById(userId: number, applicationId:number, guestToken: string): Promise<any> {
     try {
-        console.log(guestToken)
         const response = await axios.put(baseURL + `applications/?userId=${userId}&applicationId=${applicationId}`, null, {
             headers: {
                 'Authorization': `Guest ${guestToken}`

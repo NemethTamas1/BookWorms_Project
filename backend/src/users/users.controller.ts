@@ -91,16 +91,16 @@ export class UsersController {
     }
   }
 
-  // @Put()
-  // async changeUserStatusById(@Query('id') id: number): Promise<ResultSet[]> {
-  //   try {
-  //     const changedUserStatus = await this.userService.changeUserStatusById(id, 2);
-  //     return changedUserStatus
-  //   } catch (error) {
-  //     console.log('Error during status change!', error.stack);
-  //     throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
-  //   }
-  // }
+  @Put()
+  async changeUserOrAdminData(@Body() user:User): Promise<ResultSet[]> {
+    try {
+      const changedUserOrAdminData = await this.userService.changeUserOrAdminData(user);
+      return changedUserOrAdminData
+    } catch (error) {
+      console.log('Error during data change!', error.stack);
+      throw new HttpException('Data change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
 
   @Put('registration')
   async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object): Promise<ResultSet[]> {
