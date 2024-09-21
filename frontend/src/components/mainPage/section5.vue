@@ -135,7 +135,7 @@ export default {
   width: calc(100% - 145px);
 }
 #teljes_sor {
-  opacity: 0.7; /* 0.7% átlátszóság, hogy halványabb legyen MINDEN! */
+  opacity: 0.7;
   margin-top: 1rem;
 }
 
@@ -166,13 +166,18 @@ h2 {
 }
 
 section {
-  background: linear-gradient(
+background-image: url(https://kephost.net/p/MTQxMDk3Mg.png);
+background-size: cover;
+background-position: left;
+margin: 0;
+padding: 0;
+  /* background: linear-gradient(
     180deg,
     rgba(3, 26, 38, 1) 0%,
     rgba(22, 58, 78, 1) 40%,
     rgba(33, 72, 94, 1) 60%,
     rgba(4, 28, 41, 1) 100%
-  );
+  ); */
   border-top: 2px solid grey;
 }
 a {
@@ -193,8 +198,11 @@ a {
 }
 
 @media (max-width: 992px) {
+  .section-5 {
+    margin: auto;
+    width: 100%;
+  }
   section {
-    padding-left: 0;
     text-align: justify;
   }
   #social_linkek {
