@@ -13,7 +13,7 @@
               <h3>Értesüljön elsők között új szerzeményeinkről!</h3>
               <label for="feliratkozas_doboz"> Íratkozzon fel hírlevelünkre!</label>
               <div class="row">
-                <div class="col-6">
+                <div class="col-5 m-start">
                   <input
                     name="name"
                     placeholder="pelda@bookworms.hu"
@@ -23,7 +23,7 @@
                     minlength="8"
                   />
                 </div>
-                <div class="col-6">
+                <div class="col-5 ms-auto">
                   <a href="#" class="btn btn-inf form-button-submit">Küldés</a>
                 </div>
               </div>
@@ -130,10 +130,6 @@ export default {
 </script>
 
 <style scoped>
-.section-5 {
-  margin-left: 145px;
-  width: calc(100% - 145px);
-}
 #teljes_sor {
   opacity: 0.7;
   margin-top: 1rem;
@@ -166,11 +162,12 @@ h2 {
 }
 
 section {
-background-image: url(https://kephost.net/p/MTQxMDk3Mg.png);
-background-size: cover;
-background-position: left;
-margin: 0;
-padding: 0;
+  background-image: url(https://kephost.net/p/MTQxMjMzNw.png);
+  background-size: cover;
+  background-position: left;
+  padding: 0;
+  margin-left: 145px;
+  width: calc(100% - 145px);
   /* background: linear-gradient(
     180deg,
     rgba(3, 26, 38, 1) 0%,

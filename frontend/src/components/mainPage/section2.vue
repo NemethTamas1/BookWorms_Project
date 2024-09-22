@@ -7,29 +7,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- Ikonoknak -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    rel="stylesheet"
-  />
-  <!-- Ikonoknak -->
-
-  <!-- About Start -->
   <section id="section-2">
     <div class="container" id="elso_resz_fodiv">
       <div class="row">
-        <div class="col-lg-4">
-          <div class="row about-img ">
+        <!-- Első oszlop - képek -->
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+          <div class="row">
             <div class="col-12">
               <img
                 src="https://insideoutgroup.com.au/wp-content/uploads/2023/05/impediments-business-growth-harmonypsa-2.jpg"
-                class="img-fluid w-100 rounded-top d-none d-lg-block"
+                class="img-fluid w-100 rounded-top"
                 alt="Image"
               />
             </div>
-          </div>
-          <div class="row about-img">
-            <div class="col-12">
+            <div class="col-12 mt-4">
               <img
                 src="https://www.shutterstock.com/image-photo/businessman-analyzes-profitability-working-companies-600nw-2273999575.jpg"
                 class="img-fluid w-100 rounded-bottom"
@@ -38,7 +29,9 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div class="col-lg-8">
+
+        <!-- Második oszlop - szöveg -->
+        <div class="col-md-6">
           <div>
             <div class="row">
               <div class="col-10 m-auto text-center">
@@ -68,8 +61,8 @@ onMounted(() => {
                   Küldetésünk, hogy ezen ritka könyvek olyan gazdára lelhessenek, akik külső és
                   belső értéküket is egyaránt becsülik. Mindemellé páratlan vásárlási élményt
                   nyújtunk az Ön biztonságát és kényelmét előtérbe helyezve. Így nyújtunk otthonából
-                  egy olyan széles és elérhető könyvválasztékot, mely akár még
-                  Alexandriában sem volt megtalálható.
+                  egy olyan széles és elérhető könyvválasztékot, mely akár még Alexandriában sem
+                  volt megtalálható.
                 </p>
               </div>
             </div>
@@ -101,21 +94,22 @@ section {
   min-height: 100vh;
   width: calc(100% - 145px);
   margin-left: 145px;
-  background-image:
-    url('https://kephost.net/p/MTQxMDk2NA.png'),
-      linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
+    linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
   background-position: center;
-  background-size: cover; 
-  background-repeat: no-repeat; 
+  background-size: cover;
+  background-repeat: no-repeat;
   color: aliceblue;
+  padding: 2rem; /* Padding minden méretben */
 }
 
 .about-img img {
   width: 100%;
-  height: auto; /* Automatikus magasság a reszponzív megjelenéshez */
+  height: auto;
   margin: 1rem 0;
   border-radius: 5px;
 }
+
 #idezet_behuzas {
   background-color: rgba(255, 217, 0, 0.3);
   padding: 20px;
@@ -126,8 +120,8 @@ section {
 }
 
 .container {
-  width: 70%;
-  font-weight: 600;
+  width: 100%;
+  font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
   border-radius: 2rem;
   text-align: justify;
@@ -160,7 +154,7 @@ section {
 @media (max-width: 992px) {
   section {
     margin: 0;
-    padding: 0;
+    padding: 2rem; /* Padding minden méretben */
     width: 100%;
   }
 
@@ -187,12 +181,12 @@ section {
 @media (max-width: 768px) {
   section {
     flex-direction: column;
-    padding: 0;
+    padding: 2rem;
     margin-left: 0;
   }
 
   .about-img img {
-    width: 50%;
+    width: 100%;
     margin: 0;
   }
 
@@ -202,6 +196,20 @@ section {
 }
 
 @media (max-width: 576px) {
+  section {
+    flex-direction: column-reverse;
+    padding: 2rem;
+  }
+
+  /* Csak a második kép maradjon meg telefonos nézetben */
+  .col-md-6 img:first-child {
+    display: none;
+  }
+
+  #elso_resz_fodiv {
+    order: 2;
+  }
+
   #idezet_behuzas {
     font-size: small;
     margin-left: 0;
@@ -216,8 +224,8 @@ section {
     padding: 0.5rem;
   }
 
-  section {
-    padding: 0;
+  #masodik_oszlop img {
+    width: 100%;
+    border-radius: 1rem;
   }
-}
-</style>
+}</style>
