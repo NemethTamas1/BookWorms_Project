@@ -6,6 +6,7 @@ import Section3 from './section3.vue'
 import Section4 from './section4.vue'
 import Section5 from './section5.vue'
 import Aliz from './aliz.vue'
+import section6 from './section6.vue'
 
 export default defineComponent({
   name: 'MainPageComponent',
@@ -15,7 +16,8 @@ export default defineComponent({
     Section3,
     Section4,
     Section5,
-    Aliz
+    Aliz,
+    section6
   },
   methods: {
     scrollToSection(sectionId: string) {
@@ -100,8 +102,9 @@ export default defineComponent({
     <div class="content">
       <section1 id="section1" />
       <aliz id="aliz" />
-      <section2 id="section2" />
       <section3 id="section3" />
+      <section2 id="section2" />
+      <section6 id="section6"/>
       <section4 id="section4" />
       <section5 id="section5" />
     </div>
