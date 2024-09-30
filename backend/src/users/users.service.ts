@@ -34,7 +34,7 @@ export class UsersService {
                 first_name: user.first_name as string,
                 family_name: user.family_name as string,
                 email: user.email as string,
-                password: user.password as string,
+                password: await this.hashPassword(user.password) as string,
                 id: user.id as number,
             }
         }],
@@ -95,7 +95,8 @@ export class UsersService {
 
     async validateUserOrAdmin(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
-        if ( this.comparePasswords(password, user.password) && user && (user.status == 2 || user.status == 3) ) {
+        console.log(await this.comparePasswords(password, user.password))
+        if ( await this.comparePasswords(password, user.password) && user && (user.status == 2 || user.status == 3) ) {
             return user;
         }
         return null;

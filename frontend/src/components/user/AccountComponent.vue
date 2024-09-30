@@ -3,7 +3,9 @@ import { useChangeUserOrAdminData, useGetUserById } from '@/composables/api/useA
 import { useLoggedInUserStore } from '@/stores/userStore';
 import { adminToken, userToken } from '@/composables/auth/auth';
 import type { User } from '@/models/User';
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
+
+onMounted(() => initialize());
 
 const userStore = useLoggedInUserStore()
 const userId = userStore.getLoggedInUser.id
@@ -12,6 +14,13 @@ const status = userStore.getLoggedInUser.status
 let user = ref<User>({} as User)
 const changedPassword = ref<string>('')
 const changedPasswordAgain = ref<string>('')
+let dataChangedSuccessfully = ref<boolean>(false)
+let dataChangeError = ref<boolean>(false)
+
+const initialize = () => {
+    dataChangedSuccessfully.value = false
+    dataChangeError.value = false
+}
 
 const errMessages = reactive({
     family_name_err_msg: '',
@@ -45,20 +54,52 @@ const cancelUserOrAdminDataModify = async () => {
 const changeUserOrAdminData = async () => {
     if (changedPassword.value === '' && changedPasswordAgain.value === '') {
         if (status == 2) {
-            await useChangeUserOrAdminData(user.value, userToken.value!)
+            try {
+                await useChangeUserOrAdminData(user.value, userToken.value!)
+                dataChangedSuccessfully.value = true
+                isActiveField.value = false
+                changedPassword.value = ''
+                changedPasswordAgain.value = ''
+            } catch (error) {
+                dataChangeError.value = true
+            }
         }
         else if (status == 3) {
-            await useChangeUserOrAdminData(user.value, adminToken.value!)
+            try {
+                await useChangeUserOrAdminData(user.value, adminToken.value!)
+                dataChangedSuccessfully.value = true
+                isActiveField.value = false
+                changedPassword.value = ''
+                changedPasswordAgain.value = ''
+            } catch (error) {
+                dataChangeError.value = true
+            }
         }
     }
     else {
         if (changedPassword.value === changedPasswordAgain.value) {
             user.value.password = changedPassword.value
             if (status == 2) {
-                await useChangeUserOrAdminData(user.value, userToken.value!)
+                try {
+                    await useChangeUserOrAdminData(user.value, userToken.value!)
+                    dataChangedSuccessfully.value = true
+                    isActiveField.value = false
+                    changedPassword.value = ''
+                    changedPasswordAgain.value = ''
+                } catch (error) {
+                    dataChangeError.value = true
+                }
             }
             else if (status == 3) {
-                await useChangeUserOrAdminData(user.value, adminToken.value!)
+                try {
+                    await useChangeUserOrAdminData(user.value, adminToken.value!)
+                    dataChangedSuccessfully.value = true
+                    isActiveField.value = false
+                    changedPassword.value = ''
+                    changedPasswordAgain.value = ''
+                } catch (error) {
+                    dataChangeError.value = true
+                }
             }
         }
     }
@@ -127,12 +168,15 @@ const validateInputField = () => {
                 <p class="errorMsg" v-if="errMessages.email_err_msg !== ''">{{ errMessages.email_err_msg }}
                 </p>
                 <label for="password" class="form-label">Jelszó megváltoztatása:</label>
-                <input v-model="(changedPassword)" @focus="validateInputField()" @keyup="validateInputField()" class="form-label" :disabled="!isActiveField" type="password"
-                    name="password" id="password" autocomplete="new-password">
+                <input v-model="(changedPassword)" @focus="validateInputField()" @keyup="validateInputField()"
+                    class="form-label" :disabled="!isActiveField" type="password" name="password" id="password"
+                    autocomplete="new-password">
                 <label for="passwordAgain" class="form-label">Jelszó mégegyszer:</label>
-                <input v-model="(changedPasswordAgain)" @focus="validateInputField()" @keyup="validateInputField()" class="form-label" :disabled="!isActiveField" type="password"
-                    name="passwordAgain" id="passwordAgain">
-                <p class="errorMsg" v-if="errMessages.password_match_err_msg !== ''">{{ errMessages.password_match_err_msg }}
+                <input v-model="(changedPasswordAgain)" @focus="validateInputField()" @keyup="validateInputField()"
+                    class="form-label" :disabled="!isActiveField" type="password" name="passwordAgain"
+                    id="passwordAgain">
+                <p class="errorMsg" v-if="errMessages.password_match_err_msg !== ''">{{
+                    errMessages.password_match_err_msg }}
                 </p>
                 <div class="d-flex justify-content-between">
                     <button class="btn btn-warning" :disabled="isActiveField" @click="activateInputFields()">Adatok
@@ -143,6 +187,12 @@ const validateInputField = () => {
                         :disabled="!isActiveField || validateInputField()">Mentés</button>
                 </div>
             </form>
+            <div v-if="dataChangedSuccessfully" class="col-12 text-center">
+                <h4>Sikeres adatváltoztatás!</h4>
+            </div>
+            <div v-if="dataChangeError" class="col-12 text-center">
+                <h4>Valami hiba történt, kérjük próbálja meg később!</h4>
+            </div>
         </div>
     </div>
 </template>
