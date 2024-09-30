@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Put } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book } from './book.interface';
 import { ResultSet } from '@libsql/client/.';
@@ -8,16 +8,31 @@ export class BooksController {
     constructor(private readonly booksService: BooksService){}
     @Get()
     async getAllBooks(): Promise<Book[]>{
-        return await this.booksService.getBooks();
+        try {
+            return await this.booksService.getBooks();
+        } catch (error) {
+            console.error("Error getting books:", error);
+            throw new HttpException("Error getting books:", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Put()
     async modifyBookById(@Body() book: Book): Promise<ResultSet[]>{
-        return await this.booksService.modifyBookById(book);
+        try {
+            return await this.booksService.modifyBookById(book);
+        } catch (error) {
+            console.error("Error during book modify:", error);
+            throw new HttpException("Error during book modify:", HttpStatus.INTERNAL_SERVER_ERROR); 
+        }
     }
 
     @Get('id')
     async getBookById(@Body() id: number): Promise<Book>{
-        return await this.booksService.getBookById(id);
+        try {
+            return await this.booksService.getBookById(id);
+        } catch (error) {
+            console.error("Error getting book by id:", error);
+            throw new HttpException("Error getting book by id:", HttpStatus.INTERNAL_SERVER_ERROR); 
+        }
     }
 }

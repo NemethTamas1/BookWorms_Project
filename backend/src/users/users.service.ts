@@ -95,7 +95,6 @@ export class UsersService {
 
     async validateUserOrAdmin(email: string, password: string): Promise<User | null> {
         const user = await this.getUserByEmail(email);
-        console.log(await this.comparePasswords(password, user.password))
         if ( await this.comparePasswords(password, user.password) && user && (user.status == 2 || user.status == 3) ) {
             return user;
         }
@@ -104,27 +103,12 @@ export class UsersService {
 
     async getTokenForUserOrAdmin(email: string, password: string): Promise<object | null> {
         const user = await this.validateUserOrAdmin(email, password);
-        console.log(user)
         if (user) {
             const token = await this.authService.generateToken(user)
             return {token: token, user: user}
         }
-        console.log(`Failed login attempt with email: ${email}`);
         return null;
     }
-
-    // async changeUserStatusById(id: number, status: number){
-    //     const updatedUserStatus = await this.dbConnect.turso.batch([{
-    //         sql: "UPDATE User SET status = :status WHERE id = :id",
-    //         args: {
-    //             id: id as number,
-    //             status: status as number
-    //         }
-    //     }],
-    //         "write"
-    //     );
-    //     return updatedUserStatus
-    // }
 
     async changeUserStatusAndAddPasswordById(id: number, password: string){
         const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{

@@ -10,7 +10,6 @@ export class ApplicationsService {
   async getApplications() {
     const applications: Application[] = [];
     const applicationFromDatabase = await this.dbConnect.turso.execute("SELECT * FROM Application")
-    console.log(applicationFromDatabase["rows"])
     for (let i = 0; i < applicationFromDatabase["rows"].length; i++) {
       const application: Application = {
         id: applicationFromDatabase["rows"][i]["id"] as number,

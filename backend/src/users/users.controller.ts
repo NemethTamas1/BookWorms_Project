@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger, Get, Query, Put, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Get, Query, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.interface';
 import { ResultSet } from '@libsql/client/.';
@@ -9,8 +9,6 @@ import { statusFromToken, idFromToken } from 'src/authentication/auth.guard';
 
 @Controller('api/user')
 export class UsersController {
-  private readonly logger = new Logger(UsersController.name);
-
   constructor(private readonly userService: UsersService) { }
 
   @Roles(Role.Admin, Role.User)
@@ -42,11 +40,12 @@ export class UsersController {
             throw new HttpException('Nem található user a megadott id-val!', HttpStatus.NOT_FOUND);
           }
         } catch (error) {
-          console.log(error)
+          console.log('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR)
           throw new HttpException('Szerver hiba!', HttpStatus.INTERNAL_SERVER_ERROR);
         }
       }
       else {
+        console.log("Unathorized request!", HttpStatus.UNAUTHORIZED)
         throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
       }
     }
@@ -83,22 +82,33 @@ export class UsersController {
         };
       } else {
         console.log(`Failed login attempt for email: ${email}`);
+        console.log('Invalid credentials', HttpStatus.UNAUTHORIZED);
         throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
       }
     } catch (error) {
       console.log('Error during login', error.stack);
+      console.log('Login failed', HttpStatus.INTERNAL_SERVER_ERROR, error.message)
       throw new HttpException('Login failed', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
     }
   }
 
+  @Roles(Role.Admin, Role.User)
+  @UseGuards(AuthGuard)
   @Put()
-  async changeUserOrAdminData(@Body() user:User): Promise<ResultSet[]> {
-    try {
-      const changedUserOrAdminData = await this.userService.changeUserOrAdminData(user);
-      return changedUserOrAdminData
-    } catch (error) {
-      console.log('Error during data change!', error.stack);
-      throw new HttpException('Data change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+  async changeUserOrAdminData(@Body() user: User): Promise<ResultSet[]> {
+    if (user.id == idFromToken) {
+      try {
+        const changedUserOrAdminData = await this.userService.changeUserOrAdminData(user);
+        return changedUserOrAdminData
+      } catch (error) {
+        console.log('Error during data change!', error.stack);
+        console.log('Data change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+        throw new HttpException('Data change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+      }
+    }
+    else {
+      console.log("Unathorized request!", HttpStatus.UNAUTHORIZED)
+      throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
     }
   }
 
@@ -109,6 +119,7 @@ export class UsersController {
       return updatedUserResult
     } catch (error) {
       console.log('Error during registration!', error.stack);
+      console.log('Registration failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
       throw new HttpException('Registration failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
     }
   }

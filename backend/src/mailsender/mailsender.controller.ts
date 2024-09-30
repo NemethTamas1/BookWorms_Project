@@ -24,10 +24,12 @@ export class MailsenderController {
                 return HttpCode(201)
             }
             else{
+                // ???? Mikor tud ez bekovetkezni ????
+                console.log("Felhasználó vagy jelentkezés nem található!", HttpStatus.NOT_FOUND)
                 throw new HttpException("Felhasználó vagy jelentkezés nem található!", HttpStatus.NOT_FOUND)
             }
         } catch (error) {
-            console.log(error)
+            console.log("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
             throw new HttpException("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
@@ -45,7 +47,7 @@ export class MailsenderController {
                 throw new HttpException("Felhasználó nem található!", HttpStatus.NOT_FOUND)
             }
         } catch (error) {
-            console.log(error)
+            console.log("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
             throw new HttpException("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }

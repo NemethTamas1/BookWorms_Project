@@ -17,13 +17,19 @@ const save = async (book: Book) => {
     modifyBook.value = false;
     await updateBook(book);
 }
+
+const cancel = async () => {
+    modifyBook.value = false;
+    books.value = await useGetBooks();
+}
+
 </script>
 
 <template>
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <table>
+                <table class="table table-striped">
                     <thead>
                         <th>ID</th>
                         <th>Cím</th>
@@ -31,17 +37,19 @@ const save = async (book: Book) => {
                         <th>Licit vége</th>
                         <th>Módosítás</th>
                     </thead>
-                    <tbody v-for="book in books">
-                        <tr>
-                            <td>{{ book.id }}</td>
+                    <tbody>
+                        <tr v-for="book in books">
+                            <td v-if="!modifyBook">{{ book.id }}</td>
+                            <td v-if="modifyBook && bookID == book.id">{{ book.id }}</td>
                             <td v-if="!modifyBook">{{ book.title }}</td>
-                            <td v-if="modifyBook && bookID == book.id"><input type="text" v-model="book.title"></td>
+                            <td v-if="modifyBook && bookID == book.id"><input class="form-control" type="text" v-model="book.title"></td>
                             <td v-if="!modifyBook">{{ book.description }}</td>
-                            <td v-if="modifyBook && bookID == book.id"><input type="text" v-model="book.description"></td>
+                            <td v-if="modifyBook && bookID == book.id"><input class="form-control" type="text" v-model="book.description"></td>
                             <td v-if="!modifyBook">{{ book.bid_end_date }}</td>
-                            <td v-if="modifyBook && bookID == book.id"><input type="datetime-local" v-model="book.bid_end_date"></td>
+                            <td v-if="modifyBook && bookID == book.id"><input class="form-control" type="datetime-local" v-model="book.bid_end_date"></td>
                             <td v-if="!modifyBook"><button class="btn btn-success" @click="modify(book.id)">Módosítás</button></td>
                             <td v-if="modifyBook && bookID == book.id"><button class="btn btn-success" @click="save(book)">Mentés</button></td>
+                            <td v-if="modifyBook && bookID == book.id"><button class="btn btn-danger" @click="cancel()">Mégsem</button></td>
                         </tr>
                     </tbody>
                 </table>

@@ -28,6 +28,7 @@ export class ApplicationsController {
                 throw new HttpException("Erre a könyvre már jelentkeztek ezzel az email címmel!", HttpStatus.BAD_REQUEST)
             }
             else {
+                console.error("Hiba a jelentkezés létrehozása közben", HttpStatus.INTERNAL_SERVER_ERROR)
                 throw new HttpException("Hiba a jelentkezés létrehozása közben", HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
@@ -37,7 +38,12 @@ export class ApplicationsController {
     @UseGuards(AuthGuard)
     @Get()
     async getAllApplications(): Promise<Application[]> {
-        return await this.applicationService.getApplications();
+        try {
+            return await this.applicationService.getApplications();
+        } catch (error) {
+            console.error("Error getting applications:", error);
+            throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Roles(Role.Admin, Role.User)
@@ -62,8 +68,8 @@ export class ApplicationsController {
     @UseGuards(AuthGuard)
     @Put()
     async changeApplicationStatusById(@Query() query: any): Promise<ResultSet[]> {
-        const {userId, applicationId} = query
-        if(idFromToken == userId){
+        const { userId, applicationId } = query
+        if (idFromToken == userId) {
             try {
                 const changedApplicationStatus = await this.applicationService.changeApplicationStatusById(applicationId, 2);
                 return changedApplicationStatus
@@ -72,31 +78,31 @@ export class ApplicationsController {
                 throw new HttpException('Status change failed!', HttpStatus.INTERNAL_SERVER_ERROR, error.message);
             }
         }
-        else{
+        else {
             throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
-        } 
+        }
     }
 
     @Roles(Role.Admin, Role.User)
     @UseGuards(AuthGuard)
     @Get('search-by-userid')
     async getApplicationsByUserId(@Query('userId') userId: number): Promise<Application[]> {
-            if(idFromToken == userId){
-                try {
-                    const applications = await this.applicationService.getApplicationsByUserId(userId);
-                    if (!applications) {
-                        throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
-                    }
-                    return applications;
+        if (idFromToken == userId) {
+            try {
+                const applications = await this.applicationService.getApplicationsByUserId(userId);
+                if (!applications) {
+                    throw new HttpException("Application not found", HttpStatus.NOT_FOUND);
                 }
-                catch (error) {
-                    console.error("Error getting application by id:", error);
-                    throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
-                } 
+                return applications;
             }
-            else{
-                throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
-            }  
+            catch (error) {
+                console.error("Error getting application by id:", error);
+                throw new HttpException("Error getting application by id", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        else {
+            throw new HttpException("Unathorized request!", HttpStatus.UNAUTHORIZED)
+        }
     }
 
     @Roles(Role.Admin, Role.User)
