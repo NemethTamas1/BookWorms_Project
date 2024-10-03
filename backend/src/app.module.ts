@@ -7,8 +7,7 @@ import { MailsenderModule } from './mailsender/mailsender.module';
 import { AuthModule } from './authentication/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './authentication/auth.guard';
+import { BidGateway } from './bid/bid.gateway';
 
 @Module({
   imports: [
@@ -22,6 +21,7 @@ import { AuthGuard } from './authentication/auth.guard';
       rootPath: join(__dirname, '..', 'client'),
       //exclude: ['/api*'], //correct? idk
     }),
-  ]
+  ],
+  providers: [BidGateway]
 })
 export class AppModule {}

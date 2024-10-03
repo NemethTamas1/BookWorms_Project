@@ -5,7 +5,6 @@ import type { Book } from "@/models/Book";
 import { useLoggedInUserStore } from "@/stores/userStore";
 
 const baseURL = import.meta.env.VITE_URL + 'api/'
-console.log(baseURL)
 
 export async function useGetBooks(): Promise<Book[]> {
     try {
@@ -42,7 +41,6 @@ export async function useGetApplications(adminToken: string): Promise<Applicatio
 export async function useNewUser(newUser: User): Promise<number> {
     try {
         const response = await axios.post(baseURL + 'user', newUser)
-        console.log(response)
         return response.data
     } catch (error: any) {
         console.log(error)
@@ -57,7 +55,6 @@ export async function useChangeUserOrAdminData(user: User, token: string) :Promi
                 'Authorization': `${user.status == 2 ? 'User' : user.status == 3 ? 'Admin' : ''} ${token}`
             }
         })
-        console.log(response)
         return response.data
     } catch (error: any) {
         console.log(error)
@@ -68,9 +65,9 @@ export async function useChangeUserOrAdminData(user: User, token: string) :Promi
 export async function useNewApplication(newApplication: Application): Promise<AxiosResponse<any, any>> {
     try {
         const response = await axios.post(baseURL + 'applications', newApplication)
-        console.log(response)
         return response
     } catch (error: any) {
+        console.log(error.response.status)
         return error.response.status
     }
 }

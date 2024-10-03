@@ -24,6 +24,17 @@ export class ApplicationsService {
     return applications
   }
 
+  async getApplicationBids() {
+    let maxBids = {};
+    const maxBidsFromDatabase = await this.dbConnect.turso.execute("SELECT MAX(price), book_id FROM Application GROUP BY book_id")
+    for (let i = 0; i < maxBidsFromDatabase["rows"].length; i++) {
+      const book_id = maxBidsFromDatabase["rows"][i]["book_id"] as number
+      const price = maxBidsFromDatabase["rows"][i]["MAX(price)"] as number
+      maxBids[book_id] = price
+    }
+    return maxBids
+  }
+
   async getApplicationWithUserIDAndBookID(userID: number, bookID: number) {
     let application: Application = {
       id: 0,
