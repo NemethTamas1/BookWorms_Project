@@ -116,6 +116,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  let modalBackground = document.querySelector('.modal-backdrop')
+  if (modalBackground) {
+    modalBackground.remove()
+  }
   const title = to.meta.title as string | undefined
   document.title = title || 'Default Title'
   next()

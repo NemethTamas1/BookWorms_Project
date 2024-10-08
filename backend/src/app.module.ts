@@ -7,6 +7,7 @@ import { AuthModule } from './authentication/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { BrevoModule } from './brevoEmailSending/brevo.module';
+import { BidGateway } from './bid/bid.gateway';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BrevoModule } from './brevoEmailSending/brevo.module';
       rootPath: join(__dirname, '..', 'client'),
       //exclude: ['/api*'], //correct? idk
     }),
-  ]
+  ],
+  providers: [BidGateway]
 })
 export class AppModule {}

@@ -67,6 +67,7 @@ export async function useNewApplication(newApplication: Application): Promise<Ax
         const response = await axios.post(baseURL + 'applications', newApplication)
         return response
     } catch (error: any) {
+        console.log(error.response.status)
         return error.response.status
     }
 }
