@@ -1,6 +1,6 @@
 import type { Application } from "@/models/Application";
 import type { User } from "@/models/User";
-import axios, { type AxiosResponse } from "axios";
+import axios, { HttpStatusCode, type AxiosResponse } from "axios";
 import type { Book } from "@/models/Book";
 import { useLoggedInUserStore } from "@/stores/userStore";
 
@@ -113,7 +113,8 @@ export async function useSendEmailToVerification(userId: number): Promise<number
 export async function useSendEmailToRegistration(userId: number): Promise<number> {
     try {
         const response = await axios.put(baseURL + 'mail/register', { id: userId })
-        if (response.status == 201) {
+        console.log(response)
+        if (response.status == 200) {
             console.log('Email sent!')
             return response.status
         }

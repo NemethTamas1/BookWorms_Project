@@ -1,13 +1,13 @@
 import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Put } from '@nestjs/common';
-import { MailsenderService } from './mailsender.service';
+import { BrevoService } from './brevo.service';
 import { UsersService } from 'src/users/users.service';
 import { ApplicationsService } from 'src/applications/applications.service';
 import { AuthService } from 'src/authentication/auth.service';
 
 @Controller('api/mail')
-export class MailsenderController {
+export class BrevoController {
     constructor(
-        private readonly mailsenderService: MailsenderService, 
+        private readonly brevoService: BrevoService, 
         private readonly applicationService: ApplicationsService,
         private readonly userService: UsersService,
         private readonly authService: AuthService
@@ -20,7 +20,7 @@ export class MailsenderController {
             const userFromDatabase = await this.userService.getUserById(applicationFromDatabase.user_id)
             const guestToken = await this.authService.generateToken(userFromDatabase)
             if(applicationFromDatabase.id != 0 && userFromDatabase.id != 0){
-                await this.mailsenderService.sendVerificationEmailToGuest(userFromDatabase, applicationFromDatabase.id, guestToken);
+                await this.brevoService.sendVerificationEmailToGuest(userFromDatabase, applicationFromDatabase.id, guestToken);
                 return HttpCode(201)
             }
             else{
@@ -40,8 +40,8 @@ export class MailsenderController {
             const userFromDatabase = await this.userService.getUserById(body['id'])
             const guestToken = await this.authService.generateToken(userFromDatabase)
             if(userFromDatabase.id != 0){
-                await this.mailsenderService.sendRegistrationEmailToGuest(userFromDatabase, guestToken);
-                return HttpCode(201)
+                await this.brevoService.sendRegistrationEmailToGuest(userFromDatabase, guestToken);
+                return HttpCode(200)
             }
             else{
                 throw new HttpException("Felhasználó nem található!", HttpStatus.NOT_FOUND)
