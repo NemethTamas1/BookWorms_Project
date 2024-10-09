@@ -1,6 +1,6 @@
 <template>
-  <section id="section-6">
-    <div class="container">
+  <section id="team">
+    <div class="container" id="foKontainer">
       <!-- First row: Headings -->
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -9,10 +9,10 @@
       </div>
 
       <!-- Kártyák konténere -->
-      <div class="row justify-content-center">
+      <div class="container">
         <!-- 1st row: 2 cards -->
-        <div class="col-12 col-sm-6 col-lg-6 mb-4 d-flex align-items-stretch" id="osszes_kartya_">
-          <div class="card team-item rounded">
+        <div class="row">
+          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2OQ.png"
@@ -45,10 +45,8 @@
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
-        </div>
 
-        <div class="col-12 col-sm-6 col-lg-6 mb-4 d-flex align-items-stretch">
-          <div class="card team-item rounded">
+          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2Nw.png"
@@ -84,8 +82,8 @@
         </div>
 
         <!-- 2nd row: 2 cards -->
-        <div class="col-12 col-sm-6 col-lg-5 mb-2 d-flex align-items-stretch">
-          <div class="card team-item rounded">
+        <div class="row">
+          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY3MQ.png"
@@ -118,10 +116,8 @@
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
-        </div>
 
-        <div class="col-12 col-sm-6 col-lg-5 mb-4 d-flex align-items-stretch">
-          <div class="card team-item rounded">
+          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY3MA.png"
@@ -154,11 +150,7 @@
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
-        </div>
-
-        <!-- 3rd row: 1 card -->
-        <div class="col-12 col-sm-12 col-lg-5 mb-4 d-flex align-items-stretch" id="utolso_kartya">
-          <div class="card team-item rounded">
+          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2OA.png"
@@ -220,7 +212,7 @@ section {
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.container {
+#foKontainer {
   margin: 2rem 0;
   border-radius: 3rem;
   padding: 2rem;
@@ -337,13 +329,22 @@ h2:first-of-type {
   text-shadow: 3px 3px 3px rgba(188, 102, 3, 0.6);
 }
 /* ########     TELEFONOS / TABLETES NÉZETEK!     ######## */
+@media (max-width: 1200px) {
+  #foKontainer {
+    margin-bottom: 4rem;
+    padding: 1.5rem;
+  }
+  .card{
+    padding:1rem;
+  }
+}
 
 @media (max-width: 992px) {
   section {
     margin-left: 0;
     width: 100%;
     height: auto;
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   h4:first-of-type {
@@ -370,7 +371,6 @@ h2:first-of-type {
   .team-icon-share {
     right: 15px;
     margin-top: 0;
-
   }
 }
 @media (max-width: 776px) {

@@ -1,5 +1,5 @@
 <template>
-  <section class="section-5">
+  <section id="footer" class="section-5">
     <div class="container">
       <div class="row" id="teljes_sor">
         <div class="col-12 col-lg-4" id="elsoblokk">
@@ -125,7 +125,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'Section5'
+  name: 'Footer'
 }
 </script>
 
@@ -195,11 +195,9 @@ a {
 }
 
 @media (max-width: 992px) {
-  .section-5 {
+  section {
     margin: auto;
     width: 100%;
-  }
-  section {
     text-align: justify;
   }
   #social_linkek {
@@ -216,6 +214,9 @@ a {
   #harmadikblokk p {
     border-top: 2px solid grey;
     width: fit-content;
+  }
+  .copyright{
+    margin: 2rem;
   }
 }
 </style>

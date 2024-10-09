@@ -102,7 +102,7 @@
 
 <script lang="ts">
 export default {
-  name: 'Section3'
+  name: 'konyvvalaszto'
 }
 </script>
 
@@ -110,16 +110,16 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
 
 section {
-  border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: calc(100% - 145px);
   margin-left: 145px;
-  color: rgb(5, 86, 156);
-  background-image: linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
-  background-position: center;
+  background-image:
+    url('https://kephost.net/p/MTQxMDk2NA.png'),
+      linear-gradient(0, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+        background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -128,7 +128,7 @@ section {
   border-radius: 2rem;
   padding: 2rem;
   background-color: rgba(34, 23, 3, 0.7);
-  border: 1rem double rgba(246, 212, 117, 0.6);
+  border: 10px double rgba(246, 212, 117, 0.6);
 }
 #elso_oszlop {
   display: flex;
@@ -215,41 +215,37 @@ a span {
 /* Média lekérdezések */
 @media (max-width: 1200px) {
   section {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
     margin-left: 145px;
     width: calc(100% - 145px);
-    padding: 2rem;
-    height: auto;
+    padding: 1rem;
+    height: 100%;
+
   }
   a span {
     text-wrap: wrap;
   }
-  #elso_oszlop li {
-    margin: 0;
-    padding: 0;
-  }
-
   #elso_oszlop {
     flex-direction: column;
     width: 100%;
-    padding: 0;
-    margin: 0;
   }
   .container{
-    width: 75%;
-
+    width: 90%;
   }
   #masodik_oszlop {
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: 80%;
+    width: 70%;
   }
 }
 @media (max-width: 992px) {
   section {
     margin: 0;
     padding: 2rem;
-    width: 100%;
+    width: auto;
     height: auto;
   }
   #elso_oszlop, #masodik_oszlop {
@@ -257,27 +253,21 @@ a span {
     flex-direction: column;
     margin: auto;
     padding: 0;
-    width: 90%;
+    width: 100%;
+  }
+  h1{
+    margin:1.5rem 0;
+  }
+  .row{
+    display: flex;
+    flex-direction: column-reverse;
+    padding:0 0.5rem;
   }
 }
 
 @media (max-width: 576px) {
-  #elso_oszlop h1 {
-    font-size: smaller;
-  }
   a span {
     text-wrap: wrap;
-  }
-  #elso_oszlop ul li {
-    font-size: smaller;
-  }
-
-  #elso_oszlop, #masodik_oszlop {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding: 0;
-    width: 100%;
   }
 }
 </style>

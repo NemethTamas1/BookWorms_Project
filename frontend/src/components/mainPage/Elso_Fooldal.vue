@@ -1,25 +1,3 @@
-<script lang="ts">
-import Section2 from './section2.vue'
-import aliz from './aliz.vue'
-
-export default {
-  name: 'Section1',
-  components: {
-    Section2,
-    aliz
-  },
-  methods: {
-    scrollToSection(sectionId: string) {
-      const section = document.getElementById(sectionId)
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' })
-      } else {
-        console.error(`Section with ID "${sectionId}" not found.`)
-      }
-    }
-  }
-}
-</script>
 
 <template>
   <section class="section-1">
@@ -35,8 +13,7 @@ export default {
 
           <div class="row" id="gombok-keret">
             <div class="col">
-              <a class="btn btn-info" @click="scrollToSection('section2')">Könyveink</a>
-              <a class="btn btn-info" @click="scrollToSection('aliz')">Aukcióink</a>
+              <a class="btn btn-info" @click="scrollToSection('Konyvvalaszto')">Könyveink</a>
             </div>
           </div>
         </div>
@@ -44,6 +21,27 @@ export default {
     </div>
   </section>
 </template>
+
+
+<script lang="ts">
+import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
+
+export default {
+  name: 'fooldal',
+  components: {
+    Konyvvalaszto,
+  },
+  methods: {
+    scrollToSection(sectionId: string) {
+      const section = document.getElementById(sectionId)
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' })
+      } 
+    }
+  }
+}
+</script>
+
 
 <style scoped>
 h2 {
@@ -58,7 +56,6 @@ h2 {
   background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg');
   background-size: cover;
   position: relative;
-  z-index: -1;
 }
 
 #keret {
@@ -85,6 +82,7 @@ h2 {
   color: rgb(84, 62, 1);
   cursor: pointer;
   margin: 10px;
+  border-radius: 1rem;
 }
 
 .btn:hover {

@@ -1,33 +1,37 @@
 <script lang="ts">
+import Fooldal from './Elso_Fooldal.vue'
+import Kimutatas from './Negyedik_Kimutatas.vue'
+import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
+import Footer from './Hatodik_Footer.vue'
+import Udvozlo from './Masodikudvozlo.vue'
+import Team from './Otodik_Csapat.vue'
 import { defineComponent } from 'vue'
-import Section1 from './section1.vue'
-import Section2 from './section2.vue'
-import Section3 from './section3.vue'
-import Section4 from './section4.vue'
-import Section5 from './section5.vue'
-import Aliz from './aliz.vue'
-import section6 from './section6.vue'
 
-export default defineComponent({
-  name: 'MainPageComponent',
+export default {
+  name: 'navbar',
   components: {
-    Section1,
-    Section2,
-    Section3,
-    Section4,
-    Section5,
-    Aliz,
-    section6
+    Fooldal,
+    Kimutatas,
+    Konyvvalaszto,
+    Udvozlo,
+    Team,
+    Footer
   },
+
   methods: {
     scrollToSection(sectionId: string) {
       const section = document.getElementById(sectionId)
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' })
       }
+      // navbar összecsukó, kattintás után
+      const navbarCollapse = document.querySelector('.navbar-collapse')
+      if (window.innerWidth <= 992 && navbarCollapse) {
+        navbarCollapse.classList.remove('show')
+      }
     }
   }
-})
+}
 </script>
 
 <template>
@@ -36,7 +40,7 @@ export default defineComponent({
     rel="stylesheet"
   />
   <div>
-    <!-- Bootstrap Navbar for Mobile View -->
+    <!-- MOBIL -->
     <nav class="navbar navbar-expand-lg d-lg-none sticky-top">
       <div class="container-fluid">
         <img src="https://kephost.net/p/MTM0ODc2NA.png" alt="" />
@@ -54,20 +58,20 @@ export default defineComponent({
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-lg-0">
-            <li class="nav-item" @click="scrollToSection('section1')">
-              <a class="nav-link" aria-current="page" href="#">Főoldal</a>
+            <li class="nav-item" @click="scrollToSection('navbar')">
+              <a class="nav-link" href="#">Főoldal</a>
             </li>
-            <li class="nav-item" @click="scrollToSection('section2')">
+            <li class="nav-item" @click="scrollToSection('Udvozlo')">
+              <a class="nav-link" href="#">Bejelentkezés</a>
+            </li>
+            <li class="nav-item" @click="scrollToSection('Konyvvalaszto')">
               <a class="nav-link" href="#">Könyvek</a>
             </li>
-            <li class="nav-item" @click="scrollToSection('section3')">
+            <li class="nav-item" @click="scrollToSection('kimutatas')">
               <a class="nav-link" href="#">Rólunk</a>
             </li>
-            <li class="nav-item" @click="scrollToSection('section4')">
+            <li class="nav-item" @click="scrollToSection('footer')">
               <a class="nav-link" href="#">Kapcsolat</a>
-            </li>
-            <li class="nav-item" @click="scrollToSection('section5')">
-              <a class="nav-link" href="#">Bejelentkezés</a>
             </li>
           </ul>
         </div>
@@ -76,37 +80,36 @@ export default defineComponent({
 
     <!-- Sidebar Navbar for Larger Screens -->
     <div class="nav d-none d-lg-flex">
-      <div class="nav-item fooldal_gomb" @click="scrollToSection('section1')">
+      <div class="nav-item fooldal_gomb" @click="scrollToSection('Fooldal')">
         <i class="fas fa-home"></i>
         <span>Főoldal</span>
       </div>
-      <div class="nav-item fooldal_gomb" @click="scrollToSection('section2')">
+      <div class="nav-item fooldal_gomb" id="bejelentkezes" @click="scrollToSection('Udvozlo')">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Bejelentkezés</span>
+      </div>
+      <div class="nav-item fooldal_gomb" @click="scrollToSection('Konyvvalaszto')">
         <i class="fas fa-book"></i>
         <span>Könyvek</span>
       </div>
-      <div class="nav-item fooldal_gomb" @click="scrollToSection('section3')">
+      <div class="nav-item fooldal_gomb" @click="scrollToSection('kimutatas')">
         <i class="fas fa-info-circle"></i>
         <span>Rólunk</span>
       </div>
-      <div class="nav-item fooldal_gomb" @click="scrollToSection('section4')">
+      <div class="nav-item fooldal_gomb" @click="scrollToSection('footer')">
         <i class="fa-solid fa-address-book"></i>
         <span>Kapcsolat</span>
-      </div>
-      <div class="nav-item fooldal_gomb" id="bejelentkezes" @click="scrollToSection('section5')">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Bejelentkezés</span>
       </div>
     </div>
 
     <!-- Content Sections -->
     <div class="content">
-      <section1 id="section1" />
-      <aliz id="aliz" />
-      <section3 id="section3" />
-      <section2 id="section2" />
-      <section6 id="section6"/>
-      <section4 id="section4" />
-      <section5 id="section5" />
+      <Fooldal id="Fooldal" />
+      <Udvozlo id="Udvozlo" />
+      <Konyvvalaszto id="Konyvvalaszto" />
+      <kimutatas id="kimutatas" />
+      <team id="team" />
+      <Footer id="footer" />
     </div>
   </div>
 </template>
