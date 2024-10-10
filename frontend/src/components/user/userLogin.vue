@@ -28,8 +28,6 @@ const handleSubmit = async () => {
     else{
         const user = (response as AxiosResponse).data.user
         const token = (response as AxiosResponse).data.access_token
-        console.log(user)
-        console.log(token)
         userStore.setLoggedInUser(user)
         localStorage.setItem('userId', userStore.getLoggedInUser.id.toString())
         if(user.status == 2){
@@ -53,10 +51,6 @@ const handleSubmit = async () => {
     email.value = '';
     password.value = '';
 };
-
-// Ellenőrzés
-// console.log('E-mail: ', email.value);
-// console.log('Jelszó: ', password.value);
 </script>
 
 

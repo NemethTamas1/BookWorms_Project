@@ -11,6 +11,7 @@ import AboutUS from '@/components/aboutus/aboutUS.vue'
 import AccountView from '@/views/AccountView.vue'
 import ModifyBooksView from '@/views/ModifyBooksView.vue'
 import PageNotFoundView from '@/views/PageNotFoundView.vue'
+import { useLoggedInUserStore } from '@/stores/userStore'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -35,6 +36,15 @@ const router = createRouter({
       path: '/admin',
       name: 'adminView',
       component: AdminView,
+      beforeEnter: (to, from, next) => {
+        const isAdminLoggedIn = useLoggedInUserStore().getLoggedInUser.status
+        if(isAdminLoggedIn == 3){
+          next()
+        }
+        else{
+          next('/login')
+        }
+      },
       meta: {
         title: 'Admin felület'
       }
@@ -83,6 +93,15 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboardView',
       component: DashboardView,
+      beforeEnter: (to, from, next) => {
+        const isUserOrAdminLoggedIn = useLoggedInUserStore().getLoggedInUser.status
+        if(isUserOrAdminLoggedIn == 3 || isUserOrAdminLoggedIn == 2){
+          next()
+        }
+        else{
+          next('/login')
+        }
+      },
       meta: {
         title: 'Jelentkezéseim'
       }
@@ -91,6 +110,15 @@ const router = createRouter({
       path: '/account',
       name: 'accountView',
       component: AccountView,
+      beforeEnter: (to, from, next) => {
+        const isUserOrAdminLoggedIn = useLoggedInUserStore().getLoggedInUser.status
+        if(isUserOrAdminLoggedIn == 3 || isUserOrAdminLoggedIn == 2){
+          next()
+        }
+        else{
+          next('/login')
+        }
+      },
       meta: {
         title: 'Fiókom'
       }
@@ -99,6 +127,15 @@ const router = createRouter({
       path: '/modifyBooks',
       name: 'modifyBooks',
       component: ModifyBooksView,
+      beforeEnter: (to, from, next) => {
+        const isAdminLoggedIn = useLoggedInUserStore().getLoggedInUser.status
+        if(isAdminLoggedIn == 3){
+          next()
+        }
+        else{
+          next('/login')
+        }
+      },
       meta: {
         title: 'Könyvek módosítása'
       }

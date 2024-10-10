@@ -1,7 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Put, UseGuards } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { Book } from './book.interface';
 import { ResultSet } from '@libsql/client/.';
+import { Roles } from 'src/authentication/roles.decorator';
+import { AuthGuard } from 'src/authentication/auth.guard';
+import { Role } from 'src/enums/role.enum';
 
 @Controller('api/books')
 export class BooksController {
@@ -16,6 +19,8 @@ export class BooksController {
         }
     }
 
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard)
     @Put()
     async modifyBookById(@Body() book: Book): Promise<ResultSet[]>{
         try {

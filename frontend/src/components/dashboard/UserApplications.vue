@@ -20,6 +20,15 @@ const setToken = () => {
   }
 }
 
+const tooLowBid = ref<boolean>(false)
+const successfullBidChangeInDatabase = ref<boolean>(true)
+
+const checkDigit = (event: KeyboardEvent) => {
+  if (event.key.length === 1 && isNaN(Number(event.key))) {
+    event.preventDefault();
+  }
+};
+
 //Define a reactive reference to hold the applications
 const checkStatusForApplications = async (): Promise<Ref<Application[]>> => {
   if (userStatus == 2) {
@@ -72,12 +81,20 @@ biggestBidDictionary.value = await createBiggestBidDictionary(books);
 const userBid: number[] = []
 
 async function submit(application: Application, userBid: number, biggestBid: number) {
-  try {
+  tooLowBid.value = false
+  successfullBidChangeInDatabase.value = true
+  if (userBid <= biggestBid || userBid == undefined) {
+    tooLowBid.value = true
+  }
+  else {
+    tooLowBid.value = false
     const response = await useSendBid(application, userBid, biggestBid, token.value);
-    biggestBidDictionary.value = await createBiggestBidDictionary(books);
-  } catch (error) {
-    console.error("An error occurred during the submission process:", error);
-    // Handle error appropriately, e.g., show a user notification
+    if (response == 200) {
+      biggestBidDictionary.value = await createBiggestBidDictionary(books);
+    }
+    else {
+      successfullBidChangeInDatabase.value = false
+    }
   }
 }
 
@@ -87,12 +104,12 @@ setInterval(() => {
   socket.emit('getMaxBids', (bids: any) => {
     // a valaszbol bejovo arak "kicserelese", ha a bejovo max ar magasabb
     Object.keys(bids).forEach(key => {
-      if (biggestBidDictionary.value[parseInt(key)] < bids[parseInt(key)]){
+      if (biggestBidDictionary.value[parseInt(key)] < bids[parseInt(key)]) {
         biggestBidDictionary.value[parseInt(key)] = bids[parseInt(key)]
       }
     })
   })
-}, 5000);
+}, 1000);
 
 
 function isBidEnded(end_date: Date): boolean {
@@ -136,10 +153,17 @@ function isBidEnded(end_date: Date): boolean {
           <td>
             <!-- Textbox for user input and submit button -->
             <p v-if="isBidEnded(books[application.book_id - 1].bid_end_date)">A licitnek vége</p>
+            <p v-if="tooLowBid">Túl alacsony összeget adott meg!</p>
+            <p v-if="!successfullBidChangeInDatabase">Valami hiba történt, kérjük, próbálja meg újra! Amennyiben a hiba
+              továbbra is fennáll, kérjük vegye
+              fel
+              velünk a kapcsolatot!
+            </p>
             <div
               v-if="application.application_status === 3 && !isBidEnded(books[application.book_id - 1].bid_end_date)">
-              <input ref="inputField" type="number" v-model.number="userBid[index]" placeholder="Adj meg egy licitet" />
-              <button @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
+              <input @keydown="checkDigit" ref="inputField" type="number" v-model.number="userBid[index]"
+                placeholder="Adjon meg egy licitet" />
+              <button class="btn btn-success ms-3" @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
                 Licit
               </button>
             </div>

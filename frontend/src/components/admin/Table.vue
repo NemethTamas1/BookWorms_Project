@@ -44,7 +44,6 @@ async function sendEmailToRegistration(application: Application){
   const user: User | number = await useGetUserById(application.user_id, adminToken.value!)
   if(((user) as User).status == 1){
     await useSendEmailToRegistration(((user) as User).id)
-    console.log("Email sent!")
   }
 }
 

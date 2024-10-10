@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { updateBook, useGetBooks } from '@/composables/api/useApi';
+import { adminToken } from '@/composables/auth/auth';
 import type { Book } from '@/models/Book';
 import { ref } from 'vue';
 
@@ -15,7 +16,7 @@ const modify = (bookId: number) => {
 
 const save = async (book: Book) => {
     modifyBook.value = false;
-    await updateBook(book);
+    await updateBook(book, adminToken.value!);
 }
 
 const cancel = async () => {

@@ -64,7 +64,7 @@ export class ApplicationsController {
         }
     }
 
-    @Roles(Role.Guest)
+    @Roles(Role.Guest, Role.User)
     @UseGuards(AuthGuard)
     @Put()
     async changeApplicationStatusById(@Query() query: any): Promise<ResultSet[]> {

@@ -48,7 +48,7 @@ export async function useNewUser(newUser: User): Promise<number> {
     }
 }
 
-export async function useChangeUserOrAdminData(user: User, token: string) :Promise<number> {
+export async function useChangeUserOrAdminData(user: User, token: string): Promise<number> {
     try {
         const response = await axios.put(baseURL + 'user', user, {
             headers: {
@@ -77,11 +77,9 @@ export async function useNewApplication(newApplication: Application): Promise<Ax
 //what happens when we call this function with a wrong id?
 export async function useUpdateApplication(updatedApplication: Application, adminToken: string): Promise<number> {
     try {
-        const headers = {'Authorization': `Admin ${adminToken}`}
-        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication, {headers})
+        const headers = { 'Authorization': `Admin ${adminToken}` }
+        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication, { headers })
         if (response.status == 200) {
-            console.log('Application updated successfully!');
-            console.log('Updated application data:', response);
             return response.status
         }
         else {
@@ -94,11 +92,10 @@ export async function useUpdateApplication(updatedApplication: Application, admi
     }
 }
 
-export async function useSendEmailToVerification(userId: number): Promise<number> {
+export async function useSendEmailToVerification(applicationId: number): Promise<number> {
     try {
-        const response = await axios.post(baseURL + 'mail', { id: userId })
+        const response = await axios.post(baseURL + 'mail', { id: applicationId })
         if (response.status == 201) {
-            console.log('Email sent!')
             return response.status
         }
         else {
@@ -114,9 +111,7 @@ export async function useSendEmailToVerification(userId: number): Promise<number
 export async function useSendEmailToRegistration(userId: number): Promise<number> {
     try {
         const response = await axios.put(baseURL + 'mail/register', { id: userId })
-        console.log(response)
         if (response.status == 200) {
-            console.log('Email sent!')
             return response.status
         }
         else {
@@ -131,7 +126,6 @@ export async function useSendEmailToRegistration(userId: number): Promise<number
 
 export async function useGetUserById(userId: number, token: string): Promise<User | number> {
     try {
-        console.log(token)
         const userStatus = useLoggedInUserStore().getLoggedInUser.status
         const response = await axios.get(baseURL + `user/?id=${userId}`, {
             headers: {
@@ -151,26 +145,29 @@ export async function useGetUserById(userId: number, token: string): Promise<Use
     }
 }
 
-export async function useUpdateApplicationStatusById(userId: number, applicationId:number, guestToken: string): Promise<any> {
+export async function useUpdateApplicationStatusById(userId: number, applicationId: number, guestToken: string): Promise<number | null> {
     try {
         const response = await axios.put(baseURL + `applications/?userId=${userId}&applicationId=${applicationId}`, null, {
             headers: {
                 'Authorization': `Guest ${guestToken}`
             }
         })
-        console.log(response)
-        return response
+        return response.status
     } catch (error) {
         console.log(error)
         return null
     }
 }
 
-export async function useAddUserPasswordAndUpdateStatus(userId: number, password: string) {
+export async function useAddUserPasswordAndUpdateStatus(userId: number, password: string, guestToken: string): Promise<number> {
     try {
-        const response = await axios.put(baseURL + `user/registration/?id=${userId}`, { password: password })
+        const response = await axios.put(baseURL + `user/registration/?id=${userId}`, { password: password }, {
+            headers: {
+                'Authorization': `Guest ${guestToken}`
+            }
+        })
         if (response.status == 200) {
-            return response.data
+            return response.status
         }
         else {
             console.log("Something went wrong!")
@@ -196,11 +193,11 @@ export async function useAddUserPasswordAndUpdateStatus(userId: number, password
     }
 }
 
-export async function useGetBiggestBid(bookId: number, token:String): Promise<number | null> {
+export async function useGetBiggestBid(bookId: number, token: String): Promise<number | null> {
     try {
         const userStatus = useLoggedInUserStore().getLoggedInUser.status
         const response = await axios.get(baseURL + `applications/search-by-bookid`, {
-            headers: {'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`},
+            headers: { 'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}` },
             params: { bookId: bookId }
         })
         if (response.status == 200) {
@@ -217,37 +214,36 @@ export async function useGetBiggestBid(bookId: number, token:String): Promise<nu
 }
 
 export async function useSendBid(application: Application, newBid: number, biggestBid: number, token: string): Promise<number> {
-    if (newBid <= biggestBid) {
-        alert("A licited túl alacsony, addj meg egy magasabb összeget!")
-        return 0
+    const updatedApplication = application
+    updatedApplication.price = newBid
+    try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
+        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, application, {
+            headers: {
+                'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        return response.status
+    } catch (error: any) {
+        return error.response.status
     }
-    else {
-        const updatedApplication = application
-        updatedApplication.price = newBid
-        try {
-            const userStatus = useLoggedInUserStore().getLoggedInUser.status
-            const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, application, {
-                headers: {
-                    'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
-                }
-            })
-            return response.status
-        } catch (error: any) {
-            return error.response.status
-        }
-    }
+
 }
 
-export async function updateBook(book: Book): Promise<number> {
+export async function updateBook(book: Book, adminToken: string): Promise<number> {
     try {
-        const response = await axios.put(baseURL + `books`, book)
+        const response = await axios.put(baseURL + `books`, book, {
+            headers: {
+                'Authorization': `Admin ${adminToken}`
+            }
+        })
         return response.status
     } catch (error: any) {
         return error.response.status
     }
 }
 
-export async function useGetBookById(bookId: number): Promise<Book| number> {
+export async function useGetBookById(bookId: number): Promise<Book | number> {
     try {
         const response = await axios.get(baseURL + `books/${bookId}`)
         return response.data
