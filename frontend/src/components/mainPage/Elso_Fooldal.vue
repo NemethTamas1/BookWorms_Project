@@ -44,8 +44,14 @@ export default {
 
 
 <style scoped>
+h1{
+  letter-spacing: 10px;
+  font-size: 56px;
+}
 h2 {
   margin: 0;
+  letter-spacing: 3px;
+  font-size: 44px;
 }
 .section-1 {
   margin-left: 145px;
@@ -66,7 +72,9 @@ h2 {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 85vh; /* Azért, hogy ne legyen annyira lent (kb felső 2/3-ban) */
+  height: 85vh;
+  margin: auto;
+  /* height: calc(100%-20vh); Azért, hogy ne legyen annyira lent (kb felső 2/3-ban) */
 }
 #gombok-keret {
   margin-top: 1rem;

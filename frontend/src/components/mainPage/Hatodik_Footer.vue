@@ -130,6 +130,17 @@ export default {
 </script>
 
 <style scoped>
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  width: calc(100% - 145px);
+  margin-left: 145px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat-y;
+}
 #teljes_sor {
   opacity: 0.7;
   margin-top: 1rem;
@@ -138,6 +149,7 @@ export default {
 .container {
   color: #ffeec5;
   width: 100%;
+  margin: 0 1rem;
 }
 #harmadikblokk i {
   text-wrap: nowrap;
@@ -168,32 +180,22 @@ section {
   padding: 0;
   margin-left: 145px;
   width: calc(100% - 145px);
-  /* background: linear-gradient(
-    180deg,
-    rgba(3, 26, 38, 1) 0%,
-    rgba(22, 58, 78, 1) 40%,
-    rgba(33, 72, 94, 1) 60%,
-    rgba(4, 28, 41, 1) 100%
-  ); */
   border-top: 2px solid grey;
 }
 a {
   text-decoration: none;
   color: #ffeec5;
 }
-
 .btn {
   background-color: rgb(255, 238, 197);
   color: #58490c;
   border-radius: 10px;
   margin-left: 1rem;
 }
-
 .btn:hover {
   color: #58490c;
   background-color: #dfcc84;
 }
-
 @media (max-width: 992px) {
   section {
     margin: auto;
@@ -215,7 +217,7 @@ a {
     border-top: 2px solid grey;
     width: fit-content;
   }
-  .copyright{
+  .copyright {
     margin: 2rem;
   }
 }

@@ -1,68 +1,68 @@
 <template>
   <section id="section-3">
-    <!-- Projects Start -->
-    <div class="container" id="fullContainer">
+    <div class="container" id="foKontainer">
       <div class="row">
-        <!-- Első oszlop -->
-        <div class="col-md-6" id="elso_oszlop">
-          <div class="row">
-            <h1 class="text-center">Hogyan Találhatod Meg Nálunk Álmaid Könyvét?</h1>
-          </div>
-          <div class="row">
-            <ul class="nav flex-column">
-              <li class="nav-item mb-4 w-100">
-                <a
-                  class="d-flex align-items-center h4 mb-0 p-3 active"
-                  data-bs-toggle="pill"
-                  href="#ProjectsTab-1"
-                >
-                  <div class="projects-icon me-4">
-                    <span class="fa-solid fa-earth-americas small"></span>
-                  </div>
-                  <span>világszíntű keresést végzünk neked</span>
-                </a>
-              </li>
-              <li class="nav-item mb-4 w-100">
-                <a
-                  class="d-flex align-items-center h4 mb-0 p-3"
-                  data-bs-toggle="pill"
-                  href="#ProjectsTab-2"
-                >
-                  <div class="projects-icon me-3">
-                    <span class="fa-solid fa-user-lock small"></span>
-                  </div>
-                  <span>Biztonságod Az Első Nekünk </span>
-                </a>
-              </li>
-              <li class="nav-item mb-4 w-100">
-                <a
-                  class="d-flex align-items-center h4 mb-0 p-3"
-                  data-bs-toggle="pill"
-                  href="#ProjectsTab-3"
-                >
-                  <div class="projects-icon me-3">
-                    <span class="fas fa-bolt small"></span>
-                  </div>
-                  <span>Otthonodba varázsoljuk a licitálás izgalmát</span>
-                </a>
-              </li>
-              <li class="nav-item mb-4 w-100">
-                <a
-                  class="d-flex align-items-center h4 mb-0 p-3"
-                  data-bs-toggle="pill"
-                  href="#ProjectsTab-4"
-                >
-                  <div class="projects-icon me-3">
-                    <span class="fas fa-bolt small"></span>
-                  </div>
-                  <span>Szaktudásunk nyújtotta garancia</span>
-                </a>
-              </li>
-            </ul>
+        <div class="col">
+          <div class="row" id="cim">
+            <div class="col">
+              <h1 class="text-center">Hogyan Találhatod Meg Nálunk Álmaid Könyvét?</h1>
+            </div>
           </div>
         </div>
-
-        <!-- Második oszlop - Képek megjelenítése -->
+      </div>
+      <div class="row" id="masodikTeljesBlokk">
+        <div class="col-md-6" id="elso_oszlop">
+          <ul class="nav flex-column">
+            <li class="nav-item mb-4 w-100">
+              <a
+                class="d-flex align-items-center h4 mb-0 p-3 active"
+                data-bs-toggle="pill"
+                href="#ProjectsTab-1"
+              >
+                <div class="projects-icon me-4">
+                  <span class="fa-solid fa-earth-americas small"></span>
+                </div>
+                <span>világszíntű keresést végzünk neked</span>
+              </a>
+            </li>
+            <li class="nav-item mb-4 w-100">
+              <a
+                class="d-flex align-items-center h4 mb-0 p-3"
+                data-bs-toggle="pill"
+                href="#ProjectsTab-2"
+              >
+                <div class="projects-icon me-3">
+                  <span class="fa-solid fa-user-lock small"></span>
+                </div>
+                <span>Biztonságod Az Első Nekünk </span>
+              </a>
+            </li>
+            <li class="nav-item mb-4 w-100">
+              <a
+                class="d-flex align-items-center h4 mb-0 p-3"
+                data-bs-toggle="pill"
+                href="#ProjectsTab-3"
+              >
+                <div class="projects-icon me-3">
+                  <span class="fas fa-bolt small"></span>
+                </div>
+                <span>Otthonodba varázsoljuk a licitálás izgalmát</span>
+              </a>
+            </li>
+            <li class="nav-item mb-4 w-100">
+              <a
+                class="d-flex align-items-center h4 mb-0 p-3"
+                data-bs-toggle="pill"
+                href="#ProjectsTab-4"
+              >
+                <div class="projects-icon me-3">
+                  <span class="fas fa-bolt small"></span>
+                </div>
+                <span>Szaktudásunk nyújtotta garancia</span>
+              </a>
+            </li>
+          </ul>
+        </div>
         <div class="col-md-6" id="masodik_oszlop">
           <div class="tab-content">
             <div id="ProjectsTab-1" class="tab-pane fade show active">
@@ -116,64 +116,78 @@ section {
   height: 100vh;
   width: calc(100% - 145px);
   margin-left: 145px;
-  background-image:
-    url('https://kephost.net/p/MTQxMDk2NA.png'),
-      linear-gradient(0, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
-        background-position: center;
+  background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
+    linear-gradient(0, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
 
-#fullContainer {
+#foKontainer {
   border-radius: 2rem;
   padding: 2rem;
   background-color: rgba(34, 23, 3, 0.7);
   border: 10px double rgba(246, 212, 117, 0.6);
+  margin: 2rem;
+}
+h1 {
+  font-size: 3rem;
+  margin: auto;
+  padding: 1rem 0;
+  color: rgb(255, 238, 197);
+  text-shadow: 3px 3px 3px rgba(188, 102, 3, 0.6);
+}
+#masodikTeljesBlokk {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+#masodik_oszlop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#masodik_oszlop img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
 }
 #elso_oszlop {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  height: 100%; /* Az oszlop teljes magasságát használjuk */
+  height: 100%;
 }
-#elso_oszlop h1 {
-  align-self: flex-start;
-  margin-bottom: 2rem;
-  color: aliceblue;
-}
-
-ul {
+#elso_oszlop li {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 100%;
-}
-
-li {
+  justify-content: center;
+  height: auto;
+  padding: 0.25rem;
+  margin: 2rem 0;
   background-color: rgb(255, 238, 197);
   border-radius: 1.5rem;
-  text-align: center;
   transition: box-shadow 0.3s ease;
-  max-width: 100%;
-  padding: 0.5rem;
-  margin: 0.5rem 0;
 }
-
 li:hover {
   box-shadow: 0 0.7rem 0.7rem rgba(255, 167, 3, 0.5);
 }
 span {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  white-space: normal;
   text-transform: capitalize;
   font-weight: 600;
   color: #58490c;
   background-color: rgb(255, 238, 197);
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 }
 
 a {
@@ -192,82 +206,62 @@ a span {
   background-color: rgb(255, 238, 197);
   justify-content: center;
   align-items: center;
-  white-space: nowrap;
-}
-
-#masodik_oszlop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#masodik_oszlop img {
-  max-width: 100%;
-  border-radius: 1rem;
 }
 
 .tab-content {
   background-color: transparent;
   border: none;
+  height: auto;
   padding: 0;
-}
-
-/* Média lekérdezések */
-@media (max-width: 1200px) {
-  section {
-    display: flex;
-  flex-direction: column;
-  align-items: center;
-    margin-left: 145px;
-    width: calc(100% - 145px);
-    padding: 1rem;
-    height: 100%;
-
-  }
-  a span {
-    text-wrap: wrap;
-  }
-  #elso_oszlop {
-    flex-direction: column;
-    width: 100%;
-  }
-  .container{
-    width: 90%;
-  }
-  #masodik_oszlop {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    width: 70%;
-  }
+  object-fit: cover;
 }
 @media (max-width: 992px) {
   section {
-    margin: 0;
-    padding: 2rem;
-    width: auto;
-    height: auto;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+    margin-left: 0;
   }
-  #elso_oszlop, #masodik_oszlop {
+
+  #masodikTeljesBlokk {
     display: flex;
     flex-direction: column;
-    margin: auto;
-    padding: 0;
+    justify-content: ;
+    align-items: center;
+    max-width: 75%;
+
+  }
+
+  #elso_oszlop,
+  #masodik_oszlop {
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  #elso_oszlop li {
+    margin: 1rem 0;
     width: 100%;
   }
-  h1{
-    margin:1.5rem 0;
-  }
-  .row{
-    display: flex;
-    flex-direction: column-reverse;
-    padding:0 0.5rem;
-  }
-}
 
-@media (max-width: 576px) {
-  a span {
-    text-wrap: wrap;
+  #masodik_oszlop img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
   }
-}
-</style>
+
+  h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  a {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  a span {
+    font-size: 1rem;
+    text-align: left;
+  }
+}</style>

@@ -8,17 +8,13 @@ onMounted(() => {
 
 <template>
   <section id="kimutatas">
-    <div class="container" id="elso_resz_fodiv">
-      <!-- Első sor: Cím -->
+    <div class="container" id="foKontainer">
       <div class="row">
         <div class="col-12 text-center mb-2">
           <h1>Ahogy a könyveink, mi sem vagyunk egyformák.</h1>
         </div>
       </div>
-
-      <!-- Második sor: Első kép és első bekezdés -->
       <div class="row">
-        <!-- Szöveg a jobb oldalon -->
         <div class="col-12 col-xl-6">
           <p>
             Egy dolgoban viszont egészen biztos. A <strong>BookWorms</strong>-nál meggyőződésünk,
@@ -28,16 +24,12 @@ onMounted(() => {
             egyedülállóról.
           </p>
         </div>
-        <!-- Kép a bal oldalon -->
-        <div class="col-12 col-xl-6" id="elsokep">
+        <div class="col col-lg-6" id="elsokep">
           <!--  -->
         </div>
       </div>
-
-      <!-- Harmadik sor: Második kép, sárga hátteres szöveg és gomb -->
       <div class="row">
-        <!-- Második kép a bal oldalon -->
-        <div class="col-12 col-xl-6" id="masodikkep">
+        <div class="col col-lg-6" id="masodikkep">
           <!--  -->
         </div>
         <!-- Sárga hátteres szöveg és bekezdés + gomb a jobb oldalon -->
@@ -70,60 +62,49 @@ export default {
 <style scoped>
 #elsokep {
   background-image: url(https://insideoutgroup.com.au/wp-content/uploads/2023/05/impediments-business-growth-harmonypsa-2.jpg);
+  margin-bottom: 1rem;
 }
 #masodikkep {
   background-image: url(https://www.shutterstock.com/image-photo/businessman-analyzes-profitability-working-companies-600nw-2273999575.jpg);
 }
 #elsokep,
 #masodikkep {
+  border-radius: 1rem;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  margin-bottom: 1rem;
 }
 section {
-  border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
-  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   width: calc(100% - 145px);
   margin-left: 145px;
   background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
     linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  font-family: Arial, Helvetica, sans-serif;
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
-  color: aliceblue;
-  padding: 2rem; 
+  background-repeat: repeat-y;
 }
-.about-img img {
-  width: 100%;
-  height: auto;
-  margin: 1rem 0;
-  border-radius: 5px;
-}
-#idezet_behuzas {
-  color: #58490c;
-  font-size: 22px;
-  background-color: rgba(255, 217, 0, 0.3);
-  padding: 20px;
-  border-left: 5px solid rgb(255, 174, 0);
-  text-align: justify;
-  margin-bottom: 1rem;
-}
-
-.container {
-  width: 100%;
+#foKontainer {
   font-size: 20px;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 2rem;
   text-align: justify;
-}
-
-#elso_resz_fodiv {
   color: whitesmoke;
   background-color: rgba(34, 23, 3, 0.7);
   border: 1rem double rgba(246, 212, 117, 0.6);
   border-radius: 2rem;
+  margin: 2rem;
   padding: 2rem;
+}
+#idezet_behuzas {
+  color: #58490c;
+  font-weight: bold;
+  font-style: italic;
+  background-color: rgba(255, 217, 0, 0.3);
+  padding: 20px;
+  border-left: 8px solid rgb(255, 174, 0);
 }
 
 .btn.rounded-pill {
@@ -142,18 +123,14 @@ section {
   transition: 0.35s ease;
 }
 p {
-  font-size: 24px;
   line-height: 2;
 }
 h1 {
   font-size: 3rem;
   margin: auto;
   color: rgb(255, 238, 197);
-  line-height: 1.5;
   text-shadow: 3px 3px 3px rgba(188, 102, 3, 0.6);
 }
-
-/* Média lekérdezések hozzáadása a reszponzív megjelenéshez */
 @media (max-width: 2000px) {
   #elsokep,
   #masodikkep {
@@ -161,11 +138,15 @@ h1 {
     max-height: 500px;
   }
 }
-
 @media (max-width: 992px) {
   section {
-    margin: 0;
-    padding: 2rem; /* Padding minden méretben */
+    margin-left: 0;
+    width: auto;
+    height: auto;
+    padding: 1.5rem;
+  }
+  #foKontainer {
+    padding: 1rem;
     width: 100%;
   }
 
@@ -187,58 +168,30 @@ h1 {
   h1 {
     font-size: 2rem;
   }
-  p{
+  p {
     margin: 0;
     padding: 0;
   }
 }
 
-@media (max-width: 768px) {
-  section {
-    flex-direction: column;
-    padding: 2rem;
-    margin-left: 0;
+@media (min-width: 576px) and (max-width: 776px) {
+  #foKontainer {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
   }
-
-  .about-img img {
-    width: 100%;
+  section {
+    height: 100%;
+    padding: 2rem 0;
     margin: 0;
   }
-  #idezet_behuzas{
-    font-size: 20px;
-  }
-
-  .btn {
-    padding: 0.5rem 1.5rem;
-  }
-}
-
-@media (max-width: 576px) {
-  section {
-    flex-direction: column-reverse;
-    padding: 2rem;
-  }
-
-  /* Csak a második kép maradjon meg telefonos nézetben */
-  .col-md-6 img:first-child {
-    display: none;
-  }
-
-  #elso_resz_fodiv {
-    order: 2;
-  }
-  h1 {
-    font-size: 1.3rem;
-  }
   #idezet_behuzas {
-    margin: auto;
     font-size: 20px;
-    font-size: medium;
   }
-
   .btn {
-    width: 100%;
-    padding: 0.5rem;
+    padding: 0.5rem 0;
+    margin: 0.5rem 0;
   }
 }
 </style>

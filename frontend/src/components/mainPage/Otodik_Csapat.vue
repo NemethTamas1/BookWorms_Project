@@ -1,15 +1,50 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default {
+  name: 'Team',
+  data() {
+    return {
+      IkonokMegjelenitese: false,
+      rotated: false
+    }
+  },
+  methods: {
+    kattintasfigyelo(event) {
+      event.stopPropagation()
+      this.IkonokMegjelenitese = !this.IkonokMegjelenitese
+      this.rotated = !this.rotated
+    },
+    clickOutside(event) {
+      const target = event.target
+      // Ellenőrzi, hogy ha nem az ikonra vagy a social media részre kattintanak, akkor visszafordítja és bezárja az ikonokat
+      if (!this.$el.contains(target)) {
+        this.IkonokMegjelenitese = false
+        this.rotated = false
+      }
+    }
+  },
+  mounted() {
+    document.addEventListener('click', this.clickOutside)
+  },
+  beforeUnmount() {
+    document.removeEventListener('click', this.clickOutside)
+  }
+}
+</script>
+
 <template>
   <section id="team">
     <div class="container" id="foKontainer">
       <!-- First row: Headings -->
-      <div class="row mb-5">
+      <div class="row">
         <div class="col-12 text-center">
-          <h2>A BookWorms <br />Dedikált Csapatának Tagjai</h2>
+          <h2 class="my-2">A BookWorms Dedikált Csapatának Tagjai</h2>
         </div>
       </div>
 
       <!-- Kártyák konténere -->
-      <div class="container">
+      <div class="container" id="tartalom">
         <!-- 1st row: 2 cards -->
         <div class="row">
           <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
@@ -21,11 +56,13 @@
               />
               <div class="team-icon">
                 <a
-                  class="btn btn-sm-square rounded-circle text-white rounded-circle"
-                  href="#"
+                  id="share"
+                  class="btn btn-sm-square rounded-circle rounded-circle"
+                  :class="{ 'rotate-icon': 'rotated' }"
+                  @click="kattintasfigyelo"
                   style="border: 1px solid rgba(246, 212, 117)"
                 >
-                  <i class="fas fa-share-alt"></i>
+                  <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
                   <a class="btn btn-sm-square rounded-circle" href="#">
@@ -46,6 +83,13 @@
             </div>
           </div>
 
+          <div
+            id="szellemdiv"
+            class="card team-item rounded col col-lg-4 d-none mb-4 d-flex align-items-stretch"
+          >
+            <!-- Szellem div - köztes hely miatt -->
+          </div>
+
           <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
@@ -55,11 +99,13 @@
               />
               <div class="team-icon">
                 <a
-                  class="btn btn-sm-square rounded-circle text-white rounded-circle"
-                  href="#"
+                  id="share"
+                  class="btn btn-sm-square rounded-circle rounded-circle"
+                  :class="{ 'rotate-icon': 'rotated' }"
+                  @click="kattintasfigyelo"
                   style="border: 1px solid rgba(246, 212, 117)"
                 >
-                  <i class="fas fa-share-alt"></i>
+                  <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
                   <a class="btn btn-sm-square rounded-circle" href="#">
@@ -80,8 +126,6 @@
             </div>
           </div>
         </div>
-
-        <!-- 2nd row: 2 cards -->
         <div class="row">
           <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
@@ -92,11 +136,13 @@
               />
               <div class="team-icon">
                 <a
-                  class="btn btn-sm-square rounded-circle text-white rounded-circle"
-                  href="#"
+                  id="share"
+                  class="btn btn-sm-square rounded-circle rounded-circle"
+                  :class="{ 'rotate-icon': 'rotated' }"
+                  @click="kattintasfigyelo"
                   style="border: 1px solid rgba(246, 212, 117)"
                 >
-                  <i class="fas fa-share-alt"></i>
+                  <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
                   <a class="btn btn-sm-square rounded-circle" href="#">
@@ -126,11 +172,13 @@
               />
               <div class="team-icon">
                 <a
-                  class="btn btn-sm-square rounded-circle text-white rounded-circle"
-                  href="#"
+                  id="share"
+                  class="btn btn-sm-square rounded-circle rounded-circle"
+                  :class="{ 'rotate-icon': 'rotated' }"
+                  @click="kattintasfigyelo"
                   style="border: 1px solid rgba(246, 212, 117)"
                 >
-                  <i class="fas fa-share-alt"></i>
+                  <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
                   <a class="btn btn-sm-square rounded-circle" href="#">
@@ -159,11 +207,13 @@
               />
               <div class="team-icon">
                 <a
-                  class="btn btn-sm-square rounded-circle text-white rounded-circle"
-                  href="#"
+                  id="share"
+                  class="btn btn-sm-square rounded-circle rounded-circle"
+                  :class="{ 'rotate-icon': 'rotated' }"
+                  @click="kattintasfigyelo"
                   style="border: 1px solid rgba(246, 212, 117)"
                 >
-                  <i class="fas fa-share-alt"></i>
+                  <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
                   <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-1" href="#">
@@ -188,89 +238,82 @@
     </div>
   </section>
 </template>
-<script lang="ts">
-export default {
-  name: 'Section6'
-}
-</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
 
 section {
-  border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   width: calc(100% - 145px);
   margin-left: 145px;
-  color: rgb(5, 86, 156);
-  background-image: linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
+  background-image: url('https://kephost.net/p/MTQ1NjUxMg.png'),
+  linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  font-family: Arial, Helvetica, sans-serif;
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
-  overflow: hidden;
+  background-repeat: repeat-y;
 }
 #foKontainer {
-  margin: 2rem 0;
-  border-radius: 3rem;
-  padding: 2rem;
-  background-color: rgba(34, 23, 3, 0.7);
   border: 1rem double rgba(246, 212, 117, 0.6);
-  max-height: 100%;
+  text-align: justify;
+  background-color: rgba(34, 23, 3, 0.7);
+  border-radius: 2rem;
+  margin:5rem;
+  padding: auto;
+}
+#tartalom {
+  padding: 0;
+}
+#tartalom > .row:first-of-type {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
 }
-
-.row {
-  flex-wrap: wrap; /* Ensure proper wrapping of cards */
-}
-
-/* Card styles */
 .card {
   background-color: transparent;
   border: none;
 }
 
 .team-item {
+  margin: 0;
+  cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
-  /* Maximális szélességet lejjebb vettem,
-  hogy ne legyenek túl nagyok
-  a képek a kártyákban (max-width) */
-  max-width: 500px;
-  margin: 0 auto;
-  cursor: pointer;
 }
+
 .team-img {
   position: relative;
 }
 
-.team-img img {
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-}
-
 .team-icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  z-index: 1;
+  padding: 0;
+  margin: 0;
 }
 
 .team-icon a {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: all 0.3s ease;
   background-color: rgba(180, 140, 45);
 }
 
 .team-icon-share {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 40px;
-  right: 0px;
+  top: 50px;
   opacity: 0;
   transform: translateY(-20px);
   transition: all 0.3s ease;
@@ -278,174 +321,185 @@ section {
 
 .team-item:hover .team-icon-share {
   opacity: 1;
-  transform: translateY(0); /* Lenyílás hatása */
+  transform: translateY(0);
 }
-
+/* LEGFELSŐ megosztási ikon */
 .team-icon-share a {
-  margin-bottom: 5px;
-  color: white;
+  margin-top: 10px;
+  color: rgb(255, 255, 255);
   border: 2px solid rgba(246, 212, 117, 0.8);
-  font-size: 14px; /* Alapértelmezett méret a közösségi ikonokhoz */
-  padding: 10px; /* Kisebb padding a gombok körül */
-  width: 40px; /* Azonos szélesség */
-  height: 40px; /* Azonos magasság */
-  border-radius: 50%; /* Kerek forma */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.4s ease;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: 0.6s ease all;
 }
 
-.team-icon-share a:nth-child(1) {
-  transition-delay: 0.2s;
+#share:hover{
+  font-weight: bolder;
+  color: rgb(128, 111, 1);
+  background-color: rgb(246, 212, 117);
+  transform: rotate(90deg);
 }
-
-.team-icon-share a:nth-child(2) {
-  transition-delay: 0.4s;
-}
-
-.team-icon-share a:nth-child(3) {
-  transition-delay: 0.6s;
+.team-icon a:hover{
+  background-color: #bd9441;
+  border: 2px solid rgb(84, 62, 1);
 }
 
 .team-content {
   background-color: #000;
   transition: background-color 0.3s ease;
-}
-.team-content p {
-  font-weight: 600;
-  font-style: italic;
+  padding: 20px;
+  flex-grow: 1;
 }
 
 .team-item:hover .team-content {
   background-color: rgba(255, 238, 197, 0.65);
 }
 
+/* Facebook ikon */
+.team-icon-share a:nth-child(1):hover {
+  background-color: rgb(0, 101, 178, 0.7);
+  color: rgb(255, 255, 255);
+  border: 2px solid #58490c;
+  font-size: larger;
+}
+
+/* Twitter ikon */
+.team-icon-share a:nth-child(2):hover {
+  background-color: rgb(234, 234, 234);
+  color: rgb(0, 101, 178, 0.7);
+  border: 2px solid #58490c;
+  font-size: larger;
+}
+
+/* Instagram ikon */
+.team-icon-share a:nth-child(3):hover {
+  transition-delay: 0.3s;
+  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  font-size: larger;
+}
+
 h2:first-of-type {
   font-size: 3rem;
   margin: auto;
   color: rgb(255, 238, 197);
-  line-height: 1.5;
+  line-height: 1.2;
   text-shadow: 3px 3px 3px rgba(188, 102, 3, 0.6);
 }
-/* ########     TELEFONOS / TABLETES NÉZETEK!     ######## */
-@media (max-width: 1200px) {
-  #foKontainer {
-    margin-bottom: 4rem;
-    padding: 1.5rem;
-  }
-  .card{
-    padding:1rem;
-  }
+#share {
+  color: whitesmoke;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+.team-icon {
+  width: 35px;
+  height: 35px;
+}
+.team-icon a {
+  font-size: 16px;
 }
 
+.team-icon-share a {
+  margin-top: 5px;
+  width: 35px;
+  height: 35px;
+  font-size: 16px;
+}
+@media (min-width: 992px) and (max-width: 1300px) {
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: calc(100% - 145px);
+    margin-left: 145px;
+  }
+}
 @media (max-width: 992px) {
+  #szellemdiv {
+    display: none;
+  }
   section {
     margin-left: 0;
-    width: 100%;
+    width: auto;
     height: auto;
     padding: 1.5rem;
   }
-
+  #foKontainer {
+    padding: 0;
+    width: 100%;
+  }
+  .row:last-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   h4:first-of-type {
     font-size: 1rem;
     font-weight: bold;
   }
+  h2:first-of-type {
+    margin: 0.5rem 0;
+    padding: 0;
+  }
+
   p:first-of-type {
     font-size: 0.8rem;
   }
-  /* Azért vettem vissza, hogy telefonos
-     nézeten is azonos mérete maradjon
-     (mint a többinek) */
-  #utolso_kartya {
-    width: 50%;
-  }
-  .team-icon {
-    font-size: 16px;
-    padding: 0;
-    width: 40px;
-    height: 40px;
-    right: 5px;
-    top: 10px;
-  }
-  .team-icon-share {
-    right: 15px;
-    margin-top: 0;
-  }
-}
-@media (max-width: 776px) {
-  .team-icon a {
-    font-size: 14px;
-    padding: 0;
-    width: 25px;
-    height: 25px;
-  }
-  .team-icon {
-    font-size: 16px;
-    padding: 0;
-    width: 40px;
-    height: 40px;
-    right: -8px;
-    top: 10px;
-  }
-}
 
-@media (max-width: 576px) {
-  h4 {
-    font-size: 1.6rem;
+  .team-icon {
+    width: 35px;
+    height: 35px;
   }
-  p {
-    font-size: 1.2rem;
+
+  .team-icon-share a {
+    margin-top: 5px;
+    width: 35px;
+    height: 35px;
   }
-  .card {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  /* Telefonon mehet neki a 100% szélesség (50-ről)! */
-  #utolso_kartya {
+}
+@media (max-width: 991px) {
+  section {
+    margin: 0;
+    padding: 2rem;
     width: 100%;
   }
+  #foKontainer {
+    margin: auto;
+    padding: 0;
+    width: 100%;
+  }
+  .card.team-item {
+    max-width: 50%;
+    max-height: 50%;
+  }
+  #share {
+    color: whitesmoke;
+    cursor: pointer;
+    transition: transform 0.7s ease;
+  }
   .team-icon a {
-    font-size: 24px;
-    padding: 0;
-    width: 40px;
-    height: 40px;
+    transition: transform 5s ease-in-out;
   }
-  .team-icon {
-    font-size: 16px;
-    padding: 0;
-    width: 40px;
-    height: 40px;
-    right: 10px;
-    top: 10px;
+  .rotate-icon {
+    transform: rotate(90deg);
   }
+
   .team-icon-share {
-    right: 0;
-    margin-top: 8px;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+  }
+
+  .show-icons {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
   }
 }
 </style>
-
-<!-- A fenti weboldal projektemet szeretném kinézetében / szerkezetében átalakítani, az alábbiak szerint (HTML, CSS, Javascript felhasználásával 'section-6' néven és vue.js formátumban van.):
-1. Bootstrap alapon dolgozva a section mérete laptopon / gépen az alábbiak legyenek:
-"border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: calc(100% - 145px);
-  margin-left: 145px;
-  color: rgb(5, 86, 156);
-  background-image: linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;"
-2. Ebben a sectionben legyen egy konténer, amiben tárolunk minden adatot / képet / szöveget, stb.
-3. Conténer első sorában - colban: "BookWorms - Szakértelemmel, szakemberekkel töltve" H1-es kiemeléssel. Alatta 'h2'-vel "A BookWorms dedikált csapatának tagjai" .
-4. Alatta egy külön konténerben és sorban (vagy egy következő sorban) kerüljön bele a 3 kártya, alatta lévő sorba pedig 2. (col-okban, külön külön. MD méretig egy sorban 3 jelenjen meg. Azalatt soronként 2-2 és (az utolsó) 1db a 3. sorban, 'x' és 'y' tengely szerint is középen. Összesen 5 ilyen kártya van/lesz.)
-5. A kártyákban első része a kép legyen, alatta fekete hátterü szöveggel "David Coffee Brock", Alatta lévő sorban pedig a "CEO & Founder" felirat. 
-6. Amikor a kártyákra húzzuk az egeret, akkor legyen animációja, azaz jelenjen meg jobbról balra a "share, facebook, twitter, instagram" kis ikonok, ahogy az eredeti kódban van. A háttere a szövegnek is eszerint változzon barnásabb/arany árnyalatúra.
-7. MINDEN elem reszponzív legyen minden méretben. A kártyák ne tapadjanak egymáshoz, azonos méretű legyen az összes kártya.
-A section beállításait ne módosítsd, mivel minden section így néz ki. A margin behúzás balról azért van, mert ott helyezkedik el a 'navbar' section, ami telefonos nézeten a képernyő tetejére kerül, így azt ki kell vonnunk a méretből (ezért lesz telefonon 100% width).
-
-Ebben segíts nekem, átírni a kódot! -->

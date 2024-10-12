@@ -5,7 +5,6 @@ import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
 import Footer from './Hatodik_Footer.vue'
 import Udvozlo from './Masodikudvozlo.vue'
 import Team from './Otodik_Csapat.vue'
-import { defineComponent } from 'vue'
 
 export default {
   name: 'navbar',
@@ -43,8 +42,10 @@ export default {
     <!-- MOBIL -->
     <nav class="navbar navbar-expand-lg d-lg-none sticky-top">
       <div class="container-fluid">
-        <img src="https://kephost.net/p/MTM0ODc2NA.png" alt="" />
-        <a class="navbar-brand" id="logoszoveg" href="#">BookWorms</a>
+        <a href="#Fooldal"
+          ><img src="https://kephost.net/p/MTM0ODc2NA.png" alt="A BookWorms madártollas logója"
+        /></a>
+        <a class="navbar-brand" id="logoszoveg" href="#Fooldal">BookWorms</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -58,27 +59,27 @@ export default {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-lg-0">
-            <li class="nav-item" @click="scrollToSection('navbar')">
-              <a class="nav-link" href="#">Főoldal</a>
+            <li class="nav-item">
+              <a class="nav-link" href="#Fooldal">Főoldal</a>
             </li>
             <li class="nav-item" @click="scrollToSection('Udvozlo')">
-              <a class="nav-link" href="#">Bejelentkezés</a>
+              <a class="nav-link">Bejelentkezés</a>
             </li>
             <li class="nav-item" @click="scrollToSection('Konyvvalaszto')">
-              <a class="nav-link" href="#">Könyvek</a>
+              <a class="nav-link">Könyvek</a>
             </li>
             <li class="nav-item" @click="scrollToSection('kimutatas')">
-              <a class="nav-link" href="#">Rólunk</a>
+              <a class="nav-link">Rólunk</a>
             </li>
             <li class="nav-item" @click="scrollToSection('footer')">
-              <a class="nav-link" href="#">Kapcsolat</a>
+              <a class="nav-link">Kapcsolat</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Sidebar Navbar for Larger Screens -->
+    <!-- Navbar -NAGY PC nézeten -->
     <div class="nav d-none d-lg-flex">
       <div class="nav-item fooldal_gomb" @click="scrollToSection('Fooldal')">
         <i class="fas fa-home"></i>
@@ -116,11 +117,20 @@ export default {
 
 <style>
 /* Telefonos nézet optimalizálása */
-@media (max-width: 992px) {
+/* NAVBAR BOOTSTRAP ALAP beállítások lepucololása */
+@media (max-width: 993px) {
+  #navbarSupportedContent {
+    border: none;
+    padding: 0;
+    padding-bottom: 0.5rem;
+    margin: 0;
+    line-height: 0;
+    color: #efcf83;
+  }
   .navbar-toggler {
     background: #f8d985;
-    border-color: #f6ba14;
     border-width: 2px;
+    border-color: rgb(209, 157, 14);
   }
   .navbar {
     background: linear-gradient(
@@ -129,7 +139,15 @@ export default {
       rgba(22, 58, 78, 1) 50%,
       rgba(4, 28, 41, 1) 100%
     );
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid rgba(209, 157, 14, 0.5);
+  }
+  /* ITT SZERK: 2024.10.12-kor */
+  .nav-item {
+    display: block;
+    max-width: 20%;
+    margin: auto;
+    border-radius: 1rem;
+    cursor: pointer;
   }
   #logoszoveg {
     color: #efcf83;
@@ -137,20 +155,23 @@ export default {
     font-weight: 600;
     text-shadow: 2px 2px 2px rgba(188, 102, 3, 0.6);
   }
-  /* Csökkentett távolság a menüpontok között */
-  .navbar-nav .nav-item {
-    margin: 0px;
-    padding: 0;
+  .nav-item:hover {
+    border-radius: 1rem;
+    cursor: pointer;
+    background-color: rgb(227, 173, 46, 0.3);
+    margin: auto;
   }
-
-  .nav-item .nav-link {
-    margin: 0;
-    padding: 0;
+  .nav-link {
     color: #efcf83;
-    /* font-weight: bold; */
+    font-weight: 600;
+    display: block;
+    margin: 0;
+    padding: 5px;
+    width: fit-content;
+    letter-spacing: 2px;
   }
-  .nav-item .nav-link:hover {
-    text-shadow: 2px 2px 2px rgba(188, 102, 3, 0.3);
+  .nav-link:hover {
+    color: #f7c94b;
   }
 }
 </style>
@@ -177,7 +198,7 @@ export default {
   border-right: 5px solid #cc9966;
   justify-content: center;
   height: 100vh;
-  width: 145px; /* +5px jobbra a border miatt */
+  width: 145px;
   padding: 0;
 }
 .fooldal_gomb {
@@ -213,12 +234,21 @@ export default {
 }
 
 .nav-item span {
-  font-size: 16px;
+  font-size: 18px;
 }
 @media (min-width: 993px) {
+  .nav-item {
+    border-radius: 0;
+    padding: 2rem 0;
+    margin: 0;
+    box-sizing: border-box;
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    box-shadow: 0 0 0 0 rgba(246, 186, 20, 0);
+    transition: box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
   .nav-item:hover {
-    background-color: rgba(29, 30, 0, 0.75);
-    color: #fff;
+    box-shadow: 0 0 10px 3px rgba(246, 186, 20, 0.8); 
   }
 }
 </style>
