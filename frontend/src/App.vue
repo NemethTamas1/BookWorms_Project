@@ -116,8 +116,21 @@ const handleSelection = (event: any) => {
   </Suspense>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'App',
+});
+</script>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+#app {
+  font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;}
+
 
 .navbar {
   background-color: #191416;
@@ -136,10 +149,6 @@ const handleSelection = (event: any) => {
 }
 .navbar-nav > li > .nav-link.router-link-active {
   color: #f5cd7e;
-}
-
-.navbar-toggler {
-  filter: invert(100%);
 }
 
 * {

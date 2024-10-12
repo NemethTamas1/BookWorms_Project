@@ -161,5 +161,4 @@ router.beforeEach((to, from, next) => {
   document.title = title || 'Default Title'
   next()
 })
-
 export default router
