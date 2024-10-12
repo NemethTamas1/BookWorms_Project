@@ -116,13 +116,13 @@ const handleSelection = (event: any) => {
   </Suspense>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
 });
-</script>
+</script> -->
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
