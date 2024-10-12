@@ -27,7 +27,7 @@ export class BrevoService {
                     </p>
                     
                     <div style="margin: 20px 0; text-align: left;">
-                    <a href="https://bookworms.fly.dev/changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+                    <a href="https://bookworms-dev.fly.dev/changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
                     </div>
 
                     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
@@ -77,7 +77,7 @@ export class BrevoService {
             const apiInstance = new Brevo.TransactionalEmailsApi()
             apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
 
-            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: https://bookworms.fly.dev/registration/?id=${user.id}&token=${guestToken}`
+            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: https://bookworms-dev.fly.dev/registration/?id=${user.id}&token=${guestToken}`
 
             await apiInstance.sendTransacEmail({
                 sender: {
