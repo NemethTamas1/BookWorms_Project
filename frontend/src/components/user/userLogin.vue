@@ -13,6 +13,7 @@ const email = ref<string>('');
 const password = ref<string>('');
 const errorMessage = ref<string>('');
 const router = useRouter()
+const forgottenPasswordRef = ref<boolean>(false)
 
 // Rövid form check
 const handleSubmit = async () => {
@@ -25,24 +26,24 @@ const handleSubmit = async () => {
     if ((response as string).length > 0) {
         errorMessage.value = response as string
     }
-    else{
+    else {
         const user = (response as AxiosResponse).data.user
         const token = (response as AxiosResponse).data.access_token
         userStore.setLoggedInUser(user)
         localStorage.setItem('userId', userStore.getLoggedInUser.id.toString())
-        if(user.status == 2){
+        if (user.status == 2) {
             localStorage.setItem('userToken', token);
             localStorage.setItem('status', '2');
             userToken.value = token
             router.push({ name: 'dashboardView' })
         }
-        else if(user.status == 3){
+        else if (user.status == 3) {
             localStorage.setItem('adminToken', token);
             localStorage.setItem('status', '3');
             adminToken.value = token
             router.push({ name: 'adminView' })
         }
-        else{
+        else {
             errorMessage.value = "Valami hiba történt..."
         }
     }
@@ -51,6 +52,10 @@ const handleSubmit = async () => {
     email.value = '';
     password.value = '';
 };
+
+const forgottenPassword = () => {
+
+}
 </script>
 
 
@@ -74,7 +79,10 @@ const handleSubmit = async () => {
                         {{ errorMessage }}
                     </div>
 
-                    <button type="submit" class="btn">Bejelentkezés</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn">Bejelentkezés</button>
+                        <button type="button" @click="forgottenPassword()" class="btn">Elfelejtett jelszó</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -115,12 +123,13 @@ form {
 
 label {
     margin-bottom: 1rem;
-  text-align: center;
-  color: #d3a72e;
-  font-family: "Playfair Display", serif;
-  font-weight: 400;
-  font-size: 1.5rem;
+    text-align: center;
+    color: #d3a72e;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    font-size: 1.5rem;
 }
+
 .btn {
     margin-top: 1rem;
     background-color: #F5CD7E;

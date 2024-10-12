@@ -100,7 +100,7 @@ const handleSelection = (event: any) => {
         </ul>
         <ul v-if="userId != 0" class="navbar-nav ms-auto">
           <select class="form-select" name="" id="" @change="handleSelection">
-            <option value="valasszon">Válasszon a lehetőségek közül...</option>
+            <option selected value="valasszon">Válasszon a lehetőségek közül...</option>
             <option v-if="userStatus == 3" value="admin">Admin oldal</option>
             <option v-if="userStatus == 3" value="modifyBooks">Könyvek módosítása</option>
             <option value="myDashboard">Jelentkezéseim</option>
@@ -136,6 +136,10 @@ const handleSelection = (event: any) => {
 }
 .navbar-nav > li > .nav-link.router-link-active {
   color: #f5cd7e;
+}
+
+.navbar-toggler {
+  filter: invert(100%);
 }
 
 * {
