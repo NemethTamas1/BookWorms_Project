@@ -6,7 +6,6 @@ import { afterEach, describe } from 'node:test'
 import axios from 'axios'
 import type { User } from '@/models/User'
 import { createPinia } from 'pinia'
-import type { Book } from '@/models/Book'
 
 describe('test API calls', () => {
     const mockuseLoggedInUserStore = useLoggedInUserStore(createPinia())
