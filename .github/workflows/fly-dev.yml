@@ -76,7 +76,8 @@ jobs:
       - name: Deploy Backend
         run: |
           cd backend
-          echo "BREVO_API_KEY=${{ secrets.BREVO_API_KEY }}" >> .env
+          echo BREVO_API_KEY=${{ secrets.BREVO_API_KEY }} >> .env
+          cat .env
           flyctl deploy -c fly.dev.toml --no-cache
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
