@@ -1,8 +1,9 @@
-import { Body, Controller, HttpCode, HttpException, HttpStatus, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpException, HttpStatus, Post, Put } from '@nestjs/common';
 import { BrevoService } from './brevo.service';
 import { UsersService } from 'src/users/users.service';
 import { ApplicationsService } from 'src/applications/applications.service';
 import { AuthService } from 'src/authentication/auth.service';
+import { HttpAdapterHost } from '@nestjs/core';
 
 @Controller('api/mail')
 export class BrevoController {
@@ -49,6 +50,23 @@ export class BrevoController {
         } catch (error) {
             console.log("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
             throw new HttpException("Szerver hiba!", HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
+    @Post('forgottenPassword')
+    async checkIfForgottenPasswordEmailExists(@Body() e_mail:{}): Promise<MethodDecorator>{
+        try {
+            const userFromDatabase = await this.userService.getUserByEmail(e_mail['e_mail'])
+            if(userFromDatabase.id != 0){
+                const userToken = await this.authService.generateToken(userFromDatabase)
+                this.brevoService.sendForgottenPasswordEmailToUser(userFromDatabase, userToken);
+                return HttpCode(201)
+            }
+            else{
+                return HttpCode(400)
+            }
+        } catch (error) {
+            
         }
     }
 }

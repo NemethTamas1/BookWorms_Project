@@ -112,7 +112,7 @@ export class UsersController {
     }
   }
 
-  @Roles(Role.Guest)
+  @Roles(Role.Guest, Role.Admin, Role.User)
   @UseGuards(AuthGuard)
   @Put('registration')
   async addUserPasswordAndUpdateStatus(@Query('id') id: number, @Body() password: object): Promise<ResultSet[]> {

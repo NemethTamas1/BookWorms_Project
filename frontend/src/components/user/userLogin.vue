@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useSendForgottenPasswordEmail } from '@/composables/api/useApi';
 import { adminToken, loginUserOrAdminAndStoreTokenIntoLocalStorage, userToken } from '@/composables/auth/auth';
 import type { User } from '@/models/User';
 import { useLoggedInUserStore } from '@/stores/userStore';
@@ -13,7 +14,8 @@ const email = ref<string>('');
 const password = ref<string>('');
 const errorMessage = ref<string>('');
 const router = useRouter()
-const forgottenPasswordRef = ref<boolean>(false)
+let forgottenPasswordRef = ref<boolean>(false)
+let passwordEmailSent = ref<string>('')
 
 // Rövid form check
 const handleSubmit = async () => {
@@ -54,8 +56,20 @@ const handleSubmit = async () => {
 };
 
 const forgottenPassword = () => {
-
+    forgottenPasswordRef.value = true
+    console.log(forgottenPasswordRef.value)
 }
+
+const sendForgottenPasswordEmail = async (email: string) => {
+    const response = await useSendForgottenPasswordEmail(email)
+    if(response == 201){
+        passwordEmailSent.value = "true"
+    }
+    else{
+        passwordEmailSent.value = "false"
+    }
+}
+
 </script>
 
 
@@ -66,11 +80,12 @@ const forgottenPassword = () => {
                 <form @submit.prevent=handleSubmit>
                     <div class="mb-3">
                         <label for="email">E-mail</label>
+                        <p class="forgottenPasswordMessage" v-if="forgottenPasswordRef">Adja meg az email címet, amihez vissza szeretné állítani a jelszót: </p>
                         <input v-model="email" class="form-control" type="email" name="email" id="email"
                             placeholder="example@example.com">
                     </div>
 
-                    <div class="mb-3">
+                    <div v-if="!forgottenPasswordRef" class="mb-3">
                         <label for="password">Jelszó</label>
                         <input v-model="password" class="form-control" type="password" name="password" id="password">
                     </div>
@@ -80,9 +95,12 @@ const forgottenPassword = () => {
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn">Bejelentkezés</button>
-                        <button type="button" @click="forgottenPassword()" class="btn">Elfelejtett jelszó</button>
+                        <button v-if="!forgottenPasswordRef" type="submit" class="btn">Bejelentkezés</button>
+                        <button v-if="!forgottenPasswordRef" type="button" @click="forgottenPassword()" class="btn">Elfelejtett jelszó</button>
+                        <button v-if="forgottenPasswordRef" type="button" @click="sendForgottenPasswordEmail(email)" class="btn">Küldés</button>
                     </div>
+                    <p v-if="passwordEmailSent == 'true'">A jelszó változtatásához szükéges emailt a megadott email címre elküldtük!</p>
+                    <p v-if="passwordEmailSent == 'false'">A megadott email címmel nem található regisztráció!</p>
                 </form>
             </div>
         </div>
@@ -135,4 +153,9 @@ label {
     background-color: #F5CD7E;
     font-family: "Playfair Display", serif;
 }
+
+.forgottenPasswordMessage{
+    color: white;
+}
+
 </style>

@@ -111,17 +111,33 @@ export class UsersService {
     }
 
     async changeUserStatusAndAddPasswordById(id: number, password: string){
-        const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{
-            sql: "UPDATE User SET status = :status, password = :password WHERE id = :id",
-            args: {
-                id: id as number,
-                status: 2,
-                password: password
-            }
-        }],
-            "write"
-        );
-        return changeUserStatusAndAddPassword
+        const userById = await this.getUserById(id);
+        if(userById.status == 1){
+            const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{
+                sql: "UPDATE User SET status = :status, password = :password WHERE id = :id",
+                args: {
+                    id: id as number,
+                    status: 2,
+                    password: password
+                }
+            }],
+                "write"
+            );
+            return changeUserStatusAndAddPassword
+        }
+        else{
+            const changeUserStatusAndAddPassword = await this.dbConnect.turso.batch([{
+                sql: "UPDATE User SET status = :status, password = :password WHERE id = :id",
+                args: {
+                    id: id as number,
+                    status: userById.status,
+                    password: password
+                }
+            }],
+                "write"
+            );
+            return changeUserStatusAndAddPassword
+        }
     }
 
     async hashPassword(plainTextPassword: string): Promise<string> {

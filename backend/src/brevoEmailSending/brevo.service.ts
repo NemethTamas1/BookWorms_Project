@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User } from 'src/users/user.interface';
 import * as Brevo from '@getbrevo/brevo';
+import { DatabaseService } from 'src/database/db.service';
 
 
 @Injectable()
 export class BrevoService {
+    dbConnect = new DatabaseService()
+
     async sendVerificationEmailToGuest(user: User, application_id: number, guestToken: string): Promise<boolean> {
         try {
             const apiInstance = new Brevo.TransactionalEmailsApi()
@@ -36,7 +39,7 @@ export class BrevoService {
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
                     <p style="font-size: 14px; color: #000000; text-align: center;">
                     Tekintse meg weboldalunk számtalan ritka és felbecsülhetetlen értékű könyvritkaságait és jelentkezzen aukcióinkra még ma!<br>
-                    <a href="https://bookworms.fly.dev/books" style="color: #3c64ae;">BookWorms</a><br>
+                    <a href="https://bookworms-dev.fly.dev/books" style="color: #3c64ae;">BookWorms</a><br>
                     <i>Ahol a motiváció és az irodalom kéz a kézben jár.</i>
                     </p>
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
@@ -89,6 +92,33 @@ export class BrevoService {
                     "email": `${user.email}`
                 }],
                 subject: 'Regisztrációs email',
+                htmlContent: `${emailTemplateSource}`
+            })
+
+            return true
+        } catch (error) {
+            console.log('ERROR SENDING EMAIL: ', error)
+            return false
+        }
+    }
+
+    async sendForgottenPasswordEmailToUser(user: User, guestToken: string) {
+        try {
+            const apiInstance = new Brevo.TransactionalEmailsApi()
+            apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
+
+            const emailTemplateSource = `Kattints a linkre az elfelejtett jelszó visszaállításához: https://bookworms-dev.fly.dev/registration/?id=${user.id}&token=${guestToken}`
+
+            await apiInstance.sendTransacEmail({
+                sender: {
+                    "name": "BookWorms Team",
+                    "email": "bookwormsproject2024@gmail.com"
+                },
+                to: [{
+                    "name": `${user.family_name} ${user.first_name}`,
+                    "email": `${user.email}`
+                }],
+                subject: 'Elfelejtett jelszó',
                 htmlContent: `${emailTemplateSource}`
             })
 

@@ -124,6 +124,23 @@ export async function useSendEmailToRegistration(userId: number): Promise<number
     }
 }
 
+export async function useSendForgottenPasswordEmail(email: string): Promise<number> {
+    try {
+        const response = await axios.post(baseURL + 'mail/forgottenPassword', {e_mail: email})
+        console.log(response)
+        if (response.status == 201) {
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return response.status
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
 export async function useGetUserById(userId: number, token: string): Promise<User | number> {
     try {
         const userStatus = useLoggedInUserStore().getLoggedInUser.status
@@ -252,3 +269,4 @@ export async function useGetBookById(bookId: number): Promise<Book | number> {
         return error.response.status
     }
 }
+
