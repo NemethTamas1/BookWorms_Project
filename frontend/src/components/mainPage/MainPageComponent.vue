@@ -5,6 +5,38 @@ import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
 import Footer from './Hatodik_Footer.vue'
 import Udvozlo from './Masodikudvozlo.vue'
 import Team from './Otodik_Csapat.vue'
+import { computed, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
+import { useLoggedInUserStore, useLogOutUser } from '@/stores/userStore'
+
+const userStore = useLoggedInUserStore()
+const router = useRouter()
+
+let userId = computed(() => userStore.getLoggedInUser.id)
+let userStatus = computed(() => userStore.getLoggedInUser.status)
+
+const navigateToLoginSite = () => {
+  router.push('/login')
+}
+
+const handleSelection = (event: any) => {
+  const selectedValue = event.target.value
+  console.log(selectedValue)
+  if (selectedValue === 'logOut') {
+    console.log('Első: ', userId.value)
+    useLogOutUser()
+    navigateToLoginSite()
+    console.log('Második: ', userId.value)
+  } else if (selectedValue === 'myDashboard') {
+    router.push('/dashboard')
+  } else if (selectedValue === 'admin') {
+    router.push('/admin')
+  } else if (selectedValue === 'account') {
+    router.push('/account')
+  } else if (selectedValue === 'modifyBooks') {
+    router.push('/modifyBooks')
+  }
+}
 
 export default {
   name: 'navbar',
@@ -62,8 +94,8 @@ export default {
             <li class="nav-item">
               <a class="nav-link" href="#Fooldal">Főoldal</a>
             </li>
-            <li class="nav-item" @click="scrollToSection('Udvozlo')">
-              <a class="nav-link">Bejelentkezés</a>
+            <li class="nav-item">
+              <RouterLink to="/login"><a class="nav-link">Bejelentkezés</a></RouterLink>
             </li>
             <li class="nav-item" @click="scrollToSection('Konyvvalaszto')">
               <a class="nav-link">Könyvek</a>
@@ -85,10 +117,38 @@ export default {
         <i class="fas fa-home"></i>
         <span>Főoldal</span>
       </div>
-      <div class="nav-item fooldal_gomb" id="bejelentkezes" @click="scrollToSection('Udvozlo')">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Bejelentkezés</span>
+      <div class="nav-item fooldal_gomb">
+        <div class="dropend">
+          <button
+            type="button"
+            class="btn dropdown-toggle fooldal_gomb"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-sign-in"></i>
+            <ul v-if="userId == 0" class="navbar-nav ms-auto">
+              <RouterLink to="/login"><span>Bejelentkezés</span></RouterLink>
+            </ul>
+            <ul v-if="userId != 0" class="navbar-nav ms-auto">
+              <span>Opciók</span>
+            </ul>
+          </button>
+          <ul class="dropdown-menu ms-2" v-if="userId != 0" name="" id="" @change="handleSelection" >
+            <li><a class="dropdown-item" href="#">Bejelentkezés</a></li>
+            <li v-if="userStatus == 3" value="admin">
+              <a class="dropdown-item" href="#">Admin oldal</a>
+            </li>
+            <!--  CSAK BEJELENTKEZÉS & ADMINKÉNT UTÁN LÁTSZÓDJON!-->
+            <li value="myDashboard"><a class="dropdown-item">Jelentkezéseim</a></li>
+            <li value="account"><a class="dropdown-item">Profil Beállítások</a></li>
+            <li v-if="userStatus == 3" value="modifyBooks">
+              <a class="dropdown-item">Profil Beállítások</a>
+            </li>
+            <li value="logOut"><a class="dropdown-item" href="#">Kijelentkezés</a></li>
+          </ul>
+        </div>
       </div>
+
       <div class="nav-item fooldal_gomb" @click="scrollToSection('Konyvvalaszto')">
         <i class="fas fa-book"></i>
         <span>Könyvek</span>
@@ -175,12 +235,49 @@ export default {
   }
 }
 </style>
-
-<!--  CSAK EZEN AZ OLDALON! -->
 <style scoped>
-/* Sidebar Navbar Styles for Larger Screens */
+.dropdown-item:hover {
+  background-color: rgba(159, 132, 42, 0.8);
 
-/* A TELJES NAVBAR-KERET: */
+  height: auto;
+}
+.dropdown-menu {
+  z-index: 5050;
+  position: relative;
+  margin: auto;
+  padding-bottom: 1rem;
+  background: linear-gradient(
+    180deg,
+    rgba(36, 38, 40, 0.8) 0%,
+    rgba(60, 60, 59, 0.8) 40%,
+    rgba(112, 97, 78, 0.8) 70%,
+    rgba(159, 132, 42, 0.8) 100%
+  );
+  border-top: 2px solid rgba(255, 166, 0, 0.1);
+  border-right: 2px solid rgba(255, 166, 0, 0.2);
+  transform: translateX(20px); 
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.show > .dropdown-menu {
+  opacity: 1;
+  transform: translateX(0);
+}
+.dropdown-item {
+  color: #efcf83;
+  font-size: 20px;
+  color: whitesmoke;
+}
+.btn.dropdown-toggle {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
+.btn.dropdown-toggle::after {
+  display: none !important;
+}
+
 .nav {
   position: fixed;
   background: rgb(40, 45, 48);
@@ -237,6 +334,9 @@ export default {
   font-size: 18px;
 }
 @media (min-width: 993px) {
+  .nav.d-none.d-lg-flex {
+    height: 100%;
+  }
   .nav-item {
     border-radius: 0;
     padding: 2rem 0;
@@ -248,7 +348,7 @@ export default {
     transition: box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
   .nav-item:hover {
-    box-shadow: 0 0 10px 3px rgba(246, 186, 20, 0.8); 
+    box-shadow: 0 0 10px 3px rgba(246, 186, 20, 0.8);
   }
 }
 </style>
