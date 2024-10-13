@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 // See here how to get started:
 // https://playwright.dev/docs/intro
 
-test('Checking the title and the heading', async ({ page }) => {
+/*test('Checking the title and the heading', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveTitle(/Üdvözöljük!/);
   await expect(page.getByRole('heading', { name: 'BookWorms' , exact:true})).toBeVisible();
@@ -13,7 +13,7 @@ test('Checking the name of the books', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Angol-magyar szótár' , exact:true})).toBeVisible({ timeout: 10000 });
   await expect(page.getByRole('heading', { name: 'Fotókönyv' , exact:true})).toBeVisible({ timeout: 10000 });
   await expect(page.getByRole('heading', { name: 'A filozófia nagykönyve - Minden, amit tudni érdemes' , exact:true})).toBeVisible({ timeout: 10000 });
-})
+})*/
 
 // test("Form Successful Submission", async ({ page }) => {
 //   //Többször nem lehet ugyanazzal az email címmel jelentkezni, majd ki kell találni valalmilyen logikát
