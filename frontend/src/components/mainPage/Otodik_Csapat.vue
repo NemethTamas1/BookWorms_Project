@@ -38,8 +38,8 @@ export default {
     <div class="container" id="foKontainer">
       <!-- First row: Headings -->
       <div class="row">
-        <div class="col-12 text-center">
-          <h2 class="my-2">A BookWorms Dedikált Csapatának Tagjai</h2>
+        <div class="col-12">
+          <h2>A BookWorms Dedikált Csapatának Tagjai</h2>
         </div>
       </div>
 
@@ -47,7 +47,7 @@ export default {
       <div class="container" id="tartalom">
         <!-- 1st row: 2 cards -->
         <div class="row">
-          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2OQ.png"
@@ -65,19 +65,19 @@ export default {
                   <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="team-content text-center rounded-bottom p-4">
+            <div class="team-content text-center rounded-bottom">
               <h4 class="text-white">David Coffee Brock</h4>
               <p class="text-white">CEO & Founder</p>
             </div>
@@ -85,12 +85,12 @@ export default {
 
           <div
             id="szellemdiv"
-            class="card team-item rounded col col-lg-4 d-none mb-4 d-flex align-items-stretch"
+            class="card team-item rounded col col-lg-4 d-none d-flex align-items-stretch"
           >
             <!-- Szellem div - köztes hely miatt -->
           </div>
 
-          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2Nw.png"
@@ -108,26 +108,26 @@ export default {
                   <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="team-content text-center rounded-bottom p-4">
+            <div class="team-content text-center rounded-bottom">
               <h4 class="text-white">Thommas Brainful</h4>
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY3MQ.png"
@@ -145,25 +145,25 @@ export default {
                   <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="team-content text-center rounded-bottom p-4">
+            <div class="team-content text-center rounded-bottom">
               <h4 class="text-white">Mark P. Napping</h4>
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
 
-          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY3MA.png"
@@ -181,24 +181,24 @@ export default {
                   <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-sm-square rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="team-content text-center rounded-bottom p-4">
+            <div class="team-content text-center rounded-bottom">
               <h4 class="text-white">Alice W. Wonderful</h4>
               <p class="text-white">CEO & Founder</p>
             </div>
           </div>
-          <div class="card team-item rounded col-12 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
               <img
                 src="https://kephost.net/p/MTQyMDY2OA.png"
@@ -216,19 +216,19 @@ export default {
                   <i class="fas fa-share"></i>
                 </a>
                 <div class="team-icon-share">
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-1" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-facebook-f"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle mb-1" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a class="btn btn-primary btn-sm-square text-white rounded-circle" href="#">
+                  <a class="btn btn-sm-square rounded-circle">
                     <i class="fab fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="team-content text-center rounded-bottom p-4">
+            <div class="team-content text-center rounded-bottom">
               <h4 class="text-white">Fabian S. Speci</h4>
               <p class="text-white">CEO & Founder</p>
             </div>
@@ -250,7 +250,7 @@ section {
   margin-left: 145px;
   border-bottom: 0.8rem solid rgba(0, 59, 34, 0.6);
   background-image: url('https://kephost.net/p/MTQ1NjUxMg.png'),
-  linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    linear-gradient(0deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
   font-family: Arial, Helvetica, sans-serif;
   background-position: center;
   background-size: cover;
@@ -261,11 +261,15 @@ section {
   text-align: justify;
   background-color: rgba(34, 23, 3, 0.7);
   border-radius: 2rem;
-  margin:5rem;
+  margin: 5rem;
   padding: auto;
 }
 #tartalom {
   padding: 0;
+}
+h2 {
+  text-align: center;
+  padding: 1.5rem 0;
 }
 #tartalom > .row:first-of-type {
   display: flex;
@@ -283,6 +287,7 @@ section {
   position: relative;
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
 }
 
 .team-img {
@@ -335,13 +340,13 @@ section {
   transition: 0.6s ease all;
 }
 
-#share:hover{
+#share:hover {
   font-weight: bolder;
   color: rgb(128, 111, 1);
   background-color: rgb(246, 212, 117);
   transform: rotate(90deg);
 }
-.team-icon a:hover{
+.team-icon a:hover {
   background-color: #bd9441;
   border: 2px solid rgb(84, 62, 1);
 }
@@ -406,7 +411,7 @@ h2:first-of-type {
   height: 35px;
   font-size: 16px;
 }
-@media (min-width: 992px) and (max-width: 1300px) {
+@media (min-width: 993px) and (max-width: 2900px) {
   section {
     display: flex;
     justify-content: center;
@@ -414,6 +419,31 @@ h2:first-of-type {
     height: 100vh;
     width: calc(100% - 145px);
     margin-left: 145px;
+    background-color: linear-gradient(
+      0deg,
+      #031a26 0%,
+      #163a4eb5 40%,
+      #21485e9b 60%,
+      #041c2965 100%
+    );
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+  }
+  #foKontainer {
+    margin: auto;
+    font-size: 20px;
+    text-align: justify;
+    color: whitesmoke;
+    background-color: rgba(34, 23, 3, 0.7);
+    border-radius: 2rem;
+    margin: auto;
+    height: auto;
+  }
+  #tartalom{
+    margin: auto;
+    padding: auto;
   }
 }
 @media (max-width: 992px) {
@@ -421,85 +451,40 @@ h2:first-of-type {
     display: none;
   }
   section {
-    margin-left: 0;
-    width: auto;
-    height: auto;
-    padding: 1.5rem;
-  }
-  #foKontainer {
-    padding: 0;
     width: 100%;
-  }
-  .row:last-of-type {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: auto;
+    padding: auto;
   }
   h4:first-of-type {
-    font-size: 1rem;
+    font-size: 20px;
     font-weight: bold;
   }
-  h2:first-of-type {
-    margin: 0.5rem 0;
-    padding: 0;
-  }
-
   p:first-of-type {
-    font-size: 0.8rem;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
   }
-
   .team-icon {
     width: 35px;
     height: 35px;
   }
-
   .team-icon-share a {
     margin-top: 5px;
     width: 35px;
     height: 35px;
   }
-}
-@media (max-width: 991px) {
-  section {
-    margin: 0;
-    padding: 2rem;
-    width: 100%;
-  }
-  #foKontainer {
-    margin: auto;
-    padding: 0;
-    width: 100%;
-  }
   .card.team-item {
-    max-width: 50%;
-    max-height: 50%;
+    padding-bottom: 2rem;
   }
-  #share {
-    color: whitesmoke;
-    cursor: pointer;
-    transition: transform 0.7s ease;
+  h4 {
+    letter-spacing: 3px;
   }
-  .team-icon a {
-    transition: transform 5s ease-in-out;
+  p {
+    letter-spacing: 2px;
   }
-  .rotate-icon {
-    transform: rotate(90deg);
-  }
-
-  .team-icon-share {
-    opacity: 0;
-    transform: translateY(-20px);
-    transition:
-      opacity 0.5s ease,
-      transform 0.5s ease;
-  }
-
-  .show-icons {
-    opacity: 1;
-    transform: translateY(0);
-    transition:
-      opacity 0.5s ease,
-      transform 0.5s ease;
+  h2 {
+    text-align: center;
+    padding: 1.2rem 0;
   }
 }
 </style>

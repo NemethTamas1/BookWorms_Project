@@ -143,7 +143,7 @@ section {
 }
 #teljes_sor {
   opacity: 0.7;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 .container {

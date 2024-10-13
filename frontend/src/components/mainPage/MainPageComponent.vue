@@ -85,10 +85,26 @@ export default {
         <i class="fas fa-home"></i>
         <span>Főoldal</span>
       </div>
-      <div class="nav-item fooldal_gomb" id="bejelentkezes" @click="scrollToSection('Udvozlo')">
-        <i class="fas fa-sign-in-alt"></i>
-        <span>Bejelentkezés</span>
+      <div class="nav-item fooldal_gomb">
+        <div class="dropend">
+          <button
+            type="button"
+            class="btn dropdown-toggle fooldal_gomb"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fas fa-sign-in"></i>
+            <span>Bejelentkezés</span>
+          </button>
+          <ul class="dropdown-menu ms-2">
+            <li><a class="dropdown-item" href="#">Profilom</a></li>
+            <li><a class="dropdown-item" href="#">Beállítások</a></li>
+            <li><a class="dropdown-item" href="#">Bejelentkezés</a></li>
+            <li><a class="dropdown-item" href="#">Könyv hozzáadása</a></li>
+          </ul>
+        </div>
       </div>
+
       <div class="nav-item fooldal_gomb" @click="scrollToSection('Konyvvalaszto')">
         <i class="fas fa-book"></i>
         <span>Könyvek</span>
@@ -181,6 +197,44 @@ export default {
 /* Sidebar Navbar Styles for Larger Screens */
 
 /* A TELJES NAVBAR-KERET: */
+.dropdown-item:hover {
+  background-color: rgba(159, 132, 42, 0.8);
+
+  height: auto;
+}
+.dropdown-menu {
+  margin: auto;
+  padding-bottom: 1rem;
+  background: linear-gradient(
+    180deg,
+    rgba(36, 38, 40, 0.8) 0%,
+    rgba(60, 60, 59, 0.8) 40%,
+    rgba(112, 97, 78, 0.8) 70%,
+    rgba(159, 132, 42, 0.8) 100%
+  );
+  border-top: 2px solid rgba(255, 166, 0, 0.1);
+  border-right: 2px solid rgba(255, 166, 0, 0.2);
+  transform: translateX(20px); /* Menüt jobbról tolja */
+  transition: opacity .8s ease, transform 0.8s ease;
+}
+.show > .dropdown-menu {
+  opacity: 1;
+  transform: translateX(0);
+}
+.dropdown-item {
+  color: #efcf83;
+  font-size: 20px;
+  color: whitesmoke;
+}
+.btn.dropdown-toggle {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
+.btn.dropdown-toggle::after {
+  display: none !important;
+}
+
 .nav {
   position: fixed;
   background: rgb(40, 45, 48);
@@ -237,6 +291,9 @@ export default {
   font-size: 18px;
 }
 @media (min-width: 993px) {
+  .nav.d-none.d-lg-flex {
+    height: 100%;
+  }
   .nav-item {
     border-radius: 0;
     padding: 2rem 0;
@@ -248,7 +305,7 @@ export default {
     transition: box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
   .nav-item:hover {
-    box-shadow: 0 0 10px 3px rgba(246, 186, 20, 0.8); 
+    box-shadow: 0 0 10px 3px rgba(246, 186, 20, 0.8);
   }
 }
 </style>

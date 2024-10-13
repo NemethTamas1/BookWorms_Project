@@ -1,4 +1,3 @@
-
 <template>
   <section class="section-1">
     <div class="container-fluid">
@@ -22,29 +21,27 @@
   </section>
 </template>
 
-
 <script lang="ts">
 import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
 
 export default {
   name: 'fooldal',
   components: {
-    Konyvvalaszto,
+    Konyvvalaszto
   },
   methods: {
     scrollToSection(sectionId: string) {
       const section = document.getElementById(sectionId)
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' })
-      } 
+      }
     }
   }
 }
 </script>
 
-
 <style scoped>
-h1{
+h1 {
   letter-spacing: 10px;
   font-size: 56px;
 }
@@ -53,15 +50,20 @@ h2 {
   letter-spacing: 3px;
   font-size: 44px;
 }
-.section-1 {
-  margin-left: 145px;
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
+  width: 100%;
+  margin-left: 145px;
   width: calc(100% - 145px);
-  background-attachment: fixed;
-  background-position: top;
-  background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg');
+  background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+    linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  background-position: center;
   background-size: cover;
-  position: relative;
+  background-repeat: no-repeat;
+  color: whitesmoke;
 }
 
 #keret {
@@ -73,6 +75,7 @@ h2 {
   align-items: center;
   text-align: center;
   height: 85vh;
+  width: 100vh;
   margin: auto;
   /* height: calc(100%-20vh); Azért, hogy ne legyen annyira lent (kb felső 2/3-ban) */
 }

@@ -8,9 +8,9 @@ onMounted(() => {
 
 <template>
   <section id="kimutatas">
-    <div class="container" id="foKontainer">
+    <div class="container" id="fullContainer">
       <div class="row">
-        <div class="col-12 text-center mb-2">
+        <div class="col-12 text-center">
           <h1>Ahogy a könyveink, mi sem vagyunk egyformák.</h1>
         </div>
       </div>
@@ -83,19 +83,22 @@ section {
   margin-left: 145px;
   background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
     linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
-  font-family: Arial, Helvetica, sans-serif;
   background-position: center;
   background-size: cover;
-  background-repeat: repeat-y;
+  background-repeat: no-repeat;
+  color: whitesmoke;
 }
-#foKontainer {
+
+#fullContainer {
+  margin: auto;
   font-size: 20px;
   text-align: justify;
   color: whitesmoke;
   background-color: rgba(34, 23, 3, 0.7);
-  border: 1rem double rgba(246, 212, 117, 0.6);
+  border: 10px double rgba(246, 212, 117, 0.6);
   border-radius: 2rem;
-  margin: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   padding: 2rem;
 }
 #idezet_behuzas {
@@ -103,7 +106,6 @@ section {
   font-weight: bold;
   font-style: italic;
   background-color: rgba(255, 217, 0, 0.3);
-  padding: 20px;
   border-left: 8px solid rgb(255, 174, 0);
 }
 
@@ -138,18 +140,32 @@ h1 {
     max-height: 500px;
   }
 }
-@media (max-width: 992px) {
+@media (min-width: 993px) and (max-width: 2920px) {
   section {
-    margin-left: 0;
-    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: calc(100% - 145px);
+    margin-left: 145px;
+    background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
+      linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+  }
+  #fullContainer {
+    margin: auto;
+    font-size: 20px;
+    text-align: justify;
+    color: whitesmoke;
+    background-color: rgba(34, 23, 3, 0.7);
+    border-radius: 2rem;
+    margin: 2rem;
+    padding: 2rem;
     height: auto;
-    padding: 1.5rem;
   }
-  #foKontainer {
-    padding: 1rem;
-    width: 100%;
-  }
-
   .about-img img {
     margin: 0;
     padding: 0;
@@ -174,14 +190,15 @@ h1 {
   }
 }
 
-@media (min-width: 576px) and (max-width: 776px) {
-  #foKontainer {
+@media (min-width: 576px) and (max-width: 992px) {
+  #fullContainer {
     margin: 0;
     padding: 0;
-    width: auto;
-    height: auto;
+    width: 100%;
   }
   section {
+    margin-left: 0;
+    width: 100%;
     height: 100%;
     padding: 2rem 0;
     margin: 0;
