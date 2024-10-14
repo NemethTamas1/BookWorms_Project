@@ -6,7 +6,7 @@ import Footer from './Hatodik_Footer.vue'
 import Udvozlo from './Masodikudvozlo.vue'
 import Team from './Otodik_Csapat.vue'
 import { computed, ref, type ComputedRef } from 'vue'
-import { RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useLoggedInUserStore, useLogOutUser } from '@/stores/userStore'
 
 const userStore = useLoggedInUserStore()
@@ -49,6 +49,32 @@ const scrollToSection = (sectionId: string) => {
         navbarCollapse.classList.remove('show')
       }
     }
+
+// export default {
+//   name: 'navbar',
+//   components: {
+//     Fooldal,
+//     Kimutatas,
+//     Konyvvalaszto,
+//     Udvozlo,
+//     Team,
+//     Footer
+//   },
+
+//   methods: {
+//     scrollToSection(sectionId: string) {
+//       const section = document.getElementById(sectionId)
+//       if (section) {
+//         section.scrollIntoView({ behavior: 'smooth' })
+//       }
+//       // navbar összecsukó, kattintás után
+//       const navbarCollapse = document.querySelector('.navbar-collapse')
+//       if (window.innerWidth <= 992 && navbarCollapse) {
+//         navbarCollapse.classList.remove('show')
+//       }
+//     }
+//   }
+// }
 </script>
 
 <template>
@@ -100,7 +126,11 @@ const scrollToSection = (sectionId: string) => {
         <i class="fas fa-home"></i>
         <span>Főoldal</span>
       </div>
-      <div class="nav-item fooldal_gomb">
+      <div v-if="userId == 0" class="nav-item fooldal_gomb" @click="router.push('/login')">
+        <i class="fas fa-home"></i>
+        <span>Bejelentkezés</span>
+      </div>
+      <div v-if="userId != 0" class="nav-item fooldal_gomb">
         <div class="dropend">
           <button
             type="button"
@@ -109,21 +139,21 @@ const scrollToSection = (sectionId: string) => {
             aria-expanded="false"
           >
             <i class="fas fa-sign-in"></i>
-            <ul v-if="userId == 0" class="navbar-nav ms-auto">
+            <!-- <ul v-if="userId == 0" class="navbar-nav ms-auto">
               <RouterLink to="/login"><span>Bejelentkezés</span></RouterLink>
-            </ul>
-            <ul v-if="userId != 0" class="navbar-nav ms-auto">
+            </ul> -->
+            <ul class="navbar-nav ms-auto">
               <span>Opciók</span>
             </ul>
           </button>
           <ul class="dropdown-menu ms-2" v-if="userId != 0" name="" id="" @change="handleSelection" >
             <li v-if="userStatus == 3" value="admin">
-              <a class="dropdown-item">Admin oldal</a>
+              <RouterLink to="/admin" class="dropdown-item">Admin oldal</RouterLink>
             </li>
             <li value="myDashboard"><a class="dropdown-item">Jelentkezéseim</a></li>
-            <li value="account"><a class="dropdown-item">Profil Beállítások</a></li>
+            <li value="account"><RouterLink to="/account" class="dropdown-item">Profil Beállítások</RouterLink></li>
             <li v-if="userStatus == 3" value="modifyBooks">
-              <a class="dropdown-item">Könyv Hozzáadása</a>
+              <RouterLink to="/modifyBooks" class="dropdown-item">Könyv módosítása</RouterLink>
             </li>
             <li value="logOut"><a class="dropdown-item">Kijelentkezés</a></li>
           </ul>
