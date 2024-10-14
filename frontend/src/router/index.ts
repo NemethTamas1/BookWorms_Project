@@ -3,7 +3,6 @@ import BookView from '../views/BookView.vue'
 import AdminView from '../views/AdminView.vue'
 import UserLoginView from '../views/UserLoginView.vue'
 import ApplicantReceivedView from '@/views/ApplicantReceivedView.vue'
-import MainPageComponent from '@/components/mainPage/MainPageComponent.vue'
 import ChangeGuestStatusView from '@/views/ChangeGuestStatusView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
 import DashboardView from '@/views/DashboardView.vue'
@@ -12,6 +11,7 @@ import AccountView from '@/views/AccountView.vue'
 import ModifyBooksView from '@/views/ModifyBooksView.vue'
 import PageNotFoundView from '@/views/PageNotFoundView.vue'
 import { useLoggedInUserStore } from '@/stores/userStore'
+import MainPageView from '@/views/MainPageView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -19,7 +19,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'mainPage',
-      component: MainPageComponent,
+      component: MainPageView,
       meta: {
         title: 'Üdvözöljük!'
       }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { useLoggedInUserStore, useLogOutUser } from './stores/userStore'
+import { useLoggedInUserStore, useLogOutUser } from '@/stores/userStore';
 import { computed, ref } from 'vue'
 
 const userStore = useLoggedInUserStore()

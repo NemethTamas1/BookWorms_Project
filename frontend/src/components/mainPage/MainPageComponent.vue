@@ -1,11 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
 import Fooldal from './Elso_Fooldal.vue'
 import Kimutatas from './Negyedik_Kimutatas.vue'
 import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
 import Footer from './Hatodik_Footer.vue'
 import Udvozlo from './Masodikudvozlo.vue'
 import Team from './Otodik_Csapat.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, type ComputedRef } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 import { useLoggedInUserStore, useLogOutUser } from '@/stores/userStore'
 
@@ -23,10 +23,10 @@ const handleSelection = (event: any) => {
   const selectedValue = event.target.value
   console.log(selectedValue)
   if (selectedValue === 'logOut') {
-    console.log('Első: ', userId.value)
+    console.log('Első: ', userId)
     useLogOutUser()
     navigateToLoginSite()
-    console.log('Második: ', userId.value)
+    console.log('Második: ', userId)
   } else if (selectedValue === 'myDashboard') {
     router.push('/dashboard')
   } else if (selectedValue === 'admin') {
@@ -38,19 +38,7 @@ const handleSelection = (event: any) => {
   }
 }
 
-export default {
-  name: 'navbar',
-  components: {
-    Fooldal,
-    Kimutatas,
-    Konyvvalaszto,
-    Udvozlo,
-    Team,
-    Footer
-  },
-
-  methods: {
-    scrollToSection(sectionId: string) {
+const scrollToSection = (sectionId: string) => {
       const section = document.getElementById(sectionId)
       if (section) {
         section.scrollIntoView({ behavior: 'smooth' })
@@ -61,8 +49,6 @@ export default {
         navbarCollapse.classList.remove('show')
       }
     }
-  }
-}
 </script>
 
 <template>
