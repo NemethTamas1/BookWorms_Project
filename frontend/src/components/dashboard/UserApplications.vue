@@ -127,8 +127,13 @@ function isBidEnded(end_date: Date): boolean {
 </script>
 
 <template>
-  <div>
-    <table v-if="applications.length > 0" class="table">
+  <section>
+    <div class="jelentkezeseim">
+            <div>
+                <h1>Jelentkezéseim</h1>
+            </div>
+        </div>
+    <table v-if="applications.length > 0" class="mt-3">
       <thead>
         <tr>
           <th>Jelentkezés azon.</th>
@@ -172,10 +177,50 @@ function isBidEnded(end_date: Date): boolean {
       </tbody>
     </table>
     <p v-else>No applications found.</p>
-  </div>
+  </section>
 </template>
 
 <style scoped>
+section {
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+}
+
+.jelentkezeseim {
+    width: 100%;
+    height: 23vh;
+    overflow: hidden;
+    /* Ha a tartalom kilógna a konténerből */
+}
+
+.jelentkezeseim h1 {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    /* A szöveg a kép előtt lesz */
+    color: #ecd577;
+    justify-content: center;
+    text-shadow: 2px 2px 5px #120d01;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 3rem;
+    margin-top: 9vh;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+}
+
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -191,7 +236,7 @@ li {
   font-size: 18px;
 }
 
-table {
+/* table {
   width: 80%;
   border-collapse: collapse;
   margin: auto;
@@ -211,5 +256,36 @@ tr:nth-child(even) {
 
 th {
   background-color: #f9e3a8;
+} */
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    background-color: #a78f40;
+}
+
+tr:nth-child(even){
+  background-color: #454638;
+}
+
+th {
+  background-color: #454638;
+  color: #ecd577;
+  
+}
+
+th, td {
+  border: 2px solid #121214;
+  padding: .5rem;
+}
+
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
 }
 </style>

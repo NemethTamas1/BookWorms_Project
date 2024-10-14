@@ -105,6 +105,27 @@ const changeUserOrAdminData = async () => {
     }
 }
 
+const validateEmailInputField = () => {
+    let validationError = false;
+
+    if (user.value.email === '') {
+        errMessages.email_err_msg = 'Az e-mail cím mező nem lehet üres!';
+        validationError = true;
+    } else {
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+        if (!emailRegex.test(user.value.email)) {
+            errMessages.email_err_msg = 'Az e-mail cím formátuma nem megfelelő!'
+            validationError = true;
+        }
+        else {
+            errMessages.email_err_msg = '';
+            validationError = false;
+        }
+    }
+    return validationError;
+}
+
+
 const validateInputField = () => {
     let validationError = false;
 
@@ -124,14 +145,6 @@ const validateInputField = () => {
         validationError = false;
     }
 
-    if (user.value.email === '') {
-        errMessages.email_err_msg = 'Az e-mail cím nem lehet üres!';
-        validationError = true;
-    } else {
-        errMessages.email_err_msg = '';
-        validationError = false;
-    }
-
     if (changedPassword.value != changedPasswordAgain.value) {
         errMessages.password_match_err_msg = 'A két jelszó nem egyezik!';
         validationError = true;
@@ -147,8 +160,13 @@ const validateInputField = () => {
 </script>
 
 <template>
-    <div class="container">
-        <div class="row">
+    <section>
+        <div class="szemelyes_adatok">
+            <div>
+                <h1>Személyes adatok</h1>
+            </div>
+        </div>
+        <div class="form-div mt-3">
             <form class="col-12" @submit.prevent="changeUserOrAdminData()">
                 <label for="family_name" class="form-label">Vezetéknév: </label>
                 <input @focus="validateInputField()" @keyup="validateInputField()" class="form-label"
@@ -163,7 +181,7 @@ const validateInputField = () => {
                 <p class="errorMsg" v-if="errMessages.first_name_err_msg !== ''">{{ errMessages.first_name_err_msg }}
                 </p>
                 <label for="email" class="form-label">E-mail: </label>
-                <input @focus="validateInputField()" @keyup="validateInputField()" class="form-label"
+                <input @focus="validateEmailInputField()" @keyup="validateEmailInputField()" class="form-label"
                     :disabled="!isActiveField" type="text" id="email" name="email" v-model="(user.email)">
                 <p class="errorMsg" v-if="errMessages.email_err_msg !== ''">{{ errMessages.email_err_msg }}
                 </p>
@@ -184,7 +202,7 @@ const validateInputField = () => {
                     <button class="btn btn-danger" v-if="isActiveField"
                         @click="cancelUserOrAdminDataModify()">Mégse</button>
                     <button class="btn btn-success" type="submit"
-                        :disabled="!isActiveField || validateInputField()">Mentés</button>
+                        :disabled="!isActiveField || validateInputField() || validateEmailInputField()">Mentés</button>
                 </div>
             </form>
             <div v-if="dataChangedSuccessfully" class="col-12 text-center">
@@ -194,24 +212,84 @@ const validateInputField = () => {
                 <h4>Valami hiba történt, kérjük próbálja meg később!</h4>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <style scoped>
-.container {
-    margin-top: 5rem;
+.szemelyes_adatok {
+    width: 100%;
+    height: 23vh;
+    overflow: hidden;
+    /* Ha a tartalom kilógna a konténerből */
+}
+
+.szemelyes_adatok h1 {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    /* A szöveg a kép előtt lesz */
+    color: #ecd577;
+    justify-content: center;
+    text-shadow: 2px 2px 5px #120d01;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 3rem;
+    margin-top: 9vh;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+}
+
+section {
+    height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
 }
 
 form {
+    padding: 1.5rem;
+    border: 2px solid #ecd577;
     display: flex;
     flex-direction: column;
+    color: #ecd577;
 
     input {
         border-radius: .2rem;
     }
 }
 
+.form-div {
+    margin: auto;
+    width: 60vw;
+}
+
+input {
+    color: #ecd577;
+    background-color: #07080a;
+}
+
 button {
     width: 30%;
+}
+
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
+
+    .form-div{
+        width: auto;
+    }
 }
 </style>

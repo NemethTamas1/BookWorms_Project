@@ -2,27 +2,21 @@
 import { RouterView, useRouter } from 'vue-router'
 import { useLoggedInUserStore, useLogOutUser } from '@/stores/userStore';
 import { computed, ref } from 'vue'
+import NavbarComponent from './components/mainPage/NavbarComponent.vue';
 
-const userStore = useLoggedInUserStore()
-const router = useRouter()
+// const userStore = useLoggedInUserStore()
+// const router = useRouter()
 
-let userId = computed(() => userStore.getLoggedInUser.id)
-let userStatus = computed(() => userStore.getLoggedInUser.status)
+// let userId = computed(() => userStore.getLoggedInUser.id)
+// let userStatus = computed(() => userStore.getLoggedInUser.status)
 
-const navigateToLoginSite = () => {
-  router.push('/login')
-}
+// const navigateToLoginSite = () => {
+//   router.push('/login')
+// }
 
 //Navbar összenyomása, amikor kikattintunk belőle
 //Navbar összenyomása, amikor root-ot váltunk
-let navBar = null;
 
-document.addEventListener('click', (event: MouseEvent) => {
-  navBar = document.getElementById('navbarNav');
-  if (!navBar?.contains(event.target as Node) && navBar?.classList.contains('show')) {
-    navBar?.classList.remove('show');
-  }
-});
 
 // const closeNavBar = () => {
 //   navBar = document.getElementById('navbarNav');
@@ -31,40 +25,33 @@ document.addEventListener('click', (event: MouseEvent) => {
 //   }
 // };
 
-router.afterEach(() => {
-  navBar = document.getElementById('navbarNav');
-  if (navBar?.classList.contains('show')) {
-    navBar?.classList.remove('show');
-  }
-});
 
 
-
-const handleSelection = (event: any) => {
-  const selectedValue = event.target.value
-  console.log(selectedValue)
-  if (selectedValue === 'logOut') {
-    console.log('Első: ', userId.value)
-    useLogOutUser()
-    navigateToLoginSite()
-    console.log('Második: ', userId.value)
-  } else if (selectedValue === 'myDashboard') {
-    router.push('/dashboard')
-  }
-  else if (selectedValue === 'admin') {
-    router.push('/admin')
-  }
-  else if (selectedValue === 'account') {
-    router.push('/account')
-  }
-  else if (selectedValue === 'modifyBooks') {
-    router.push('/modifyBooks')
-  }
-}
+// const handleSelection = (event: any) => {
+//   const selectedValue = event.target.value
+//   console.log(selectedValue)
+//   if (selectedValue === 'logOut') {
+//     console.log('Első: ', userId.value)
+//     useLogOutUser()
+//     navigateToLoginSite()
+//     console.log('Második: ', userId.value)
+//   } else if (selectedValue === 'myDashboard') {
+//     router.push('/dashboard')
+//   }
+//   else if (selectedValue === 'admin') {
+//     router.push('/admin')
+//   }
+//   else if (selectedValue === 'account') {
+//     router.push('/account')
+//   }
+//   else if (selectedValue === 'modifyBooks') {
+//     router.push('/modifyBooks')
+//   }
+// }
 </script>
 
 <template>
-  <nav class="navbar fixed-top navbar-expand-lg">
+  <!-- <nav class="navbar fixed-top navbar-expand-lg">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><img src="./assets/img/kesz_resized.png" alt="" /></a>
       <button
@@ -110,7 +97,8 @@ const handleSelection = (event: any) => {
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> -->
+  <NavbarComponent/>
   <Suspense>
     <RouterView />
   </Suspense>
@@ -132,7 +120,7 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;}
 
 
-.navbar {
+/* .navbar {
   background-color: #191416;
   border-top: 2px solid #f5cd7e;
   border-bottom: 2px solid #f5cd7e;
@@ -149,7 +137,7 @@ export default defineComponent({
 }
 .navbar-nav > li > .nav-link.router-link-active {
   color: #f5cd7e;
-}
+} */
 
 * {
   padding: 0px;

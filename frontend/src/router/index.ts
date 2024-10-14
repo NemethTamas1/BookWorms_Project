@@ -161,4 +161,20 @@ router.beforeEach((to, from, next) => {
   document.title = title || 'Default Title'
   next()
 })
+
+let navBar = null;
+
+document.addEventListener('click', (event: MouseEvent) => {
+  navBar = document.getElementById('navbarNav');
+  if (!navBar?.contains(event.target as Node) && navBar?.classList.contains('show')) {
+    navBar?.classList.remove('show');
+  }
+});
+
+router.afterEach(() => {
+  navBar = document.getElementById('navbarNav');
+  if (navBar?.classList.contains('show')) {
+    navBar?.classList.remove('show');
+  }
+});
 export default router

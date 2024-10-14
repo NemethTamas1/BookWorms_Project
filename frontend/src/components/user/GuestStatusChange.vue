@@ -2,6 +2,7 @@
 import { useUpdateApplicationStatusById } from '@/composables/api/useApi';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
 let applicationStatusChangedSuccessfully = ref<boolean>(false)
 let applicationStatusChangedError = ref<boolean>(false)
@@ -24,13 +25,18 @@ changeStatusInDatabase()
 </script>
 
 <template>
-  <div class="container" id="email_megerosites">
-    <div class="row">
-      <div v-if="applicationStatusChangedSuccessfully" class="col koszono_div">
+  <section>
+    <div class="megerosites">
+      <div>
+        <h1>Megerősítés</h1>
+      </div>
+    </div>
+    <div class="koszono_div mt-3">
+      <div v-if="applicationStatusChangedSuccessfully">
         <h2 id="fooldal_nyitoszoveg" class="mb-4">Sikeres e-mail cím megerősítés!</h2>
         <hr />
-        <div class="row mb-4">
-          <div class="col-6 m-auto koszonto">
+        <div class="mb-4">
+          <div class="koszonto">
             <p>
               Köszönjük! E-mail címének megerősítésével lehetőséget nyújtunk a regisztrációs folyamat elvégézéséhez.
             </p>
@@ -42,36 +48,63 @@ changeStatusInDatabase()
           </div>
         </div>
       </div>
-      <div v-if="applicationStatusChangedError" class="koszono_div">
+      <div v-if="applicationStatusChangedError" class="text-center mt-3">
         <p>Valami hiba történt, kérjük, próbálja meg újra! Amennyiben a hiba továbbra is fennáll, kérjük vegye fel
           velünk a kapcsolatot!</p>
       </div>
-    </div>
-    <div class="row">
-      <div class="col" id="gombok_div">
+      <div class="gombok_div">
         <RouterLink to="/" class="btn btn-info" id="vissza">Vissza a Főoldalra </RouterLink>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style>
-#email_megerosites {
-  margin-top: 40vh;
-  background-image: url(../../../src/assets/img/Banner.png);
+section {
+  height: 100vh;
+  width: 100%;
+  margin-left: 145px;
+  width: calc(100% - 145px);
+  background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+    linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+  background-position: center;
   background-size: cover;
-  font-family: 'Libre Baskerville', serif;
-  text-align: center;
+  background-repeat: no-repeat;
+  color: whitesmoke;
+}
+
+.megerosites {
+  width: 100%;
+  height: 23vh;
+  overflow: hidden;
+  /* Ha a tartalom kilógna a konténerből */
+}
+
+.megerosites h1 {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  /* A szöveg a kép előtt lesz */
+  color: #ecd577;
+  justify-content: center;
+  text-shadow: 2px 2px 5px #120d01;
+  font-family: "Playfair Display", serif;
   font-style: italic;
+  font-size: 3rem;
+  margin-top: 9vh;
+  text-shadow: 2px 2px 2px #574d0cc4;
+  background-color: #9f91343e;
+  box-shadow: 0 0 50px 50px #9f91343e;
 }
 
 .koszono_div {
+  width: 60%;
   margin: auto;
-  padding: 3rem 0;
-  background-color: cornsilk;
-  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.3);
-  /* text-transform: capitalize;  */
-  border-radius: 1.5rem;
+  background-color: rgb(25 24 20 /.8);
+  padding: 30px;
+  border-radius: 5px;
+  border: 2px solid #F5CD7E;
+  color: #F5CD7E;
 }
 
 h2 {
@@ -80,15 +113,18 @@ h2 {
 
 .koszonto p {
   margin-bottom: 1rem;
-  /* Alsó margó a szöveg elválasztásához */
 }
 
 hr:first-of-type {
   border: 3px solid #bf7d02;
 }
 
+.gombok_div{
+  display: flex;
+  justify-content: center;
+}
+
 #vissza {
-  margin-top: 1rem;
   font-family: 'Libre Baskerville', serif;
   font-size: 1rem;
   background-color: rgb(149, 101, 29);
@@ -96,11 +132,21 @@ hr:first-of-type {
   border: 3px solid #3f2e01cf;
   font-weight: bold;
   transition: 0.1s ease;
-
+  margin: auto;
 }
 
 #vissza:hover {
   color: rgb(255, 245, 232);
   transform: scale(1.1);
+}
+
+@media (max-width: 992px) {
+  section {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+  }
 }
 </style>

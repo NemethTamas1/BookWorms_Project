@@ -98,29 +98,30 @@ table {
   width: 80%;
   border-collapse: collapse;
   margin: auto;
-  
+  background-color: #a78f40;
 }
 
 th, td {
-  border: 1px solid #f8d985;
+  border: 2px solid #121214;
   padding: 8px;
   
 }
 
 /* ITT MÉG NEM KAPJA MEG A TÁBLÁZAT EZEKET A SZÍNEKET !!! */
 tr:nth-child(even){
-  background-color: #f9e3a8;
+  background-color: #454638;
 }
 
 th {
-  background-color: #f9e3a8;
+  background-color: #454638;
+  color: #ecd577;
   
 }
 
 h2{
 margin: 3rem;
 text-align: center;
-color: #d3a72e;
+color: #ecd577;
 font-family: "Playfair Display", serif;
 font-weight: 600;
 font-size: 2rem;  

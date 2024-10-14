@@ -30,7 +30,7 @@ const cardPicsSrc =
 
 <template>
     <!--Cardok-->
-    <div class="container ">
+    <div class="container">
         <div class="row holder">
             <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
 
@@ -55,8 +55,8 @@ const cardPicsSrc =
                 <h1>Valami hiba történt a könyvek betöltése közben, kérjük nézzen vissza később!</h1>
             </div>
         </div>
-        <div class="row my-4" :class="description ? 'detailedDescription' : ''">
-            <div class="col-12 d-flex flex-column">
+        <div class="row" :class="description ? 'detailedDescription' : ''">
+            <div class="col-12 d-flex flex-column mt-3">
                 <p class="m-0">{{ description }}</p>
                 <button v-if="description" id="regisztralokALicitreGomb" class="btn mt-3 mx-auto" data-bs-toggle="modal"
                     data-bs-target="#bookFormModal">Regisztrálok a licitre</button>
@@ -73,12 +73,12 @@ const cardPicsSrc =
 }
 
 .detailedDescription {
+    color: #191416;
     background-color: #dcb750cf;
     border: 3px solid #191416;
     padding: 2em;
     position: relative;
     box-shadow: 5px 5px 30px grey;
-    margin: 3rem 0 10rem 0;
 }
 
 .detailedDescription:before {

@@ -21,6 +21,12 @@ function setSelectedBook(book: Book){
 </script>
 
 <template>
+    <section>
+        <div class="elerheto_konyvek">
+            <div>
+                <h1>Elérhető könyveink</h1>
+            </div>
+        </div>
     <div>
         <!-- A @toggleForm és a @book emitek figyelése, és elkapása a belőlük származó adattal. A toggleForm és a setSelectedBook itt meghatározott functionok.--> 
         <BookCards @book="setSelectedBook"/>
@@ -28,10 +34,49 @@ function setSelectedBook(book: Book){
     <div>
         <BookForms :selectedBook="selectedBook"/>
     </div>
-
+</section>
 </template>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+section {
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+}
+
+.elerheto_konyvek {
+    width: 100%;
+    height: 23vh;
+    overflow: hidden;
+    /* Ha a tartalom kilógna a konténerből */
+}
+
+.elerheto_konyvek h1 {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    /* A szöveg a kép előtt lesz */
+    color: #ecd577;
+    justify-content: center;
+    text-shadow: 2px 2px 5px #120d01;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 3rem;
+    margin-top: 9vh;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+}
 
 .topLabel {
     display: flex;

@@ -6,6 +6,7 @@ import { useLoggedInUserStore } from '@/stores/userStore';
 import type { Axios, AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
+import NavbarComponent from '../mainPage/NavbarComponent.vue';
 
 const userStore = useLoggedInUserStore()
 
@@ -62,10 +63,10 @@ const forgottenPassword = () => {
 
 const sendForgottenPasswordEmail = async (email: string) => {
     const response = await useSendForgottenPasswordEmail(email)
-    if(response == 201){
+    if (response == 201) {
         passwordEmailSent.value = "true"
     }
-    else{
+    else {
         passwordEmailSent.value = "false"
     }
 }
@@ -74,57 +75,69 @@ const sendForgottenPasswordEmail = async (email: string) => {
 
 
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form @submit.prevent=handleSubmit>
-                    <div class="mb-3">
-                        <label for="email">E-mail</label>
-                        <p class="forgottenPasswordMessage" v-if="forgottenPasswordRef">Adja meg az email címet, amihez vissza szeretné állítani a jelszót: </p>
-                        <input v-model="email" class="form-control" type="email" name="email" id="email"
-                            placeholder="example@example.com">
-                    </div>
+    <section>
+        <div class="form-div justify-content-center">
+            <form @submit.prevent=handleSubmit>
+                <div class="mb-3">
+                    <label for="email">E-mail</label>
+                    <p class="forgottenPasswordMessage" v-if="forgottenPasswordRef">Adja meg az email címet, amihez
+                        vissza szeretné állítani a jelszót: </p>
+                    <input v-model="email" class="form-control" type="email" name="email" id="email"
+                        placeholder="example@example.com">
+                </div>
 
-                    <div v-if="!forgottenPasswordRef" class="mb-3">
-                        <label for="password">Jelszó</label>
-                        <input v-model="password" class="form-control" type="password" name="password" id="password">
-                    </div>
+                <div v-if="!forgottenPasswordRef" class="mb-3">
+                    <label for="password">Jelszó</label>
+                    <input v-model="password" class="form-control" type="password" name="password" id="password">
+                </div>
 
-                    <div v-if="errorMessage" class="alert alert-danger">
-                        {{ errorMessage }}
-                    </div>
+                <div v-if="errorMessage" class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
 
-                    <div class="d-flex justify-content-between">
-                        <button v-if="!forgottenPasswordRef" type="submit" class="btn">Bejelentkezés</button>
-                        <button v-if="!forgottenPasswordRef" type="button" @click="forgottenPassword()" class="btn">Elfelejtett jelszó</button>
-                        <button v-if="forgottenPasswordRef" type="button" @click="sendForgottenPasswordEmail(email)" class="btn">Küldés</button>
-                    </div>
-                    <p v-if="passwordEmailSent == 'true'">A jelszó változtatásához szükéges emailt a megadott email címre elküldtük!</p>
-                    <p v-if="passwordEmailSent == 'false'">A megadott email címmel nem található regisztráció!</p>
-                </form>
-            </div>
+                <div class="d-flex justify-content-between">
+                    <button v-if="!forgottenPasswordRef" type="submit" class="btn">Bejelentkezés</button>
+                    <button v-if="!forgottenPasswordRef" type="button" @click="forgottenPassword()"
+                        class="btn">Elfelejtett jelszó</button>
+                    <button v-if="forgottenPasswordRef" type="button" @click="sendForgottenPasswordEmail(email)"
+                        class="btn">Küldés</button>
+                </div>
+                <p v-if="passwordEmailSent == 'true'">A jelszó változtatásához szükéges emailt a megadott email címre
+                    elküldtük!</p>
+                <p v-if="passwordEmailSent == 'false'">A megadott email címmel nem található regisztráció!</p>
+            </form>
         </div>
-    </div>
+    </section>
 </template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
 
-.container {
-    margin-top: 2rem;
+section {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
 }
 
 .row {
     width: 100%;
 }
 
-
+.form-div {
+    width: 40vw;
+}
 
 form {
-    margin-top: 4rem;
     background-color: #191814;
     padding: 30px;
     border-radius: 5px;
@@ -154,8 +167,21 @@ label {
     font-family: "Playfair Display", serif;
 }
 
-.forgottenPasswordMessage{
+.forgottenPasswordMessage {
     color: white;
 }
 
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
+
+    .form-div{
+        width: auto;
+    }
+}
 </style>

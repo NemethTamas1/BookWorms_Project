@@ -80,6 +80,7 @@ function changePage(newPage: number) {
 
 
 <template>
+  <section>
   <div>
     <div class="jelenkezesek">
         <div>
@@ -181,9 +182,25 @@ function changePage(newPage: number) {
         />
       </template>
     </Tabs>
-
+  </section>
 </template>
 <style scoped>
+section {
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+}
+
 .pagination {
   margin-top: 20px;
   display: flex;
@@ -214,13 +231,12 @@ function changePage(newPage: number) {
 
 
 .jelenkezesek {
-    position: relative;
     width: 100%;
     height: 23vh; 
     overflow: hidden; /* Ha a tartalom kilógna a konténerből */
 }
 
-.jelenkezesek::before {
+/* .jelenkezesek::before {
     content: '';
     position: absolute;
     top: 0;
@@ -231,14 +247,14 @@ function changePage(newPage: number) {
     background-size: contain;
     background-position: center;
     opacity: 0.48; 
-    z-index: 0; /* Háttérként való megjelenítés */
-}
+    z-index: 0;
+} */
 
 .jelenkezesek h1 {
 display: flex;
 position: relative;
 z-index: 1; /* A szöveg a kép előtt lesz */
-color: #201a02; 
+color: #ecd577; 
 justify-content: center;
 text-shadow: 2px 2px 5px #120d01;
 font-family: "Playfair Display", serif;
@@ -272,10 +288,20 @@ box-shadow: 0 0 50px 50px #9f91343e;
 
 label {
   text-align: center;
-  color: #d3a72e;
+  color: #ecd577;
   font-family: "Playfair Display", serif;
   font-weight: 400;
   font-size: 1.5rem;
+}
+
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
 }
 
 </style>

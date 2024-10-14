@@ -44,7 +44,7 @@
           </p>
           <div class="row jobbGombok">
             <div class="col">
-              <div class="btn btn-info bejelentkezes_gomb">Mutasd a teljes kínálatot!</div>
+              <div @click="goToBooks()" class="btn btn-info bejelentkezes_gomb">Mutasd a teljes kínálatot!</div>
             </div>
           </div>
         </div>
@@ -69,6 +69,9 @@ export default {
   methods: {
     setBackground(imageUrl: string) {
       this.backgroundImage = imageUrl 
+    },
+    goToBooks(){
+      this.$router.push('/books')
     }
   }
 }
