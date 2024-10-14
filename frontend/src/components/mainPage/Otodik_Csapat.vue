@@ -1,6 +1,4 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-
 export default {
   name: 'Team',
   data() {
@@ -17,7 +15,6 @@ export default {
     },
     clickOutside(event) {
       const target = event.target
-      // Ellenőrzi, hogy ha nem az ikonra vagy a social media részre kattintanak, akkor visszafordítja és bezárja az ikonokat
       if (!this.$el.contains(target)) {
         this.IkonokMegjelenitese = false
         this.rotated = false
@@ -36,16 +33,12 @@ export default {
 <template>
   <section id="team">
     <div class="container" id="foKontainer">
-      <!-- First row: Headings -->
       <div class="row">
         <div class="col-12">
           <h2>A BookWorms Dedikált Csapatának Tagjai</h2>
         </div>
       </div>
-
-      <!-- Kártyák konténere -->
       <div class="container" id="tartalom">
-        <!-- 1st row: 2 cards -->
         <div class="row">
           <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
             <div class="team-img position-relative">
@@ -87,7 +80,6 @@ export default {
             id="szellemdiv"
             class="card team-item rounded col d-none col-lg-4 d-flex align-items-stretch"
           >
-            <!-- Szellem div - köztes hely miatt -->
           </div>
 
           <div class="card team-item rounded col-12 col-lg-4 d-flex align-items-stretch">
@@ -238,10 +230,8 @@ export default {
     </div>
   </section>
 </template>
-
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
-
 section {
   display: flex;
   justify-content: center;
@@ -255,25 +245,13 @@ section {
   background-size: cover;
   background-repeat: repeat-y;
 }
-/*  */
 .card {
   background-color: transparent;
   border: none;
 }
-
-/* .team-item {
-  margin: 0;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 1rem;
-} */
-
 .team-img {
   position: relative;
 }
-
 .team-icon {
   position: absolute;
   top: 5px;
@@ -284,7 +262,6 @@ section {
   padding: 0;
   margin: 0;
 }
-
 .team-icon a {
   width: 100%;
   height: 100%;
@@ -296,19 +273,16 @@ section {
   transition: all 0.3s ease;
   background-color: rgba(180, 140, 45);
 }
-
 .team-icon-share {
   top: 50px;
   opacity: 0;
   transform: translateY(-20px);
   transition: all 0.3s ease;
 }
-
 .team-item:hover .team-icon-share {
   opacity: 1;
   transform: translateY(0);
 }
-/* LEGFELSŐ megosztási ikon */
 .team-icon-share a {
   margin-top: 10px;
   color: rgb(255, 255, 255);
@@ -319,7 +293,6 @@ section {
   border-radius: 50%;
   transition: 0.6s ease all;
 }
-
 #share:hover {
   font-weight: bolder;
   color: rgb(128, 111, 1);
@@ -330,7 +303,6 @@ section {
   background-color: #bd9441;
   border: 2px solid rgb(84, 62, 1);
 }
-
 .team-content {
   background-color: #000;
   transition: background-color 0.3s ease;
@@ -339,30 +311,23 @@ section {
 .team-item:hover .team-content {
   background-color: rgba(255, 238, 197, 0.65);
 }
-
-/* Facebook ikon */
 .team-icon-share a:nth-child(1):hover {
   background-color: rgb(0, 101, 178, 0.7);
   color: rgb(255, 255, 255);
   border: 2px solid #58490c;
   font-size: larger;
 }
-
-/* Twitter ikon */
 .team-icon-share a:nth-child(2):hover {
   background-color: rgb(234, 234, 234);
   color: rgb(0, 101, 178, 0.7);
   border: 2px solid #58490c;
   font-size: larger;
 }
-
-/* Instagram ikon */
 .team-icon-share a:nth-child(3):hover {
   transition-delay: 0.3s;
   background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
   font-size: larger;
 }
-
 h2:first-of-type {
   font-size: 2rem;
   margin: auto;
@@ -382,7 +347,6 @@ h2:first-of-type {
 .team-icon a {
   font-size: 16px;
 }
-
 .team-icon-share a {
   margin-top: 5px;
   width: 35px;
@@ -449,7 +413,6 @@ h2:first-of-type {
     color: rgb(255, 238, 197);
     text-shadow: 3px 3px 3px rgba(188, 102, 3, 0.6);
   }
-  
 }
 @media (min-width: 993px) and (max-width: 1200px) {
   section {

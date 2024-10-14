@@ -20,7 +20,6 @@
     </div>
   </section>
 </template>
-
 <script lang="ts">
 import Konyvvalaszto from './Harmadik_Konyvvalaszto.vue'
 
@@ -39,7 +38,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 h1 {
   letter-spacing: 10px;
@@ -65,7 +63,6 @@ section{
   background-repeat: no-repeat;
   color: whitesmoke;
 }
-
 #keret {
   color: #fdf6db;
   text-shadow: 5px 3px 3px rgba(105, 57, 2, 0.5);
@@ -77,12 +74,10 @@ section{
   height: 85vh;
   width: 100vh;
   margin: auto;
-  /* height: calc(100%-20vh); Azért, hogy ne legyen annyira lent (kb felső 2/3-ban) */
 }
 #gombok-keret {
   margin-top: 1rem;
 }
-
 .btn {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #f6d185;
@@ -95,14 +90,11 @@ section{
   margin: 10px;
   border-radius: 1rem;
 }
-
 .btn:hover {
   background-color: #191814;
   border-color: #f5cd7e;
   color: #d9b902;
 }
-
-/* Telefonos nézetekhez */
 @media (max-width: 992px) {
   .section-1 {
     margin: 0;
@@ -117,5 +109,3 @@ section{
   }
 }
 </style>
-
-<!-- Kanapé linkje: https://kephost.net/p/MTM2MDI1Ng.jpg -->

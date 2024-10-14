@@ -5,8 +5,6 @@
         <div class="col-12">
           <h1>Legfrissebb könyv szerzeményeink</h1>
         </div>
-
-        <!-- Második oszlop (szöveg, gombok) -->
         <div class="col-6 col-md-6" id="masodik_col">
           <div class="row">
             <p>Tekintse meg legújabb könyveinket:</p>
@@ -56,7 +54,6 @@
           id="elso_col"
           :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
         >
-          <!-- a kép van itt -->
         </div>
       </div>
     </div>
@@ -66,12 +63,12 @@
 export default {
   data() {
     return {
-      backgroundImage:'https://kephost.net/p/MTQxMjIwNA.png'  // Kezdetben nincs háttérkép
+      backgroundImage:'https://kephost.net/p/MTQxMjIwNA.png'
     }
   },
   methods: {
     setBackground(imageUrl: string) {
-      this.backgroundImage = imageUrl // Háttérkép URL-jét beállítja a kattintásra
+      this.backgroundImage = imageUrl 
     }
   }
 }
@@ -159,7 +156,6 @@ p {
   border-color: #f5cd7e;
   color: #d9b902;
 }
-/* Tablet és kisebb eszközökre */
 @media (min-width: 576px) and (max-width: 992px) {
   section {
     display: flex;
@@ -171,7 +167,6 @@ p {
     padding: 1rem;
     margin: 0;
   }
-
   #fullContainer {
     display: flex;
     flex-direction: column;
@@ -182,7 +177,7 @@ p {
     border-radius: 1rem;
     width: 100%;
     section {
-      margin-left: 0; /* Mindkét kódban ugyanaz legyen */
+      margin-left: 0;
       width: auto;
       height: auto;
       padding: 1.5rem;
@@ -274,7 +269,6 @@ p {
     padding: 1rem;
     margin: 0;
   }
-
   #fullContainer {
     display: flex;
     flex-direction: column;
@@ -285,7 +279,7 @@ p {
     border-radius: 1rem;
     width: 100%;
     section {
-      margin-left: 0; /* Mindkét kódban ugyanaz legyen */
+      margin-left: 0; 
       width: auto;
       height: auto;
       padding: 1.5rem;
@@ -345,7 +339,6 @@ p {
   #gomban_nyilak {
     display: none;
   }
-
   #elso_col {
     background-size: cover;
     background-position: center;
@@ -354,7 +347,6 @@ p {
     border-radius: 1rem;
     margin: 1rem 0;
   }
-
   .bejelentkezes_gomb {
     width: fit-content;
     margin: auto;
@@ -428,11 +420,11 @@ p {
     transition: box-shadow 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
   #konyvek_gombok span {
-    flex-grow: 1; /* A szöveg középen marad */
+    flex-grow: 1;
     text-align: center;
   }
   #gomban_nyilak {
-    margin-left: auto; /* A nyilat jobbra pozicionálja */
+    margin-left: auto; 
   }
   h1{
     margin: 0;

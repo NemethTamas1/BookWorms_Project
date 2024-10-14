@@ -6,9 +6,7 @@
           <h1>Üdvözöljük Könyvesboltunkban!</h1>
         </div>
         <div class="col-12 col-md-6" id="elso_col">
-          <!-- a kép van itt -->
         </div>
-        <!-- Második oszlop (szöveg, gombok) -->
         <div class="col-12 col-md-6" id="masodik_col">
           <div class="bekezdes">
             <p>
@@ -121,7 +119,6 @@
     color: #d9b902;
   }
 }
-/* Tablet és kisebb eszközökre */
 @media (max-width: 992px) {
   section {
     box-sizing: border-box;
@@ -158,8 +155,6 @@
   }
 }
 @media (min-width: 1300px) {
-  #elso_col {
-  }
   section {
     box-sizing: border-box;
     border-top: 0.8rem solid rgba(0, 59, 34, 0.6);
@@ -176,7 +171,6 @@
     background-repeat: no-repeat;
     color: whitesmoke;
   }
-
   #fullContainer {
     margin: auto;
     font-size: 20px;

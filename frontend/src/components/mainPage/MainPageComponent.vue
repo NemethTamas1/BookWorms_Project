@@ -71,7 +71,6 @@ export default {
     rel="stylesheet"
   />
   <div>
-    <!-- MOBIL -->
     <nav class="navbar navbar-expand-lg d-lg-none sticky-top">
       <div class="container-fluid">
         <a href="#Fooldal"
@@ -110,8 +109,6 @@ export default {
         </div>
       </div>
     </nav>
-
-    <!-- Navbar -NAGY PC nézeten -->
     <div class="nav d-none d-lg-flex">
       <div class="nav-item fooldal_gomb" @click="scrollToSection('Fooldal')">
         <i class="fas fa-home"></i>
@@ -134,17 +131,15 @@ export default {
             </ul>
           </button>
           <ul class="dropdown-menu ms-2" v-if="userId != 0" name="" id="" @change="handleSelection" >
-            <li><a class="dropdown-item" href="#">Bejelentkezés</a></li>
             <li v-if="userStatus == 3" value="admin">
-              <a class="dropdown-item" href="#">Admin oldal</a>
+              <a class="dropdown-item">Admin oldal</a>
             </li>
-            <!--  CSAK BEJELENTKEZÉS & ADMINKÉNT UTÁN LÁTSZÓDJON!-->
             <li value="myDashboard"><a class="dropdown-item">Jelentkezéseim</a></li>
             <li value="account"><a class="dropdown-item">Profil Beállítások</a></li>
             <li v-if="userStatus == 3" value="modifyBooks">
-              <a class="dropdown-item">Profil Beállítások</a>
+              <a class="dropdown-item">Könyv Hozzáadása</a>
             </li>
-            <li value="logOut"><a class="dropdown-item" href="#">Kijelentkezés</a></li>
+            <li value="logOut"><a class="dropdown-item">Kijelentkezés</a></li>
           </ul>
         </div>
       </div>
@@ -162,8 +157,6 @@ export default {
         <span>Kapcsolat</span>
       </div>
     </div>
-
-    <!-- Content Sections -->
     <div class="content">
       <Fooldal id="Fooldal" />
       <Udvozlo id="Udvozlo" />
@@ -176,8 +169,6 @@ export default {
 </template>
 
 <style>
-/* Telefonos nézet optimalizálása */
-/* NAVBAR BOOTSTRAP ALAP beállítások lepucololása */
 @media (max-width: 993px) {
   #navbarSupportedContent {
     border: none;
@@ -201,7 +192,6 @@ export default {
     );
     border-bottom: 2px solid rgba(209, 157, 14, 0.5);
   }
-  /* ITT SZERK: 2024.10.12-kor */
   .nav-item {
     display: block;
     max-width: 20%;

@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-
 onMounted(() => {
   new window.WOW().init()
 })
 </script>
-
 <template>
   <section id="kimutatas">
     <div class="container" id="fullContainer">
@@ -30,9 +28,7 @@ onMounted(() => {
       </div>
       <div class="row">
         <div class="col col-lg-6" id="masodikkep">
-          <!--  -->
         </div>
-        <!-- Sárga hátteres szöveg és bekezdés + gomb a jobb oldalon -->
         <div class="col-12 col-xl-6">
           <div style="background-color: #f6d475" id="idezet_behuzas">
             Gondosan válogatott és ellenőrzött kínálatunkban minden műgyűjtő megtalálhatja a számára
