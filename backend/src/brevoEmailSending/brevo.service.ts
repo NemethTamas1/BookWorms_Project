@@ -3,13 +3,11 @@ import { User } from 'src/users/user.interface';
 import * as Brevo from '@getbrevo/brevo';
 import { DatabaseService } from 'src/database/db.service';
 
-const page_url = process.env.PAGE_URL
-
 
 @Injectable()
 export class BrevoService {
     dbConnect = new DatabaseService()
-
+    page_url = process.env.PAGE_URL
     async sendVerificationEmailToGuest(user: User, application_id: number, guestToken: string): Promise<boolean> {
         try {
             const apiInstance = new Brevo.TransactionalEmailsApi()
@@ -32,7 +30,7 @@ export class BrevoService {
                     </p>
                     
                     <div style="margin: 20px 0; text-align: left;">
-                    <a href="${page_url}changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+                    <a href="${this.page_url}changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
                     </div>
 
                     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
@@ -41,7 +39,7 @@ export class BrevoService {
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
                     <p style="font-size: 14px; color: #000000; text-align: center;">
                     Tekintse meg weboldalunk számtalan ritka és felbecsülhetetlen értékű könyvritkaságait és jelentkezzen aukcióinkra még ma!<br>
-                    <a href="${page_url}books" style="color: #3c64ae;">BookWorms</a><br>
+                    <a href="${this.page_url}books" style="color: #3c64ae;">BookWorms</a><br>
                     <i>Ahol a motiváció és az irodalom kéz a kézben jár.</i>
                     </p>
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
@@ -82,7 +80,7 @@ export class BrevoService {
             const apiInstance = new Brevo.TransactionalEmailsApi()
             apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
 
-            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: ${page_url}registration/?id=${user.id}&token=${guestToken}`
+            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: ${this.page_url}registration/?id=${user.id}&token=${guestToken}`
 
             await apiInstance.sendTransacEmail({
                 sender: {
@@ -109,7 +107,7 @@ export class BrevoService {
             const apiInstance = new Brevo.TransactionalEmailsApi()
             apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
 
-            const emailTemplateSource = `Kattints a linkre az elfelejtett jelszó visszaállításához: ${page_url}registration/?id=${user.id}&token=${guestToken}`
+            const emailTemplateSource = `Kattints a linkre az elfelejtett jelszó visszaállításához: ${this.page_url}registration/?id=${user.id}&token=${guestToken}`
 
             await apiInstance.sendTransacEmail({
                 sender: {
