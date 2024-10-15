@@ -262,12 +262,13 @@ form {
 
     input {
         border-radius: .2rem;
+        background-color: rgba(3, 26, 38, 0.8);
     }
 }
 
 .form-div {
     margin: auto;
-    width: 60vw;
+    width: 40vw;
 }
 
 input {
@@ -277,6 +278,21 @@ input {
 
 button {
     width: 30%;
+}
+button:hover{
+    width: 30%;
+    color: wheat;
+    background-color: #07080a;
+    border: orange 1px solid;
+}
+.col-12:first-of-type label{
+    color: whitesmoke;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background-color: rgba(236, 213, 119, .4);
+    width: fit-content;
+    padding: 0 1rem;
+    border-radius: 1rem;
 }
 
 @media (max-width: 992px) {

@@ -23,7 +23,7 @@
             <div
               class="btn btn-info d-flex justify-content-between align-items-center"
               id="konyvek_gombok"
-              @click="setBackground('https://kephost.net/t/MTQ1OTMyMQ.jpg')"
+              @click="setBackground('https://kephost.net/p/MTQ1OTMyMA.jpg')"
             >
               <span>Filozófia nagykönyve</span>
               <i class="fa-solid fa-right-long" id="gomban_nyilak"></i>
@@ -33,7 +33,7 @@
             <div
               class="btn btn-info d-flex justify-content-between align-items-center"
               id="konyvek_gombok"
-              @click="setBackground('https://kephost.net/p/MTQ1OTMyMA.jpg')"
+              @click="setBackground('https://kephost.net/t/MTQ1OTMyMQ.jpg')"
             >
               <span>Fotókönyv</span>
               <i class="fa-solid fa-right-long" id="gomban_nyilak"></i>
