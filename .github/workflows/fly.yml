@@ -79,7 +79,6 @@ jobs:
         run: |
           cd backend
           echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env.production
-          cat .env 
         
       - name: Deploy Backend
         run: |
