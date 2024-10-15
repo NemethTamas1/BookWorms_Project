@@ -78,7 +78,7 @@ jobs:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
         run: |
           cd backend
-          echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env
+          echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env.development
           cat .env 
 
       - name: Deploy Backend

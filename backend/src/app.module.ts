@@ -11,7 +11,10 @@ import { BidGateway } from './bid/bid.gateway';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), 
+    ConfigModule.forRoot({
+      isGlobal: true, // Makes the config available globally
+      envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
+    }), 
     BooksModule,
     ApplicationsModule,
     UsersModule,
@@ -24,4 +27,14 @@ import { BidGateway } from './bid/bid.gateway';
   ],
   providers: [BidGateway]
 })
-export class AppModule {}
+export class AppModule {constructor() {
+  // Log NODE_ENV to verify it's being passed correctly
+  console.log('Current NODE_ENV:', process.env.NODE_ENV);
+
+  // Optionally, log a value from the env file to check which file is being loaded
+  console.log('Database URL:', process.env.DATABASE_URL);
+
+    // Optionally, log a value from the env file to check which file is being loaded
+  console.log('Database URL:', process.env.BREVO_API_KEY); 
+  }
+}

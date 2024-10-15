@@ -8,6 +8,7 @@ export class AuthService {
     
     //Generate a token by the users email, id, and status
     async generateToken(user: User): Promise<string> {
+        console.log("Generating token for user: ", user)
         const payload = { email: user.email, sub: user.id, status: user.status };
         return this.jwtService.sign(payload);
     }

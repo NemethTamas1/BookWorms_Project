@@ -17,9 +17,13 @@ export class BrevoController {
     @Post()
     async sendVerificationEmailToGuest(@Body() body: object): Promise<MethodDecorator> {
         try {
+            console.log("hello")
             const applicationFromDatabase = await this.applicationService.getApplicationById(body['id'])
+            console.log("hello2")
             const userFromDatabase = await this.userService.getUserById(applicationFromDatabase.user_id)
+            console.log("hello3")
             const guestToken = await this.authService.generateToken(userFromDatabase)
+            console.log("hello4")
             if(applicationFromDatabase.id != 0 && userFromDatabase.id != 0){
                 await this.brevoService.sendVerificationEmailToGuest(userFromDatabase, applicationFromDatabase.id, guestToken);
                 return HttpCode(201)

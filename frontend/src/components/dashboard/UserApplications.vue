@@ -99,7 +99,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
 }
 
 // Csatlakozas a socket szerver-hez(backenden a bid.gateway.ts), es 5 masodpercenkent keres kuldese a nyitott socketen keresztul
-const socket = io('http://localhost:3000');
+const socket = io(import.meta.env.VITE_URL);
 setInterval(() => {
   socket.emit('getMaxBids', (bids: any) => {
     // a valaszbol bejovo arak "kicserelese", ha a bejovo max ar magasabb

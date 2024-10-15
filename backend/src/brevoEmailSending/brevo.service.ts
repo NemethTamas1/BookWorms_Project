@@ -3,6 +3,8 @@ import { User } from 'src/users/user.interface';
 import * as Brevo from '@getbrevo/brevo';
 import { DatabaseService } from 'src/database/db.service';
 
+const page_url = process.env.PAGE_URL
+
 
 @Injectable()
 export class BrevoService {
@@ -26,11 +28,11 @@ export class BrevoService {
                     <h2 style="margin-top: 20px; color: #333; font-size: 20px;">Kérjük erősítse meg e-mail címét!</h2>
                     <p style="font-size: 16px; color: #333;">Tisztelt ${user.first_name}!</p>
                     <p style="font-size: 16px; color: #333;">
-                    Kérjük, a lenti gombra kattintva erősítse meg az e-mail címét, hogy megbizonyodhassunk jelentkezési szándékáról és valóban Ön jelentkezett a könyvre!
+                    Kérjük, a lenti gombra kattintva erősítse meg az e-mail címét, hogy megbizonyodhassunk a jelentkezési szándékáról és arról, hogy valóban Ön jelentkezett a könyvre!
                     </p>
                     
                     <div style="margin: 20px 0; text-align: left;">
-                    <a href="https://bookworms-dev.fly.dev/changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+                    <a href="${page_url}changeGuestStatus/?userId=${user.id}&applicationId=${application_id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
                     </div>
 
                     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
@@ -39,7 +41,7 @@ export class BrevoService {
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
                     <p style="font-size: 14px; color: #000000; text-align: center;">
                     Tekintse meg weboldalunk számtalan ritka és felbecsülhetetlen értékű könyvritkaságait és jelentkezzen aukcióinkra még ma!<br>
-                    <a href="https://bookworms-dev.fly.dev/books" style="color: #3c64ae;">BookWorms</a><br>
+                    <a href="${page_url}books" style="color: #3c64ae;">BookWorms</a><br>
                     <i>Ahol a motiváció és az irodalom kéz a kézben jár.</i>
                     </p>
                     <hr style="border: 1px solid rgb(191, 125, 2); width: 100%;">
@@ -80,7 +82,7 @@ export class BrevoService {
             const apiInstance = new Brevo.TransactionalEmailsApi()
             apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
 
-            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: https://bookworms-dev.fly.dev/registration/?id=${user.id}&token=${guestToken}`
+            const emailTemplateSource = `Kattints a linkre a regisztrációhoz: ${page_url}registration/?id=${user.id}&token=${guestToken}`
 
             await apiInstance.sendTransacEmail({
                 sender: {
@@ -107,7 +109,7 @@ export class BrevoService {
             const apiInstance = new Brevo.TransactionalEmailsApi()
             apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
 
-            const emailTemplateSource = `Kattints a linkre az elfelejtett jelszó visszaállításához: https://bookworms-dev.fly.dev/registration/?id=${user.id}&token=${guestToken}`
+            const emailTemplateSource = `Kattints a linkre az elfelejtett jelszó visszaállításához: ${page_url}registration/?id=${user.id}&token=${guestToken}`
 
             await apiInstance.sendTransacEmail({
                 sender: {
