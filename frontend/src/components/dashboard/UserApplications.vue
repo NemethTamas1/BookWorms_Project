@@ -7,6 +7,11 @@ import { useLoggedInUserStore } from '@/stores/userStore';
 import { adminToken, userToken } from '@/composables/auth/auth';
 import { io } from 'socket.io-client';
 
+let page_url = import.meta.env.VITE_URL
+page_url = page_url.slice(0, -1) //the VITE_URL looks like: http://localhost:3000/ so we remove the last character
+console.log(page_url)
+
+
 const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
@@ -99,7 +104,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
 }
 
 // Csatlakozas a socket szerver-hez(backenden a bid.gateway.ts), es 5 masodpercenkent keres kuldese a nyitott socketen keresztul
-const socket = io(import.meta.env.VITE_URL);
+const socket = io(page_url);
 setInterval(() => {
   socket.emit('getMaxBids', (bids: any) => {
     // a valaszbol bejovo arak "kicserelese", ha a bejovo max ar magasabb
