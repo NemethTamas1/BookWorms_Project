@@ -16,6 +16,7 @@ const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
 const token = ref<string>('')
+
 const setToken = () => {
   if (userStatus == 2) {
     token.value = userToken.value!
@@ -71,7 +72,7 @@ interface BiggestBidDictionary {
 async function createBiggestBidDictionary(books: { value: Book[] }): Promise<BiggestBidDictionary> {
   const biggestBids = {} as BiggestBidDictionary;
 
-  for (let i = 0; i < books.value.length; i++) {
+  for (let i = 0; i < applications.value.length; i++) {
     const bookId = books.value[i].id;
     setToken();
     const biggestBidResponse = await useGetBiggestBid(bookId, token.value);
@@ -97,6 +98,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
   }
   else {
     tooLowBid.value = false
+    setToken()
     const response = await useSendBid(application, userBid, biggestBid, token.value);
     if (response == 200) {
       biggestBidDictionary.value = await createBiggestBidDictionary(books);

@@ -233,6 +233,7 @@ export async function useGetBiggestBid(bookId: number, token: String): Promise<n
 export async function useSendBid(application: Application, newBid: number, biggestBid: number, token: string): Promise<number> {
     const updatedApplication = application
     updatedApplication.price = newBid
+    console.log(token)
     try {
         const userStatus = useLoggedInUserStore().getLoggedInUser.status
         const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, application, {
