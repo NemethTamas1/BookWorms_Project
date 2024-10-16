@@ -52,13 +52,11 @@ const checkStatusForApplications = async (): Promise<Application[]> => {
   }
 }
 
-onBeforeMount(async () => {
-  applications.value = await checkStatusForApplications();
-  books.value = await useGetBooks();
-})
-
 const applications = ref<Application[]>([]);
 const books = ref<Book[]>([]);
+
+applications.value = await checkStatusForApplications();
+books.value = await useGetBooks();
 
 // Filter out books that are not in the applications
 books.value = books.value.filter(book => applications.value.some(application => application.book_id === book.id));
@@ -71,7 +69,6 @@ interface BiggestBidDictionary {
 // Create a dictionary of the biggest bids for each book
 async function createBiggestBidDictionary(books: { value: Book[] }): Promise<BiggestBidDictionary> {
   const biggestBids = {} as BiggestBidDictionary;
-
   for (let i = 0; i < applications.value.length; i++) {
     const bookId = books.value[i].id;
     setToken();
@@ -109,7 +106,7 @@ async function submit(application: Application, userBid: number, biggestBid: num
   }
 }
 
-// Csatlakozas a socket szerver-hez(backenden a bid.gateway.ts), es 5 masodpercenkent keres kuldese a nyitott socketen keresztul
+// Csatlakozas a socket szerver-hez(backenden a bid.gateway.ts), es masodpercenkent keres kuldese a nyitott socketen keresztul
 const socket = io(page_url);
 setInterval(() => {
   socket.emit('getMaxBids', (bids: any) => {
