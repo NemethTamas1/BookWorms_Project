@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
  * https://github.com/motdotla/dotenv
  */
 dotenv.config();
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'production';
 dotenv.config({ path: `.env.${environment}` });
 
 /**
