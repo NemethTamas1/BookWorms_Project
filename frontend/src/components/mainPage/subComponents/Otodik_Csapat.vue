@@ -8,12 +8,12 @@ export default {
     }
   },
   methods: {
-    kattintasfigyelo(event) {
+    kattintasfigyelo(event: any) {
       event.stopPropagation()
       this.IkonokMegjelenitese = !this.IkonokMegjelenitese
       this.rotated = !this.rotated
     },
-    clickOutside(event) {
+    clickOutside(event: any) {
       const target = event.target
       if (!this.$el.contains(target)) {
         this.IkonokMegjelenitese = false

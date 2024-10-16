@@ -19,13 +19,7 @@ export const useLoggedInUserStore = defineStore('user', () => {
   if(localStorage.getItem("status")){
     loggedInUser.value.status = parseInt(localStorage.getItem("status")!)
   }
-  // if(localStorage.getItem("userFirstName")){
-  //   loggedInUser.value.first_name = localStorage.getItem("userFirstName")!
-  // }
-  // if(localStorage.getItem("userFamilyName")){
-  //   loggedInUser.value.family_name = localStorage.getItem("userFamilyName")!
-  // }
-
+  
   const getLoggedInUser = computed(() => loggedInUser.value)
   
   const setLoggedInUser = (user: User) => {

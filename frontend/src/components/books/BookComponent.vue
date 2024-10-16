@@ -106,4 +106,14 @@ h1{
 h3{
     font-style: normal;
 }
+
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
+}
 </style>

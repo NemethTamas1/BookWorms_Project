@@ -82,7 +82,7 @@ const addPasswordAndChangeStatusInDatabase = async () => {
 </template>
 
 <style scoped>
-    section {
+section {
     height: 100vh;
     width: 100%;
     margin-left: 145px;
@@ -163,7 +163,7 @@ label {
         background-size: cover;
     }
 
-    .form-div{
+    .form-div {
         width: auto;
     }
 }

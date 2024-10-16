@@ -104,7 +104,6 @@ table {
 th, td {
   border: 2px solid #121214;
   padding: 8px;
-  
 }
 
 /* ITT MÉG NEM KAPJA MEG A TÁBLÁZAT EZEKET A SZÍNEKET !!! */

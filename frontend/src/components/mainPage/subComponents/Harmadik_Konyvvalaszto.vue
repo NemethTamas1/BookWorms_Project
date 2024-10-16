@@ -44,7 +44,7 @@
           </p>
           <div class="row jobbGombok">
             <div class="col">
-              <div @click="goToBooks()" class="btn btn-info bejelentkezes_gomb">Mutasd a teljes kínálatot!</div>
+              <div @click="goToBooks()" class="btn btn-info bejelentkezes_gomb">Jelentkezni szeretnék!</div>
             </div>
           </div>
         </div>

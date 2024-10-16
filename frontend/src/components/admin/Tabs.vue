@@ -59,6 +59,5 @@ function selectTab(tab: string) {
 
 .tab-content {
   padding: 10px;
-  padding-bottom: 3rem;
 }
 </style>

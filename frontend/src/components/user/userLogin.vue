@@ -6,7 +6,7 @@ import { useLoggedInUserStore } from '@/stores/userStore';
 import type { Axios, AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'
-import NavbarComponent from '../mainPage/NavbarComponent.vue';
+import NavbarComponent from '../navbar/NavbarComponent.vue';
 
 const userStore = useLoggedInUserStore()
 
@@ -99,7 +99,14 @@ const sendForgottenPasswordEmail = async (email: string) => {
                 <div v-if="errorMessage" class="alert alert-danger">
                     {{ errorMessage }}
                 </div>
-
+                <div>
+                    <p v-if="passwordEmailSent == 'true'">A jelszó változtatásához szükéges emailt a megadott email
+                        címre
+                        elküldtük!</p>
+                    <p v-if="passwordEmailSent == 'false'">A megadott email címmel nem található regisztráció!
+                        Amennyiben már jelentkezett egy könyvre, de még kapott regisztrációs e-mailt, kérjük türelmét,
+                        amíg egy adminunk jóváhagyja a jelentkezését!</p>
+                </div>
                 <div class="d-flex justify-content-between">
                     <button v-if="!forgottenPasswordRef" type="submit" class="btn">Bejelentkezés</button>
                     <button v-if="!forgottenPasswordRef" type="button" @click="forgottenPassword()"
@@ -107,9 +114,6 @@ const sendForgottenPasswordEmail = async (email: string) => {
                     <button v-if="forgottenPasswordRef" type="button" @click="sendForgottenPasswordEmail(email)"
                         class="btn">Küldés</button>
                 </div>
-                <p v-if="passwordEmailSent == 'true'">A jelszó változtatásához szükéges emailt a megadott email címre
-                    elküldtük!</p>
-                <p v-if="passwordEmailSent == 'false'">A megadott email címmel nem található regisztráció!</p>
             </form>
         </div>
     </section>
@@ -117,6 +121,7 @@ const sendForgottenPasswordEmail = async (email: string) => {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+
 section {
     height: 100vh;
     width: 100%;
@@ -206,7 +211,7 @@ label {
         background-size: cover;
     }
 
-    .form-div{
+    .form-div {
         width: auto;
     }
 }

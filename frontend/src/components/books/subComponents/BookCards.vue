@@ -25,7 +25,6 @@ const cardPicsSrc =
         new URL("../../../assets/img/fotokonyv.jpg", import.meta.url).href,
         new URL("../../../assets/img/filozofia.jpg", import.meta.url).href
     ]
-
 </script>
 
 <template>
@@ -41,7 +40,7 @@ const cardPicsSrc =
                     <div class="bar bottom"></div>
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
                     <div>
-                        <BookCountdown :date="book.bid_end_date"/>
+                        <BookCountdown :date="book.bid_end_date" />
                     </div>
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
@@ -130,18 +129,6 @@ p {
     bottom: .1rem;
     pointer-events: none;
 }
-
-/* glowing effect */
-
-/* body {
-  
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-} */
-
 
 .bar {
     background: rgba(255, 215, 0, 0.5);
@@ -378,12 +365,6 @@ p {
         left: 0;
     }
 }
-
-
-
-
-
-
 
 /* another glow */
 /* 

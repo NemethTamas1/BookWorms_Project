@@ -116,9 +116,6 @@ const scrollToSection = async (sectionId: string) => {
                     <button type="button" class="btn dropdown-toggle fooldal_gomb" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         <i class="fas fa-sign-in"></i>
-                        <!-- <ul v-if="userId == 0" class="navbar-nav ms-auto">
-              <RouterLink to="/login"><span>Bejelentkezés</span></RouterLink>
-            </ul> -->
                         <ul class="navbar-nav ms-auto">
                             <span>Opciók</span>
                         </ul>
@@ -224,8 +221,6 @@ const scrollToSection = async (sectionId: string) => {
 }
 
 .dropdown-menu {
-    z-index: 5050;
-    position: relative;
     margin: auto;
     padding-bottom: 1rem;
     background: linear-gradient(180deg,
