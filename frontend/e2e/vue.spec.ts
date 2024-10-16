@@ -21,6 +21,8 @@ test('Checking the name of the books', async ({ page }) => {
 
 //   await page.waitForSelector("#erdekelGomb");
 //   await page.click("#erdekelGomb");
+//   await page.waitForSelector("#erdekelGomb");
+//   await page.click("#erdekelGomb");
 
 //   await page.waitForSelector("#regisztralokALicitreGomb");
 //   await page.click("#regisztralokALicitreGomb");
