@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, type Ref } from 'vue';
+import { computed, onBeforeMount, ref, type Ref } from 'vue';
 import { useGetApplicationsByUserId, useGetBiggestBid, useGetBooks, useSendBid } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
@@ -16,7 +16,7 @@ const userStore = useLoggedInUserStore()
 const userStatus = userStore.getLoggedInUser.status
 const userId = userStore.getLoggedInUser.id
 const token = ref<string>('')
-const dataLoaded = ref<boolean>(false)
+const dataLoaded = computed(() => {return applications.value.length > 0 && books.value.length > 0})
 
 const setToken = () => {
   if (userStatus == 2) {
@@ -56,13 +56,8 @@ const checkStatusForApplications = async (): Promise<Application[]> => {
 const applications = ref<Application[]>([]);
 const books = ref<Book[]>([]);
 
-const loadAppsAndBooks = async () => {
-  applications.value = await checkStatusForApplications();
-  books.value = await useGetBooks();
-  dataLoaded.value = true;
-}
-
-loadAppsAndBooks();
+applications.value = await checkStatusForApplications();
+books.value = await useGetBooks();
 
 // Filter out books that are not in the applications
 books.value = books.value.filter(book => applications.value.some(application => application.book_id === book.id));
@@ -143,10 +138,10 @@ function isBidEnded(end_date: Date): boolean {
 <template>
   <section>
     <div class="jelentkezeseim">
-      <div>
-        <h1>Jelentkezéseim</h1>
-      </div>
-    </div>
+            <div>
+                <h1>Jelentkezéseim</h1>
+            </div>
+        </div>
     <table v-if="dataLoaded" class="mt-3">
       <thead>
         <tr>
@@ -182,8 +177,7 @@ function isBidEnded(end_date: Date): boolean {
               v-if="application.application_status === 3 && !isBidEnded(books[application.book_id - 1].bid_end_date)">
               <input @keydown="checkDigit" ref="inputField" type="number" v-model.number="userBid[index]"
                 placeholder="Adjon meg egy licitet" />
-              <button class="btn btn-success ms-3"
-                @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
+              <button class="btn btn-success ms-3" @click="submit(application, userBid[index], biggestBidDictionary[application.book_id])">
                 Licit
               </button>
             </div>
@@ -197,43 +191,43 @@ function isBidEnded(end_date: Date): boolean {
 
 <style scoped>
 section {
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  min-height: 100vh;
-  width: 100%;
-  margin-left: 145px;
-  width: calc(100% - 145px);
-  background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
-    linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
 }
 
 .jelentkezeseim {
-  width: 100%;
-  height: 23vh;
-  overflow: hidden;
-  /* Ha a tartalom kilógna a konténerből */
+    width: 100%;
+    height: 23vh;
+    overflow: hidden;
+    /* Ha a tartalom kilógna a konténerből */
 }
 
 .jelentkezeseim h1 {
-  display: flex;
-  position: relative;
-  z-index: 1;
-  /* A szöveg a kép előtt lesz */
-  color: #ecd577;
-  justify-content: center;
-  text-shadow: 2px 2px 5px #120d01;
-  font-family: "Playfair Display", serif;
-  font-style: italic;
-  font-size: 3rem;
-  margin-top: 9vh;
-  text-shadow: 2px 2px 2px #574d0cc4;
-  background-color: #9f91343e;
-  box-shadow: 0 0 50px 50px #9f91343e;
+    display: flex;
+    position: relative;
+    z-index: 1;
+    /* A szöveg a kép előtt lesz */
+    color: #ecd577;
+    justify-content: center;
+    text-shadow: 2px 2px 5px #120d01;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 3rem;
+    margin-top: 9vh;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
 }
 
 h1 {
@@ -274,34 +268,33 @@ th {
 } */
 
 table {
-  border-collapse: collapse;
-  margin: auto;
-  background-color: #a78f40;
+    border-collapse: collapse;
+    margin: auto;
+    background-color: #a78f40;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even){
   background-color: #454638;
 }
 
 th {
   background-color: #454638;
   color: #ecd577;
-
+  
 }
 
-th,
-td {
+th, td {
   border: 2px solid #121214;
   padding: .5rem;
 }
 
 @media (max-width: 992px) {
-  section {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    background-size: cover;
-  }
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+    }
 }
 </style>
