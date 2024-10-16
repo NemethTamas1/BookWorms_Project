@@ -2,11 +2,9 @@ import { test, expect } from '@playwright/test';
 // See here how to get started:
 // https://playwright.dev/docs/intro
 
-// test('Checking the title and the heading', async ({ page }) => {
-//   await page.goto('/');
-//   await expect(page).toHaveTitle(/Üdvözöljük!/);
-//   await expect(page.getByRole('heading', { name: 'BookWorms' , exact:true})).toBeVisible();
-// })
+test('Checking the title and the heading', async ({ page }) => {
+  
+})
 /*
 test('Checking the name of the books', async ({ page }) => {
   await page.goto('/books');
