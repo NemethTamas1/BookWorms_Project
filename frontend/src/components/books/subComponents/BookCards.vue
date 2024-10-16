@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { useGetBooks } from '@/composables/api/useApi';
+import type { Book } from '@/models/Book';
 import { ref } from 'vue';
-const { books } = useGetBooks();
+import BookCountdown from './BookCountdown.vue';
+
+const booksResponse = await useGetBooks();
+const books = ref<Book[]>(booksResponse)
 let description = ref<string>('');
 // Emitek létrehozása. Emitekkel olyan eseményeket tudunk létrehozni, amiket a szülő componens figyel, 
 // és el tudja kapni azokat, amikor megtörténik az esemény. A szülő componens jelenleg a BookComponent, mert ott használjuk fel a BookCards componenst.
 // Meghatározok egy toggleForm és egy book eseményt. 
-const emit = defineEmits(['toggleForm', 'book']);
+const emit = defineEmits(['book', 'launchModal']);
 
 function loadDescription(id: number) {
     description.value = books.value[id - 1].description;
     // Érdekel gomb nyomására a toggleForm esemény 'elsül' true értékkel, a book esemény pedig az aktuális Book objecttel. Irány a BookComponent!
-    emit('toggleForm', true)
     emit('book', books.value[id - 1])
+    emit('launchModal', true)
 }
 
 const cardPicsSrc =
@@ -21,38 +25,39 @@ const cardPicsSrc =
         new URL("../../../assets/img/fotokonyv.jpg", import.meta.url).href,
         new URL("../../../assets/img/filozofia.jpg", import.meta.url).href
     ]
-
 </script>
 
 <template>
     <!--Cardok-->
-    <div class="container ">
+    <div class="container">
         <div class="row holder">
-            <div v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
-                
+            <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
                 <div class="card">
                     <div class="bar left"></div>
                     <div class="bar top"></div>
                     <div class="bar right"></div>
                     <div class="bar bottom"></div>
                     <img :src="cardPicsSrc[book.id - 1]" class="card-img-top" alt="...">
+                    <div>
+                        <BookCountdown :date="book.bid_end_date" />
+                    </div>
                     <div class="card-body text-center d-flex flex-column">
                         <h5 class="card-title">{{ book.title }}</h5>
                         <p class="card-text">{{ book.description }}</p>
-                        <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Érdekel</button>
+                        <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Tovább</button>
                     </div>
-                
                 </div>
             </div>
+            <div class="col-12 mt-5 text-center card" v-else>
+                <h1>Valami hiba történt a könyvek betöltése közben, kérjük nézzen vissza később!</h1>
+            </div>
         </div>
-        <div class="row my-4">
-            <div class="col-12 d-flex justify-content-center align-items-center">
+        <div class="row" :class="description ? 'detailedDescription' : ''">
+            <div class="col-12 d-flex flex-column mt-3">
                 <p class="m-0">{{ description }}</p>
-            </div>  
-        </div>
-        
-        <div>
-            
+                <button v-if="description" id="regisztralokALicitreGomb" class="btn mt-3 mx-auto" data-bs-toggle="modal"
+                    data-bs-target="#bookFormModal">Regisztrálok a licitre</button>
+            </div>
         </div>
     </div>
 </template>
@@ -62,6 +67,28 @@ const cardPicsSrc =
 <style scoped>
 .btn {
     background-color: #dcb750cf;
+}
+
+.detailedDescription {
+    color: #191416;
+    background-color: #dcb750cf;
+    border: 3px solid #191416;
+    padding: 2em;
+    position: relative;
+    box-shadow: 5px 5px 30px grey;
+}
+
+.detailedDescription:before {
+    background: none;
+    border: 3px solid #191416;
+    content: "";
+    display: block;
+    position: absolute;
+    top: .1rem;
+    left: .1rem;
+    right: .1rem;
+    bottom: .1rem;
+    pointer-events: none;
 }
 
 .card-text {
@@ -84,13 +111,12 @@ p {
     background-color: #dcb750cf;
     border: 2px solid #ebb00dcf;
     padding: 2em;
-    position: relative;
+    position: static;
     box-shadow: 5px 5px 30px grey;
 }
 
-.card:before {
+/* .card:before {
     background: none;
-    /* border: 2px solid #191416; */
     content: "";
     display: block;
     position: absolute;
@@ -101,33 +127,23 @@ p {
     pointer-events: none;
 }
 
- /* glowing effect */
-
- /* body {
-  
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-} */
-
-
 .bar {
     background: rgba(255, 215, 0, 0.5);
     box-shadow: 0px 0px 4px rgba(255, 215, 0, 0.8),
-                0px 0px 8px rgba(255, 215, 0, 0.6),
-                0px 0px 16px rgba(255, 215, 0, 0.4);
+        0px 0px 8px rgba(255, 215, 0, 0.6),
+        0px 0px 16px rgba(255, 215, 0, 0.4);
     border-radius: 4px;
     position: absolute;
 }
 
 
-.left, .right {
+.left,
+.right {
     width: 4px;
 }
 
-.top, .bottom {
+.top,
+.bottom {
     height: 4px;
 }
 
@@ -137,15 +153,43 @@ p {
 }
 
 @-webkit-keyframes left {
-    0% { height: 0; top: 100%; left: 0; }
-    20% { height: 100%; top: 0; left: 0; }
-    40% { height: 0; top: 0; left: 0; }
+    0% {
+        height: 0;
+        top: 100%;
+        left: 0;
+    }
+
+    20% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 0;
+    }
 }
 
 @keyframes left {
-    0% { height: 0; top: 100%; left: 0; }
-    20% { height: 100%; top: 0; left: 0; }
-    40% { height: 100%; top: 0; left: 0; }
+    0% {
+        height: 0;
+        top: 100%;
+        left: 0;
+    }
+
+    20% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
 }
 
 .card:hover .top {
@@ -154,17 +198,55 @@ p {
 }
 
 @-webkit-keyframes top {
-    0% { width: 0; top: 0; left: 0; }
-    20% { width: 0; top: 0; left: 0; }
-    40% { width: 100%; top: 0; left: 0; }
-    60% { width: 0; top: 0; left: 100px; }
+    0% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    20% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    60% {
+        width: 0;
+        top: 0;
+        left: 100px;
+    }
 }
 
 @keyframes top {
-    0% { width: 0; top: 0; left: 0; }
-    20% { width: 0; top: 0; left: 0; }
-    40% { width: 100%; top: 0; left: 0; }
-    60% { width: 0; top: 0; left: 100px; }
+    0% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    20% {
+        width: 0;
+        top: 0;
+        left: 0;
+    }
+
+    40% {
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    60% {
+        width: 0;
+        top: 0;
+        left: 100px;
+    }
 }
 
 .card:hover .right {
@@ -173,17 +255,55 @@ p {
 }
 
 @-webkit-keyframes right {
-    0% { height: 0; top: 0; left: 100%; }
-    40% { height: 0; top: 0; left: 100%; }
-    60% { height: 100%; top: 0; left: 100%; }
-    80% { height: 0; top: 100%; left: 100%; }
+    0% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    60% {
+        height: 100%;
+        top: 0;
+        left: 100%;
+    }
+
+    80% {
+        height: 0;
+        top: 100%;
+        left: 100%;
+    }
 }
 
 @keyframes right {
-    0% { height: 0; top: 0; left: 100%; }
-    40% { height: 0; top: 0; left: 100%; }
-    60% { height: 100%; top: 0; left: 100%; }
-    80% { height: 0; top: 100%; left: 100%; }
+    0% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    40% {
+        height: 0;
+        top: 0;
+        left: 100%;
+    }
+
+    60% {
+        height: 100%;
+        top: 0;
+        left: 100%;
+    }
+
+    80% {
+        height: 0;
+        top: 100%;
+        left: 100%;
+    }
 }
 
 .card:hover .bottom {
@@ -192,24 +312,56 @@ p {
 }
 
 @-webkit-keyframes bottom {
-    0% { width: 0; top: 100%; left: 196px; }
-    60% { width: 0; top: 100%; left: 196px; }
-    80% { width: 100%; top: 100%; left: 0; }
-    100% { width: 0; top: 100%; left: 0; }
+    0% {
+        width: 0;
+        top: 100%;
+        left: 196px;
+    }
+
+    60% {
+        width: 0;
+        top: 100%;
+        left: 196px;
+    }
+
+    80% {
+        width: 100%;
+        top: 100%;
+        left: 0;
+    }
+
+    100% {
+        width: 0;
+        top: 100%;
+        left: 0;
+    }
 }
 
 @keyframes bottom {
-    0% { width: 0; top: 100%; left: 100%; }
-    60% { width: 0; top: 100%; left: 100%; }
-    80% { width: 100%; top: 100%; left: 0; }
-    100% { width: 0; top: 100%; left: 0; }
-}
+    0% {
+        width: 0;
+        top: 100%;
+        left: 100%;
+    }
 
+    60% {
+        width: 0;
+        top: 100%;
+        left: 100%;
+    }
 
+    80% {
+        width: 100%;
+        top: 100%;
+        left: 0;
+    }
 
-
-
-
+    100% {
+        width: 0;
+        top: 100%;
+        left: 0;
+    }
+} */
 
 /* another glow */
 /* 

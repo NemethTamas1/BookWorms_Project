@@ -2,9 +2,10 @@ name: Fly Deploy
 
 on:
   push:
-    branches:
-      - main  # Change to your main branch if needed
-
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+    
 jobs:
   setup:
     name: Setup Backend, Build Frontend and Run Tests
@@ -22,8 +23,12 @@ jobs:
         run: npm ci
         working-directory: frontend
 
+      - name: Run Unit Tests
+        run: npm run test:unit
+        working-directory: frontend
+
       - name: Build Frontend (Development)
-        run: npm run build:dev
+        run: npm run build:localdev
         working-directory: frontend
 
       - name: Install Backend Dependencies
@@ -39,7 +44,7 @@ jobs:
         working-directory: frontend 
 
       - name: Run Playwright Tests
-        run: npx playwright test
+        run: npm run test:e2e:localdev
         working-directory: frontend
 
       - uses: actions/upload-artifact@v4
@@ -68,9 +73,16 @@ jobs:
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
-      - name: Deploy Backend
+      - name: Copy secrets to .env file
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
         run: |
           cd backend
+          echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env.production
+        
+      - name: Deploy Backend
+        run: |
+          cd backend  
           flyctl deploy --no-cache
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

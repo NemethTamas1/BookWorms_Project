@@ -1,163 +1,273 @@
-import type { Book } from "@/models/Book";
 import type { Application } from "@/models/Application";
-import { ref, watchEffect} from "vue";
 import type { User } from "@/models/User";
+import axios, { HttpStatusCode, type AxiosResponse } from "axios";
+import type { Book } from "@/models/Book";
+import { useLoggedInUserStore } from "@/stores/userStore";
 
+const baseURL = import.meta.env.VITE_URL + 'api/'
 
-const baseURL = import.meta.env.VITE_URL;
-
-export function useGetBooks() {
-    const books = ref<Book[]>([])
-    const error = ref(null)
-
-    const resetBooksRef = () => {
-        books.value = []
-        error.value = null
-    }
-
-    fetch(baseURL + 'books', {
-        method: "GET",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Accept": "application/json"
-        }
-    }).then(res => res.json())
-        .then((res) => {
-            books.value = res
-        }).catch(err => {
-            error.value = err
-            console.log(err)
-        })
-
-    watchEffect(() => {
-        resetBooksRef();
-    })
-
-    return { books, error }
-}
-
-export function useGetApplications() {
-    const applications = ref<Application[]>([])
-    const error = ref(null)
-
-    const resetApplicationsRef = () => {
-        applications.value = []
-        error.value = null
-    }
-
-    fetch(baseURL + 'applications', {
-        method: "GET",
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Accept": "application/json"
-        }
-    }).then(res => res.json())
-        .then((res) => {
-            applications.value = res
-        }).catch(err => {
-            error.value = err
-            console.log(err)
-        })
-
-    watchEffect(() => {
-        resetApplicationsRef();
-    })
-
-    return { applications, error }
-}
-
-//Új, refaktorált fetch
-export async function  useNewUser(newUser: User): Promise<void> {
+export async function useGetBooks(): Promise<Book[]> {
     try {
-        const response = await fetch(`${baseURL}user`, { //${baseURL}user not ${baseURL}/user
-            method: "POST",
+        const response = await axios.get(baseURL + 'books', {
             headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify(newUser)
-        });
-
-        if(!response.ok) {
-            console.error('Form adatok elküldése sikertelen!');
-            return;
-        }
-
-        const result = await response.json();
-        console.log('Form adatok sikeresen elküldve!');
-    } catch (error) {
-        console.log('Error: ', error)
+                'Content-type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }
+        })
+        return response.data
+    } catch (err) {
+        console.log(err)
+        return []
     }
 }
 
-//Régi fetch
-// export async function useNewUser(newUser: User): Promise<void> {
-//     await fetch(baseURL + 'user', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(newUser)
-//     }).then(res => {
-//         if (res.status === 201) {
-//             console.log('Form adatok sikeresen elküldve!');
-//             return res.json();
-//         }
-//         else {
-//             console.log('Form adatok elküldése sikertelen!');
-//         }
-//     }).then(res => {
-//         //console.log(res[0]['lastInsertRowid']) // USER ID
-//     }).catch(err => {
-//         console.log('Error:', err)
-//         return { success: false }
-//     })
-// }
+export async function useGetApplications(adminToken: string): Promise<Application[]> {
+    try {
+        const response = await axios.get(baseURL + 'applications', {
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+                'Authorization': `Admin ${adminToken}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
 
-export async function useNewApplication(newApplication: Application): Promise<void> {
-    await fetch(baseURL + 'applications', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newApplication)
-    }).then(res => {
-        if (res.status === 201) {
-            console.log('Sikereresen elküldve!');
-            return res.json();
-        }
-        else {
-            console.log('Küldés sikertelen!');
-        }
-    }).then(() => {
-    }).catch(err => {
-        console.log('Error:', err)
-        return { success: false }
-    })
-    
+
+export async function useNewUser(newUser: User): Promise<number> {
+    try {
+        const response = await axios.post(baseURL + 'user', newUser)
+        return response.data
+    } catch (error: any) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useChangeUserOrAdminData(user: User, token: string): Promise<number> {
+    try {
+        const response = await axios.put(baseURL + 'user', user, {
+            headers: {
+                'Authorization': `${user.status == 2 ? 'User' : user.status == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        return response.data
+    } catch (error: any) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useNewApplication(newApplication: Application): Promise<AxiosResponse<any, any>> {
+    try {
+        const response = await axios.post(baseURL + 'applications', newApplication)
+        return response
+    } catch (error: any) {
+        console.log(error.response.status)
+        return error.response.status
+    }
 }
 
 
 
 //what happens when we call this function with a wrong id?
-export async function useUpdateApplication(updatedApplication: Application): Promise<void> {
+export async function useUpdateApplication(updatedApplication: Application, adminToken: string): Promise<number> {
     try {
-        const response = await fetch(`${baseURL}applications/${updatedApplication.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedApplication), // Convert the application object to a JSON string
-        });
-
-        if (response.status === 200) { // 200 status indicates successful update
-            console.log('Application updated successfully!');
-            const data = await response.json(); // Parse the JSON response if needed
-            console.log('Updated application data:', data);
-        } else {
-            console.log('Update failed with status:', response.status);
+        const headers = { 'Authorization': `Admin ${adminToken}` }
+        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, updatedApplication, { headers })
+        if (response.status == 200) {
+            return response.status
         }
-    } catch (err) {
-        console.log('Error:', err);
+        else {
+            console.log('Update failed with status:', response.status);
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useSendEmailToVerification(applicationId: number): Promise<number> {
+    try {
+        const response = await axios.post(baseURL + 'mail', { id: applicationId })
+        if (response.status == 201) {
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useSendEmailToRegistration(userId: number): Promise<number> {
+    try {
+        const response = await axios.put(baseURL + 'mail/register', { id: userId })
+        if (response.status == 200) {
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useSendForgottenPasswordEmail(email: string): Promise<number> {
+    try {
+        const response = await axios.post(baseURL + 'mail/forgottenPassword', {e_mail: email})
+        console.log(response)
+        if (response.status == 201) {
+            return response.status
+        }
+        else {
+            console.log('Something went wrong!')
+            return response.status
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useGetUserById(userId: number, token: string): Promise<User | number> {
+    try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
+        const response = await axios.get(baseURL + `user/?id=${userId}`, {
+            headers: {
+                'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        if (response.status == 200) {
+            return response.data
+        }
+        else {
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+}
+
+export async function useUpdateApplicationStatusById(userId: number, applicationId: number, guestToken: string): Promise<number | null> {
+    try {
+        const response = await axios.put(baseURL + `applications/?userId=${userId}&applicationId=${applicationId}`, null, {
+            headers: {
+                'Authorization': `Guest ${guestToken}`
+            }
+        })
+        return response.status
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function useAddUserPasswordAndUpdateStatus(userId: number, password: string, guestToken: string): Promise<number> {
+    try {
+        const response = await axios.put(baseURL + `user/registration/?id=${userId}`, { password: password }, {
+            headers: {
+                'Authorization': `Guest ${guestToken}`
+            }
+        })
+        if (response.status == 200) {
+            return response.status
+        }
+        else {
+            console.log("Something went wrong!")
+            return 0
+        }
+    } catch (error) {
+        console.log(error)
+        return 0
+    }
+} export async function useGetApplicationsByUserId(userId: number, token: string): Promise<Application[]> {
+    try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
+        const response = await axios.get(baseURL + `applications/search-by-userid`, {
+            params: { userId: userId },
+            headers: {
+                'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+export async function useGetBiggestBid(bookId: number, token: String): Promise<number | null> {
+    try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
+        const response = await axios.get(baseURL + `applications/search-by-bookid`, {
+            headers: { 'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}` },
+            params: { bookId: bookId }
+        })
+        if (response.status == 200) {
+            return response.data
+        }
+        else {
+            console.log("Something went wrong!")
+            return null
+        }
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function useSendBid(application: Application, newBid: number, biggestBid: number, token: string): Promise<number> {
+    const updatedApplication = application
+    updatedApplication.price = newBid
+    console.log(token)
+    try {
+        const userStatus = useLoggedInUserStore().getLoggedInUser.status
+        const response = await axios.put(baseURL + `applications/${updatedApplication.id}`, application, {
+            headers: {
+                'Authorization': `${userStatus == 2 ? 'User' : userStatus == 3 ? 'Admin' : ''} ${token}`
+            }
+        })
+        return response.status
+    } catch (error: any) {
+        return error.response.status
+    }
+
+}
+
+export async function updateBook(book: Book, adminToken: string): Promise<number> {
+    try {
+        const response = await axios.put(baseURL + `books`, book, {
+            headers: {
+                'Authorization': `Admin ${adminToken}`
+            }
+        })
+        return response.status
+    } catch (error: any) {
+        return error.response.status
+    }
+}
+
+export async function useGetBookById(bookId: number): Promise<Book | number> {
+    try {
+        const response = await axios.get(baseURL + `books/${bookId}`)
+        return response.data
+    } catch (error: any) {
+        console.log(error)
+        return error.response.status
     }
 }
 

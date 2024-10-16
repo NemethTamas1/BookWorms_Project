@@ -9,15 +9,21 @@ const props = defineProps<{
 // Use the tabs prop from the props object
 const selectedTab = ref(props.tabs[0]);
 
+// Define the emit function
+const emit = defineEmits(['tab-changed']);
+
 function selectTab(tab: string) {
   selectedTab.value = tab;
+  // Emit the event to inform the parent component about the tab change
+  emit('tab-changed', tab);
 }
 </script>
 
 <template>
+  
   <div>
     <div class="tabs">
-      <button
+      <button 
         v-for="tab in tabs"
         :key="tab"
         @click="selectTab(tab)"
@@ -35,21 +41,23 @@ function selectTab(tab: string) {
 <style>
 .tabs {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 .tabs button {
-  padding: 10px;
+  margin-left: 0.2rem;
+  padding: 1rem  ;
   cursor: pointer;
-  background-color: #f0f0f0;
-  border: none;
-  border-bottom: 2px solid transparent;
+  border: 2px solid #faeabe;
+  border-radius: 10px;
+  background-color: #ecd577;
 }
 .tabs button.active {
-  border-bottom: 2px solid #42b983;
+  border: 2px solid #f6ba14;
 }
+
 .tab-content {
   padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
 }
 </style>

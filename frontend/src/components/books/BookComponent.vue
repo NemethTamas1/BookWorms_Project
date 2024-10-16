@@ -1,16 +1,16 @@
  <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import BookCards from './subComponents/BookCards.vue'
 import BookForms from './subComponents/BookForms.vue'
 import type { Book } from '../../models/Book'
 import BookWelcome from './subComponents/BookWelcome.vue';
 
 // Refek létrehozása, hogy dinamikus legyen az adatáramlás.
-const formDisplayed = ref<boolean>(false)
 const selectedBook = ref<Book>({
     id: 0,
     title: '',
-    description: ''
+    description: '',
+    bid_end_date: new Date("Sep 07, 2024 22:10:15")
 })
 
 // A book értéket a @book emit-ből kapjuk! Beállítjuk a selectedBook-ot a BookCards componensről kapott bookkal! Ez minden eseménykor, amikor kattintunk, megtörténik!
@@ -18,37 +18,65 @@ function setSelectedBook(book: Book){
     selectedBook.value = book
 }
 
-// A form láthatóságát állítja be. A true értéket szintén a BookCard componensből kapja, a loadDescription function-ön belül!
-function toggleForm(toogle: boolean){
-    if(toogle){
-        formDisplayed.value = true
-    }
-}
-
 </script>
 
 <template>
-    <div class="container-fluid topLabel mb-5">
-        <div class="topLabelText">
-            <h1>BookWorms</h1>
-            <h3>Ahol a motiváció és az irodalom kéz a kézben jár</h3>
+    <section>
+        <div class="elerheto_konyvek">
+            <div>
+                <h1>Elérhető könyveink</h1>
+            </div>
         </div>
-    </div>
-    <div>
-        <BookWelcome />
-    </div>
     <div>
         <!-- A @toggleForm és a @book emitek figyelése, és elkapása a belőlük származó adattal. A toggleForm és a setSelectedBook itt meghatározott functionok.--> 
-        <BookCards @toggleForm="toggleForm" @book="setSelectedBook"/>
+        <BookCards @book="setSelectedBook"/>
     </div>
     <div>
-        <!-- v-if-el megnézzük, hogy a form látható-e. v-bind-al az itteni selectedBook ref-et 'átadjuk' szintén selectedBook néven a BookForms, azaz a gyermek componensnek! Több változó átadása: {...prop1, ...prop2, ...prop3}-->
-        <BookForms v-if="formDisplayed" v-bind:selectedBook="selectedBook"/>
+        <BookForms :selectedBook="selectedBook"/>
     </div>
-
+</section>
 </template>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+section {
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 100vh;
+    width: 100%;
+    margin-left: 145px;
+    width: calc(100% - 145px);
+    background-image: url('https://kephost.net/p/MTM2MDI1Ng.jpg'),
+        linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: whitesmoke;
+}
+
+.elerheto_konyvek {
+    width: 100%;
+    height: 23vh;
+    overflow: hidden;
+    /* Ha a tartalom kilógna a konténerből */
+}
+
+.elerheto_konyvek h1 {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    /* A szöveg a kép előtt lesz */
+    color: #ecd577;
+    justify-content: center;
+    text-shadow: 2px 2px 5px #120d01;
+    font-family: "Playfair Display", serif;
+    font-style: italic;
+    font-size: 3rem;
+    margin-top: 9vh;
+    text-shadow: 2px 2px 2px #574d0cc4;
+    background-color: #9f91343e;
+    box-shadow: 0 0 50px 50px #9f91343e;
+}
 
 .topLabel {
     display: flex;
@@ -58,7 +86,7 @@ function toggleForm(toogle: boolean){
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 30rem;
+    height: 100vh;
 }
 
 .topLabelText {
@@ -77,5 +105,14 @@ h1{
 }
 h3{
     font-style: normal;
+}
+
+@media (max-width: 992px) {
+    section {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        background-size: cover;
+    }
 }
 </style>
