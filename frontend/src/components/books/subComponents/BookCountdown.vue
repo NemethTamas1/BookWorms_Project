@@ -3,7 +3,6 @@ import { ref } from 'vue';
 const props = defineProps<{
   date: Date;
 }>();
-console.log(props.date)
 let countDownDate = new Date(props.date).getTime(); // The deadline //Book bid_date
 const countdown = ref<string>(''); // Countdown value
 let x = setInterval(() => {

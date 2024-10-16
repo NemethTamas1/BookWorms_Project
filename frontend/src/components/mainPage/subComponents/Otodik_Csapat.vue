@@ -348,7 +348,7 @@ h2:first-of-type {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 150vh;
     width: calc(100% - 145px);
     margin-left: 145px;
     background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
