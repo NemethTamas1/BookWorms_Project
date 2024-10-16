@@ -40,13 +40,14 @@ export default {
 </script>
 <style scoped>
 h1 {
-  letter-spacing: 10px;
-  font-size: 56px;
+  letter-spacing: .5rem;
+  font-size: 3rem;
+  padding: 0;
 }
 h2 {
   margin: 0;
-  letter-spacing: 3px;
-  font-size: 44px;
+  letter-spacing: .5rem;
+  font-size: 2rem;
 }
 section{
   display: flex;
@@ -71,7 +72,7 @@ section{
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 85vh;
+  height: 100vh;
   width: 100vh;
   margin: auto;
 }

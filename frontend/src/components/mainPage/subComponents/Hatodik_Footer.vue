@@ -54,12 +54,6 @@
                 <li><a href=""></a></li>
               </ul>
             </div>
-            <div class="col-12 col-lg-3">
-              <ul class="list-unstyled">
-                <li><a href="">Rólunk</a></li>
-                <li><a href=""></a></li>
-              </ul>
-            </div>
           </div>
 
           <div class="row">

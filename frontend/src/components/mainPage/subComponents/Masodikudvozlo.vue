@@ -20,7 +20,7 @@
             <b><i>Kérjük jelentkezzen be!</i> </b>
           </p>
           <div class="row jobbGombok">
-            <div class="col">
+            <div class="col text-center">
               <RouterLink to="/login" class="btn btn-outline-warning bejelentkezes_gomb"
                 >Bejelentkezés</RouterLink
               >
@@ -37,9 +37,9 @@
   section {
     box-sizing: border-box;
     border-top: 0.8rem solid rgba(0, 59, 34, 0.6);
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     height: 100vh;
     width: calc(100% - 145px);
     margin-left: 145px;
@@ -52,14 +52,13 @@
   }
 
   #fullContainer {
-    margin: auto;
+    margin: 2rem auto;
     font-size: 20px;
     text-align: justify;
     color: whitesmoke;
     background-color: rgba(34, 23, 3, 0.7);
     border: 10px double rgba(246, 212, 117, 0.6);
     border-radius: 2rem;
-    margin: 2rem 1rem;
     padding: auto;
     padding-left: 1rem;
     padding-bottom: 1rem;
@@ -123,9 +122,9 @@
   section {
     box-sizing: border-box;
     border-top: 0.8rem solid rgba(0, 59, 34, 0.6);
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     height: 100vh;
     background-image: url('https://kephost.net/p/MTQxMDk2NA.png'),
       linear-gradient(180deg, #031a26 0%, #163a4eb5 40%, #21485e9b 60%, #041c2965 100%);
@@ -136,15 +135,13 @@
   }
 
   #fullContainer {
-    margin: auto;
+    margin: 2rem auto;
     font-size: 20px;
     text-align: justify;
     color: whitesmoke;
     background-color: rgba(34, 23, 3, 0.7);
     border: 10px double rgba(246, 212, 117, 0.6);
     border-radius: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     padding: 2rem;
   }
   #elso_col {
@@ -158,9 +155,9 @@
   section {
     box-sizing: border-box;
     border-top: 0.8rem solid rgba(0, 59, 34, 0.6);
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     height: 100vh;
     width: calc(100% - 145px);
     margin-left: 145px;
@@ -172,15 +169,13 @@
     color: whitesmoke;
   }
   #fullContainer {
-    margin: auto;
+    margin: 2rem auto;
     font-size: 20px;
     text-align: justify;
     color: whitesmoke;
     background-color: rgba(34, 23, 3, 0.7);
     border: 10px double rgba(246, 212, 117, 0.6);
     border-radius: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
     padding: 2rem;
   }
   #masodik_col {

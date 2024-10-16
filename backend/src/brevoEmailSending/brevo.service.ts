@@ -97,7 +97,7 @@ export class BrevoService {
                     </p>
                     
                     <div style="margin: 20px 0; text-align: left;">
-                    <a href="${this.page_url}registration/?id=${user.id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+                    <a href="${this.page_url}registration/?id=${user.id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Regisztrálok</a>
                     </div>
 
                     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>
@@ -164,7 +164,7 @@ export class BrevoService {
                     </p>
                     
                     <div style="margin: 20px 0; text-align: left;">
-                    <a href="${this.page_url}registration/?id=${user.id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Megerősítem az e-mail címem</a>
+                    <a href="${this.page_url}registration/?id=${user.id}&token=${guestToken}" style="background-color: #bf7d02; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Jelszó visszaállítása</a>
                     </div>
 
                     <p style="color: #333; font-size: 16px;"><b>Tisztelettel:</b></p>

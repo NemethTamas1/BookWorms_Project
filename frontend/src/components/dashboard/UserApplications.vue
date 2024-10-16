@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { onBeforeMount, ref, type Ref } from 'vue';
 import { useGetApplicationsByUserId, useGetBiggestBid, useGetBooks, useSendBid } from '@/composables/api/useApi';
 import type { Application } from '@/models/Application';
 import type { Book } from '@/models/Book';
@@ -35,25 +35,29 @@ const checkDigit = (event: KeyboardEvent) => {
 };
 
 //Define a reactive reference to hold the applications
-const checkStatusForApplications = async (): Promise<Ref<Application[]>> => {
+const checkStatusForApplications = async (): Promise<Application[]> => {
   if (userStatus == 2) {
     const applicationsResponse = await useGetApplicationsByUserId(userId, userToken.value!);
-    const applications = ref<Application[]>(applicationsResponse);
+    const applications = applicationsResponse;
     return applications
   }
   else if (userStatus == 3) {
     const applicationsResponse = await useGetApplicationsByUserId(userId, adminToken.value!);
-    const applications = ref<Application[]>(applicationsResponse);
+    const applications = applicationsResponse;
     return applications
   }
   else {
-    return ref<Application[]>([])
+    return []
   }
 }
 
-const applications: Ref<Application[]> = await checkStatusForApplications();
-const booksResponse = await useGetBooks();
-const books = ref<Book[]>(booksResponse);
+onBeforeMount(async () => {
+  applications.value = await checkStatusForApplications();
+  books.value = await useGetBooks();
+})
+
+const applications = ref<Application[]>([]);
+const books = ref<Book[]>([]);
 
 // Filter out books that are not in the applications
 books.value = books.value.filter(book => applications.value.some(application => application.book_id === book.id));
@@ -138,7 +142,7 @@ function isBidEnded(end_date: Date): boolean {
                 <h1>Jelentkezéseim</h1>
             </div>
         </div>
-    <table v-if="applications.length > 0" class="mt-3">
+    <table v-if="applications.length > 0 && books.length > 0" class="mt-3">
       <thead>
         <tr>
           <th>Jelentkezés azon.</th>

@@ -167,7 +167,6 @@ p {
     align-items: center;
     width: 100%;
     height: auto;
-    padding: 1rem;
     margin: 0;
   }
   #fullContainer {
@@ -176,7 +175,6 @@ p {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    margin: 0.5rem;
     border-radius: 1rem;
     width: 100%;
     section {
@@ -269,7 +267,6 @@ p {
     align-items: center;
     width: 100%;
     height: auto;
-    padding: 1rem;
     margin: 0;
   }
   #fullContainer {
@@ -278,7 +275,6 @@ p {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    margin: 0.5rem;
     border-radius: 1rem;
     width: 100%;
     section {
@@ -384,7 +380,6 @@ p {
   color: whitesmoke;
   background-color: rgba(34, 23, 3, 0.7);
   border-radius: 2rem;
-  margin: 2rem;
   padding: 2rem;
   height: auto;
 }

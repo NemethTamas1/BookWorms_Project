@@ -32,7 +32,6 @@ const cardPicsSrc =
     <div class="container">
         <div class="row holder">
             <div v-if="books.length > 0" v-for="book in books" class="col-12 col-md-4 my-3 my-md-5">
-
                 <div class="card">
                     <div class="bar left"></div>
                     <div class="bar top"></div>
@@ -47,7 +46,6 @@ const cardPicsSrc =
                         <p class="card-text">{{ book.description }}</p>
                         <button id="erdekelGomb" @click="loadDescription(book.id)" class="btn mt-auto">Tovább</button>
                     </div>
-
                 </div>
             </div>
             <div class="col-12 mt-5 text-center card" v-else>
@@ -113,13 +111,12 @@ p {
     background-color: #dcb750cf;
     border: 2px solid #ebb00dcf;
     padding: 2em;
-    position: relative;
+    position: static;
     box-shadow: 5px 5px 30px grey;
 }
 
-.card:before {
+/* .card:before {
     background: none;
-    /* border: 2px solid #191416; */
     content: "";
     display: block;
     position: absolute;
@@ -364,7 +361,7 @@ p {
         top: 100%;
         left: 0;
     }
-}
+} */
 
 /* another glow */
 /* 

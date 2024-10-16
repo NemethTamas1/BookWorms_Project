@@ -86,15 +86,13 @@ section {
 }
 
 #fullContainer {
-  margin: auto;
   font-size: 20px;
   text-align: justify;
   color: whitesmoke;
   background-color: rgba(34, 23, 3, 0.7);
   border: 10px double rgba(246, 212, 117, 0.6);
   border-radius: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 6rem;
   padding: 2rem;
 }
 #idezet_behuzas {
@@ -152,14 +150,13 @@ h1 {
     color: whitesmoke;
   }
   #fullContainer {
-    margin: auto;
     height: auto;
     font-size: 20px;
     text-align: justify;
     color: whitesmoke;
     background-color: rgba(34, 23, 3, 0.7);
     border-radius: 2rem;
-    margin: 2rem;
+    margin-bottom: 6rem;
     padding: 1rem 2rem;
   }
   .about-img img {
@@ -193,6 +190,7 @@ h1 {
     margin: 0;
     padding: 10px 20px;
     width: 100%;
+    margin-bottom: 3rem;
   }
   section {
     margin-left: 0;
