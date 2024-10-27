@@ -49,6 +49,7 @@ jobs:
             "DATABASE_TOKEN=$DATABASE_TOKEN_DEV"
             "PAGE_URL=https://bookworms-dev.fly.dev/"
           ' > .env.development
+          cat .env.development
 
       - name: Start Backend Server
         run: npm run start:dev &
