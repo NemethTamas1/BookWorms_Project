@@ -86,16 +86,23 @@ jobs:
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
+
       - name: Copy secrets to .env file
         env:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DATABASE_TOKEN: ${{ secrets.DATABASE_TOKEN }}
         run: |
           cd backend
-          echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env.production
+          echo "JWT_SECRET=$JWT_SECRET" > .env
+          echo "BREVO_API_KEY=$BREVO_API_KEY
+            DATABASE_URL=libsql://bookworms-szankdav.turso.io
+            DATABASE_TOKEN=$DATABASE_TOKEN
+            PAGE_URL=https://bookworms.fly.dev/" > .env.production
         
       - name: Deploy Backend
         run: |
           cd backend  
-          flyctl deploy --no-cache
+          flyctl deploy --no-cache --build-arg NODE_ENV=production
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

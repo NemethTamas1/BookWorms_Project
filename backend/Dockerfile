@@ -9,8 +9,13 @@ LABEL fly_launch_runtime="NestJS"
 # NestJS app lives here
 WORKDIR /app/backend
 
-# Set production environment
-ENV NODE_ENV="production"
+# Use an ARG to set the environment, but no default value is needed
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
+
+# Copy the appropriate .env file based on NODE_ENV value
+#COPY .env.${NODE_ENV} .env.${NODE_ENV}
+#COPY .env .env
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -39,4 +44,6 @@ COPY dist/client /app/dist/client
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
+RUN echo "NODE_ENV=$NODE_ENV"
+RUN cat .env.development
 CMD ["/bin/sh", "-c", "if [ \"$NODE_ENV\" = 'production' ]; then npm run start; else npm run start:dev; fi"]
