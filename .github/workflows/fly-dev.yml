@@ -51,7 +51,7 @@ jobs:
           ' > .env.development
 
       - name: Start Backend Server
-        run: npm run start &
+        run: npm run start:development &
         working-directory: backend
 
       - name: Install Playwright Browsers
