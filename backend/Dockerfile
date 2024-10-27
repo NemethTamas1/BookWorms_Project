@@ -39,4 +39,5 @@ COPY dist/client /app/dist/client
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
+RUN echo "NODE_ENV=$NODE_ENV"
 CMD ["/bin/sh", "-c", "if [ \"$NODE_ENV\" = 'production' ]; then npm run start; else npm run start:dev; fi"]
