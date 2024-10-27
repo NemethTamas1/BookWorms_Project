@@ -43,11 +43,10 @@ jobs:
         run: |
           cd backend
           echo "JWT_SECRET=$JWT_SECRET" > .env
-          echo '
-            "BREVO_API_KEY=$BREVO_API_KEY"
-            "DATABASE_URL=libsql://bookworms-szankdav.turso.io"
-            "DATABASE_TOKEN=$DATABASE_TOKEN"
-            "PAGE_URL=https://bookworms.fly.dev/"
+          echo "BREVO_API_KEY=$BREVO_API_KEY
+            DATABASE_URL=libsql://bookworms-szankdav.turso.io
+            DATABASE_TOKEN=$DATABASE_TOKEN
+            PAGE_URL=https://bookworms.fly.dev/"
           ' > .env.production
 
       - name: Start Backend Server
