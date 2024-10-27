@@ -14,8 +14,8 @@ ARG NODE_ENV
 ENV NODE_ENV=${NODE_ENV}
 
 # Copy the appropriate .env file based on NODE_ENV value
-#COPY .env.${NODE_ENV} .env.${NODE_ENV}
-#COPY .env .env
+COPY .env.${NODE_ENV} .env.${NODE_ENV}
+COPY .env .env
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
