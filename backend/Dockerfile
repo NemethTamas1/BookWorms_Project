@@ -16,10 +16,10 @@ ENV NODE_ENV=${NODE_ENV}
 # Copy the appropriate .env file based on NODE_ENV value
 RUN if [ "$NODE_ENV" = "development" ]; then \
         echo "Copying .env.development"; \
-        cp /app/backend/.env.development ./; \
+        cp .env.development ./; \
     else \
         echo "Copying .env.production"; \
-        cp /app/backend/.env.production ./; \
+        cp .env.production ./; \
     fi
 
 # Throw-away build stage to reduce size of final image

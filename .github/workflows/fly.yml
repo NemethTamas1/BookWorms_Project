@@ -46,8 +46,7 @@ jobs:
           echo "BREVO_API_KEY=$BREVO_API_KEY
             DATABASE_URL=libsql://bookworms-szankdav.turso.io
             DATABASE_TOKEN=$DATABASE_TOKEN
-            PAGE_URL=https://bookworms.fly.dev/"
-          ' > .env.production
+            PAGE_URL=https://bookworms.fly.dev/" > .env.production
 
       - name: Start Backend Server
         run: npm run start &
