@@ -35,6 +35,21 @@ jobs:
         run: npm ci
         working-directory: backend
 
+      - name: Copy secrets to .env file
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DATABASE_TOKEN: ${{ secrets.DATABASE_TOKEN }}
+        run: |
+          cd backend
+          echo "JWT_SECRET=$JWT_SECRET" > .env
+          echo '
+            "BREVO_API_KEY=$BREVO_API_KEY"
+            "DATABASE_URL=libsql://bookworms-szankdav.turso.io"
+            "DATABASE_TOKEN=$DATABASE_TOKEN"
+            "PAGE_URL=https://bookworms.fly.dev/"
+          ' > .env.production
+
       - name: Start Backend Server
         run: npm run start &
         working-directory: backend

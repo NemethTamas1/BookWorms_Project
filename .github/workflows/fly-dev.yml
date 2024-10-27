@@ -35,6 +35,21 @@ jobs:
         run: npm ci
         working-directory: backend
 
+      - name: Copy secrets to .env file
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DATABASE_TOKEN_DEV: ${{ secrets.DATABASE_TOKEN_DEV }}
+        run: |
+          cd backend
+          echo "JWT_SECRET=$JWT_SECRET" > .env
+          echo '
+            "BREVO_API_KEY=$BREVO_API_KEY"
+            "DATABASE_URL=libsql://bookworms-dev-szankdav.turso.io"
+            "DATABASE_TOKEN=$DATABASE_TOKEN_DEV"
+            "PAGE_URL=https://bookworms-dev.fly.dev/"
+          ' > .env.development
+
       - name: Start Backend Server
         run: npm run start &
         working-directory: backend
@@ -72,13 +87,6 @@ jobs:
 
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
-
-      - name: Copy secrets to .env file
-        env:
-          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
-        run: |
-          cd backend
-          echo "BREVO_API_KEY=$BREVO_API_KEY" >> .env.development
 
       - name: Deploy Backend
         run: |
