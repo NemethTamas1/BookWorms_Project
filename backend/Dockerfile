@@ -10,7 +10,7 @@ LABEL fly_launch_runtime="NestJS"
 WORKDIR /app/backend
 
 # Set production environment
-ENV NODE_ENV="production"
+#ENV NODE_ENV="production"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
