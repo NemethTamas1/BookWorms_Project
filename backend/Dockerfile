@@ -9,8 +9,9 @@ LABEL fly_launch_runtime="NestJS"
 # NestJS app lives here
 WORKDIR /app/backend
 
-# Set production environment
-#ENV NODE_ENV="production"
+# Use an ARG to set the environment, but no default value is needed
+ARG NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
