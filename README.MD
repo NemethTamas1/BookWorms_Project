@@ -1,6 +1,32 @@
-# How to run local:
+# BookWorms project
+## Where can I see the site?
+### https://bookworms.fly.dev
 
-## Preparation
+## Use-Cases
+- Visit the website
+- Check the books
+- Apply for a book
+- Confirmation of application by email
+- Registration after acceptance of the letter of motivation
+- Log in / Log out
+- Bid on a book 
+- Change user information
+- Change book information (Admin)
+- Change bid date  (Admin)
+- Confirm the letter of motivation (Admin)
+
+## Technologies
+- [Vue](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/) (Frontend)
+- [NestJS](https://nestjs.com/) + [TypeScript](https://www.typescriptlang.org/) (Backend)
+- [Turso](https://turso.tech/) (Database)
+- [Fly.io](https://fly.io/) (Deploy)
+- [Brevo](https://www.brevo.com/) (Sending Emails)
+- Github Actions (CI/CD)
+![CI/CD image](ProjectAssets/CICD.png)
+
+
+## How to run locally?
+### Preparation
 - In the backend folder make a file `.env`  with this line:
 `JWT_SECRET=your JWT secret`
 
@@ -10,12 +36,12 @@
 `PAGE_URL=http://localhost:3000/`   
 `BREVO_API_KEY=your Brevo API key`
 
-## Frontend:
+### Frontend
 cd frontend  
 npm ci  
 npm run build:localdev
 
-## Backend:
+### Backend
 
 cd backend  
 npm ci  
